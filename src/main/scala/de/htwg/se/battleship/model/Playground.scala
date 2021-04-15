@@ -11,6 +11,7 @@ case class Playground(cells:Matrix[Cell]){
   def cell(row:Int, col:Int):Cell = cells.cell(row, col)
   //change the cell value in the Playground
   def set(row:Int, col:Int, value:Int):Playground = copy(cells.replaceCell(row, col, Cell(value)))
+
   def setRowWithLetter(rowString:String, columnString:String, value:Int):Playground = {
     val UpperRowString = rowString.toUpperCase
     val row = (UpperRowString(0) -65).toChar.toInt

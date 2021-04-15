@@ -21,5 +21,4 @@ class Controller(var pgP1L :Playground, var pgP2R: Playground) extends Observabl
     var pgNew = pg.set(row, col, value)
     notifyObservers
   }
-
 }
