@@ -5,7 +5,14 @@ import org.scalatest.matchers.should.Matchers
 
 
 class CellSpec extends AnyWordSpec with Matchers {
-  "A Playground Cell" when {
+  "A Battlefield Cell" when {
+    //case class test for 100% Coverage
+    "initialized" should {
+      "a int parameter" in {
+        val caseClassCell = Cell(0)
+        Cell.unapply(caseClassCell).get should be(0)
+      }
+    }
     "not set to any value " should {
       val emptyCell = Cell(0)
       "have value 0" in {
