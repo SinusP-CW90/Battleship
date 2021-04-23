@@ -68,6 +68,7 @@ case class Battlefield(cells:Matrix[Cell]){
   }
 
   def start(pgP1: Battlefield, pgP2:Battlefield): Battlefield ={
+
     setShips(pgP1,pgP2,"p1")
     setShips(pgP2,pgP1,"p2")
     pgP1

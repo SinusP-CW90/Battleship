@@ -18,6 +18,11 @@ object Battleship {
     do {
       println("Welcome to Battleship")
       println("To start the Game please enter 'start', or change the size of the Battlefield")
+      println("or change the size of the Battlefield\n" +
+        "type 's' or 'small' for a 3x3 Battlefield\n"+
+        "type 'm' or 'medium' for a 6x6 Battlefield\n"+
+        "type 'l' or 'large' for a 9x9 Battlefield\n");
+
       println("after the start you can set your ships with `a1` or `b2` etc. ")
       input = readLine()
       tui.processInputLine(input)
