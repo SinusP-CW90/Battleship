@@ -8,7 +8,7 @@ import de.htwg.se.battleship.controller.Controller
 import scala.io.StdIn.readLine
 
 object Battleship {
-  val controller = new Controller(new Playground(3),new Playground(3))
+  val controller = new Controller(new Battlefield(3),new Battlefield(3))
   val tui = new Tui(controller)
   controller.notifyObservers
 

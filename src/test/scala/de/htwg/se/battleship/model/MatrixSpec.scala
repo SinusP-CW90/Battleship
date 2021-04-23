@@ -6,6 +6,13 @@ import org.scalatest.matchers.should.Matchers
 class MatrixSpec extends AnyWordSpec with Matchers {
   "A Matrix is a tailor-made immutable data type that contains a two-dimentional Vector of Cells. " +
     "A Matrix" when {
+    //case class test for 100% Coverage
+    "initialized" should {
+      "have a 2d Vector parameter" in {
+        val caseClassMatrix = Matrix(Vector(Vector(Cell(0))))
+        Matrix.unapply(caseClassMatrix).get should be(Vector(Vector(Cell(0))))
+      }
+    }
     "empty " should {
       "be created by using a dimention and a sample cell" in {
         val matrix = new Matrix[Cell](2, Cell(0))

@@ -1,6 +1,6 @@
 package de.htwg.se.battleship.controller
 
-import de.htwg.se.battleship.model.Playground
+import de.htwg.se.battleship.model.Battlefield
 import de.htwg.se.battleship.util.Observer
 
 import org.scalatest.wordspec._
@@ -14,7 +14,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
 
   "A Controller" when {
     "observed by an Observer" should {
-      val smallPlayground = new Playground(3)
+      val smallPlayground = new Battlefield(3)
       val controller = new Controller(smallPlayground,smallPlayground)
       val observer = new Observer {
         var updated: Boolean = false

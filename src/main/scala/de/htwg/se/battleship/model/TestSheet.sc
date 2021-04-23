@@ -5,11 +5,11 @@ import scala.io.StdIn.readLine
 case class Playground(cells:Matrix[Cell]){
   //set the size with the Matrix class
   def this(size:Int) = this(new Matrix[Cell](size, Cell(0)))
-  //Int value with the size of the Playground
+  //Int value with the size of the Battlefield
   val size:Int = cells.size
   //return the called cell
   def cell(row:Int, col:Int):Cell = cells.cell(row, col)
-  //change the cell value in the Playground
+  //change the cell value in the Battlefield
   def set(row:Int, col:Int, value:Int):Playground = copy(cells.replaceCell(row, col, Cell(value)))
   def setRowWithLetter(rowString:String, columnString:String, value:Int):Playground = {
     val UpperRowString = rowString.toUpperCase
@@ -17,9 +17,9 @@ case class Playground(cells:Matrix[Cell]){
     val col = columnString.toInt
     copy (cells.replaceCell (row, col-1, Cell (value)))
   }
-  //show the called row of the Playground
+  //show the called row of the Battlefield
   def row(row:Int):Vector[Cell] = cells.rows(row)
-  //show the called column of the Playground
+  //show the called column of the Battlefield
   def col(col:Int):Vector[Cell] = cells.rows.map(row=>row(col))
   //
   def shoot(pg: Playground, row:Int, col:Int):Playground = {
@@ -58,10 +58,10 @@ case class Playground(cells:Matrix[Cell]){
     pgP1L
   }
 
-  //generate a String that represents the Playground
+  //generate a String that represents the Battlefield
   def playgroundString(pgP1:Playground, pgP2:Playground, currentPlayer: String): String = {
 
-    //create a number String for the first line of the Playground
+    //create a number String for the first line of the Battlefield
     //(allows different playground sizes for P1 and P2)
     def buildNumberRowString(): String ={
       var numberString = "\n"
@@ -106,7 +106,7 @@ case class Playground(cells:Matrix[Cell]){
       }
       currentCell
     }
-    //creates a String for the Playground
+    //creates a String for the Battlefield
     def buildRows(): String ={
       var playgroundString = ""
       var lineP1 = ""
@@ -118,7 +118,7 @@ case class Playground(cells:Matrix[Cell]){
         //loop to create the row Strings
         for (y <- 1 to pgP1.size) {
 
-          //build the Playground row Strings from the cell values for player1 and player 2
+          //build the Battlefield row Strings from the cell values for player1 and player 2
           if (currentPlayer == "p1"){
             lineP1 = setRowForPlayer(x,y,pgP1,lineP1)
             lineP2 = setRowForEnemy(x,y,pgP2,lineP2)
