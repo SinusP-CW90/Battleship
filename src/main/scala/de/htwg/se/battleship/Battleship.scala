@@ -13,10 +13,15 @@ object Battleship {
   controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
+    println("Welcome to Battleship");
 
+    println("Please set a Name for the Player 1!");
+    val player1 = Player(readLine())
+    println("Please set a Name for the Player 2!");
+    val player2 = Player(readLine())
     var input: String = ""
     do {
-      println("Welcome to Battleship")
+      println("Hello, " + player1.name +" and " +player2.name)
       println("To start the Game please enter 'start', or change the size of the Battlefield")
       println("or change the size of the Battlefield\n" +
         "type 's' or 'small' for a 3x3 Battlefield\n"+

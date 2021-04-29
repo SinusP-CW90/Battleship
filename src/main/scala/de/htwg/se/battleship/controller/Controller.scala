@@ -10,6 +10,7 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     notifyObservers
   }
   def start(): Unit ={
+    pgP1L.playgroundString(pgP1L, pgP2R,"p1")
     pgP1L.start(pgP1L,pgP2R)
     notifyObservers
   }

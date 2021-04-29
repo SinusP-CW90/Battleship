@@ -64,6 +64,7 @@ case class Playground(cells:Matrix[Cell]){
     //create a number String for the first line of the Battlefield
     //(allows different playground sizes for P1 and P2)
     def buildNumberRowString(): String ={
+      var nameLine = "\n"
       var numberString = "\n"
       var currentNumberP1 = "  "
       var currentNumberP2 = "  "
@@ -71,6 +72,7 @@ case class Playground(cells:Matrix[Cell]){
         currentNumberP1 = currentNumberP1.concat(x.toString + "  ")
       }
       numberString = numberString.concat(currentNumberP1 + "|")
+
       for (x <- 1 to pgP2.size) {
         currentNumberP2 = currentNumberP2.concat(x.toString + "  ")
       }
@@ -132,6 +134,9 @@ case class Playground(cells:Matrix[Cell]){
         lineP1=""
         lineP2=""
       }
+      //neu
+
+
       playgroundString
     }
     "%s\n%s".format(buildNumberRowString(), buildRows())
@@ -175,5 +180,5 @@ pgP2R = pgP2R.shoot(pgP2R, 2, 1)
 
 pgP1L.playgroundString(pgP1L, pgP2R, "p1")
 pgP1L.isWinning(pgP2R)
-
+pgP1L.cell(1,1).value
 //pgP1L.start(pgP1L)
