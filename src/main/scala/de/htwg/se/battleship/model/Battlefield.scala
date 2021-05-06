@@ -2,27 +2,28 @@ package de.htwg.se.battleship.model
 
 import scala.io.StdIn.readLine
 
-case class Playground(cells:Matrix[Cell]){
+case class Battlefield(cells:Matrix[Cell]){
   //set the size with the Matrix class
   def this(size:Int) = this(new Matrix[Cell](size, Cell(0)))
-  //Int value with the size of the Playground
+  //Int value with the size of the Battlefield
   val size:Int = cells.size
   //return the called cell
   def cell(row:Int, col:Int):Cell = cells.cell(row, col)
-  //change the cell value in the Playground
-  def set(row:Int, col:Int, value:Int):Playground = copy(cells.replaceCell(row, col, Cell(value)))
-  def setRowWithLetter(rowString:String, columnString:String, value:Int):Playground = {
+  //change the cell value in the Battlefield
+  def set(row:Int, col:Int, value:Int):Battlefield = copy(cells.replaceCell(row, col, Cell(value)))
+
+  def setRowWithLetter(rowString:String, columnString:String, value:Int):Battlefield = {
     val UpperRowString = rowString.toUpperCase
     val row = (UpperRowString(0) -65).toChar.toInt
     val col = columnString.toInt
     copy (cells.replaceCell (row, col-1, Cell (value)))
   }
-  //show the called row of the Playground
+  //show the called row of the Battlefield
   def row(row:Int):Vector[Cell] = cells.rows(row)
-  //show the called column of the Playground
+  //show the called column of the Battlefield
   def col(col:Int):Vector[Cell] = cells.rows.map(row=>row(col))
   //
-  def shoot(pg: Playground, row:Int, col:Int):Playground = {
+  def shoot(pg: Battlefield, row:Int, col:Int):Battlefield = {
     if (cell(row,col).value == 1){
       println("hit")
       this.set(row,col, 2)
@@ -32,7 +33,7 @@ case class Playground(cells:Matrix[Cell]){
       pg
     }
   }
-  def isWinning(pg: Playground): Boolean ={
+  def isWinning(pg: Battlefield): Boolean ={
     var isWinning = true
     for (x <- 1 to pg.size) {
       for (y <- 1 to pg.size) {
@@ -45,7 +46,7 @@ case class Playground(cells:Matrix[Cell]){
     isWinning
   }
 //TODO fehler abfangen, wenn ships doppelt oder außerhalb der spielfeld größe gesetzt werden
-  def setShips(pgP1: Playground, pgP2:Playground, currentPlayer:String): Playground ={
+  def setShips(pgP1: Battlefield, pgP2:Battlefield, currentPlayer:String): Battlefield ={
     var pgP1L = pgP1
     var pgP2R = pgP2
     var counter = size
@@ -66,16 +67,17 @@ case class Playground(cells:Matrix[Cell]){
     }
   }
 
-  def start(pgP1: Playground, pgP2:Playground): Playground ={
+  def start(pgP1: Battlefield, pgP2:Battlefield): Battlefield ={
+
     setShips(pgP1,pgP2,"p1")
     setShips(pgP2,pgP1,"p2")
     pgP1
   }
 
-  //generate a String that represents the Playground
-  def playgroundString(pgP1:Playground, pgP2:Playground, currentPlayer: String): String = {
+  //generate a String that represents the Battlefield
+  def playgroundString(pgP1:Battlefield, pgP2:Battlefield, currentPlayer: String): String = {
 
-    //create a number String for the first line of the Playground
+    //create a number String for the first line of the Battlefield
     //(allows different playground sizes for P1 and P2)
     def buildNumberRowString(): String ={
       var numberString = "\n"
@@ -92,7 +94,7 @@ case class Playground(cells:Matrix[Cell]){
     }
 
     //check if the cell ist set to 0 or to another value (that changes the String)
-    def setRowForPlayer(x:Int, y:Int, pg:Playground, lineString: String): String ={
+    def setRowForPlayer(x:Int, y:Int, pg:Battlefield, lineString: String): String ={
 
       var currentCell = lineString
 
@@ -108,7 +110,7 @@ case class Playground(cells:Matrix[Cell]){
       currentCell
     }
 
-    def setRowForEnemy(x:Int, y:Int, pg:Playground, lineString: String): String ={
+    def setRowForEnemy(x:Int, y:Int, pg:Battlefield, lineString: String): String ={
 
       var currentCell = lineString
 
@@ -120,7 +122,7 @@ case class Playground(cells:Matrix[Cell]){
       }
       currentCell
     }
-    //creates a String for the Playground
+    //creates a String for the Battlefield
     def buildRows(): String ={
       var playgroundString = ""
       var lineP1 = ""
@@ -132,7 +134,7 @@ case class Playground(cells:Matrix[Cell]){
         //loop to create the row Strings
         for (y <- 1 to pgP1.size) {
 
-          //build the Playground row Strings from the cell values for player1 and player 2
+          //build the Battlefield row Strings from the cell values for player1 and player 2
           if (currentPlayer == "p1"){
             lineP1 = setRowForPlayer(x,y,pgP1,lineP1)
             lineP2 = setRowForEnemy(x,y,pgP2,lineP2)

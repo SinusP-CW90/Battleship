@@ -1,6 +1,10 @@
 language: scala
 scala:
+<<<<<<< HEAD
   - 2.13.3
+=======
+  - 2.13.4
+>>>>>>> main
 
 script:
   - sbt clean coverage test coverageReport

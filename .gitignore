@@ -34,6 +34,8 @@ project/.sbtserver
 .sbtserver/
 
 # Scala-IDE specific
+src\main\scala\de\htwg\se\battleship\model\TestSheet.sc
+src\main\scala\de\htwg\se\battleship\model\ModelWorksheet.sc
 .scala_dependencies
 .worksheet
 
