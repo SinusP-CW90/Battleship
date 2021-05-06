@@ -15,17 +15,7 @@ class Tui(controller: Controller) extends Observer {
       case "m"|"medium"|"6x6"|"set size medium" => controller.createEmptyPlayground(6);
       case "l"|"large"|"9x9"|"set size large" => controller.createEmptyPlayground(9);
       case "start" => controller.start()
-      /* //für später
-      case "start" => {
-          var input2: String = ""
-          do {
-            input2 = readLine()
-            input2 match {
-              case "d" => println("det?")
-              case _ => println("please set a valid String" )
-            }
-          } while (input2 != "quit1")
-      }*/
+
       case _ => println("please set a valid String" )
     }
   }
