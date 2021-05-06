@@ -45,6 +45,7 @@ case class Battlefield(cells:Matrix[Cell]){
     }
     isWinning
   }
+  //TODO!! komplett überarbeiten, da readLine() nur in TUI oder Battleship main, wegen besserer testbarkeit vorkommen darf
 //TODO fehler abfangen, wenn ships doppelt oder außerhalb der spielfeld größe gesetzt werden
   def setShips(pgP1: Battlefield, pgP2:Battlefield, currentPlayer:String): Battlefield ={
     var pgP1L = pgP1
@@ -66,7 +67,7 @@ case class Battlefield(cells:Matrix[Cell]){
       pgP2R
     }
   }
-
+//TODO - nicht gut zu testen wegen setShips
   def start(pgP1: Battlefield, pgP2:Battlefield): Battlefield ={
 
     setShips(pgP1,pgP2,"p1")

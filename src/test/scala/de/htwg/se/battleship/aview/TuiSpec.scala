@@ -26,6 +26,15 @@ class TuiSpec extends AnyWordSpec with Matchers {
       controller.pgP1L should be(new Battlefield(9))
       controller.pgP2R should be(new Battlefield(9))
     }
+    /*
+    "quit wenn you type 'q'" in {
+      tui.processInputLine("q") should be("quit")
+    }
+    "X" in {
+      tui.processInputLine("x") should be("text")
+    }
+
+     */
 /*
     "start the Game" in {
       tui.processInputLine("s")
