@@ -33,6 +33,9 @@ class TuiSpec extends AnyWordSpec with Matchers {
       controller.pgP1L should be(new Battlefield(9))
       controller.pgP2R should be(new Battlefield(9))
     }
+    "create and empty Battlefield on input 'start'" in {
+      tui.processInputLine("start")
+    }
     "do nothing on bad input like'99999'" in {
       val old = controller.playgroundToString
       tui.processInputLine("X")
