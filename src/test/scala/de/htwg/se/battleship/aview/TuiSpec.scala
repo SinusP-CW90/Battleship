@@ -11,6 +11,13 @@ class TuiSpec extends AnyWordSpec with Matchers {
     val controller = new Controller(new Battlefield(6),new Battlefield(6))
     val tui = new Tui(controller)
 
+    "do nothing on input 'q'" in {
+      tui.processInputLine("q")
+    }
+    "create and print Player Names on input 'set'" in {
+      tui.processInputLine("set")
+      //
+    }
     "create and empty Battlefield on input 'm'" in {
       tui.processInputLine("m")
       controller.pgP1L should be(new Battlefield(6))
@@ -25,6 +32,28 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("l")
       controller.pgP1L should be(new Battlefield(9))
       controller.pgP2R should be(new Battlefield(9))
+    }
+    "create and empty Battlefield on input 'start'" in {
+      tui.processInputLine("start")
+    }
+    "do nothing on bad input like'99999'" in {
+      val old = controller.playgroundToString
+      tui.processInputLine("X")
+      controller.playgroundToString should be(old)
+    }
+    "test input" in {
+      tui.processInputLine("rl")
+      tui.processInputLine("rr")
+      tui.processInputLine("a1")
+      tui.processInputLine("a2")
+      tui.processInputLine("b1")
+      tui.processInputLine("b2")
+      tui.processInputLine("A1")
+      tui.processInputLine("A2")
+      tui.processInputLine("B1")
+      tui.processInputLine("B2")
+      tui.processInputLine("001")
+
     }
     /*
     "quit wenn you type 'q'" in {

@@ -1,12 +1,14 @@
 package de.htwg.se.battleship.model
 
 import scala.io.StdIn.readLine
+import scala.math.sqrt
 
 case class Battlefield(cells:Matrix[Cell]){
   //set the size with the Matrix class
   def this(size:Int) = this(new Matrix[Cell](size, Cell(0)))
   //Int value with the size of the Battlefield
   val size:Int = cells.size
+
   //return the called cell
   def cell(row:Int, col:Int):Cell = cells.cell(row, col)
   //change the cell value in the Battlefield
@@ -22,7 +24,10 @@ case class Battlefield(cells:Matrix[Cell]){
   def row(row:Int):Vector[Cell] = cells.rows(row)
   //show the called column of the Battlefield
   def col(col:Int):Vector[Cell] = cells.rows.map(row=>row(col))
-  //
+
+
+
+  //TODO - prints raus nehemen
   def shoot(pg: Battlefield, row:Int, col:Int):Battlefield = {
     if (cell(row,col).value == 1){
       println("hit")
@@ -45,6 +50,9 @@ case class Battlefield(cells:Matrix[Cell]){
     }
     isWinning
   }
+//strategy pattern
+
+/*
   //TODO!! komplett überarbeiten, da readLine() nur in TUI oder Battleship main, wegen besserer testbarkeit vorkommen darf
 //TODO fehler abfangen, wenn ships doppelt oder außerhalb der spielfeld größe gesetzt werden
   def setShips(pgP1: Battlefield, pgP2:Battlefield, currentPlayer:String): Battlefield ={
@@ -67,6 +75,7 @@ case class Battlefield(cells:Matrix[Cell]){
       pgP2R
     }
   }
+
 //TODO - nicht gut zu testen wegen setShips
   def start(pgP1: Battlefield, pgP2:Battlefield): Battlefield ={
 
@@ -74,83 +83,40 @@ case class Battlefield(cells:Matrix[Cell]){
     setShips(pgP2,pgP1,"p2")
     pgP1
   }
+*/
 
   //generate a String that represents the Battlefield
-  def playgroundString(pgP1:Battlefield, pgP2:Battlefield, currentPlayer: String): String = {
+  def playgroundString(playgroundLeft:Battlefield, playgroundRight:Battlefield): String = {
 
-    //create a number String for the first line of the Battlefield
-    //(allows different playground sizes for P1 and P2)
-    def buildNumberRowString(): String ={
-      var numberString = "\n"
-      var currentNumberP1 = "  "
-      var currentNumberP2 = "  "
-      for (x <- 1 to pgP1.size) {
-        currentNumberP1 = currentNumberP1.concat(x.toString + "  ")
+    def createNumberRow(): String ={
+      var currentNumberString = ""
+      for (x <- 1 to playgroundLeft.size) {
+        currentNumberString = currentNumberString.concat(x.toString+"  ")
       }
-      numberString = numberString.concat(currentNumberP1 + "\u001b[48;5;0m|\u001b[0m")
-      for (x <- 1 to pgP2.size) {
-        currentNumberP2 = currentNumberP2.concat(x.toString + "  ")
-      }
-      numberString.concat(currentNumberP2)
+      val numberString = "\n    " +currentNumberString + "|  " +currentNumberString
+      numberString
     }
 
-    //check if the cell ist set to 0 or to another value (that changes the String)
-    def setRowForPlayer(x:Int, y:Int, pg:Battlefield, lineString: String): String ={
-
-      var currentCell = lineString
-
-      if(pg.cell(x-1,y-1).value == 0){
-        currentCell = currentCell.concat("\u001b[48;5;20m . \u001b[0m")
-      }
-      if(pg.cell(x-1,y-1).value == 1) {
-        currentCell = currentCell.concat(" x ")
-      }
-      if(pg.cell(x-1,y-1).value == 2) {
-        currentCell = currentCell.concat(" o ")
-      }
-      currentCell
+    def battlefieldToString():String={
+      //val y = createNumberRow();
+      val line = ("L |" + (" q " * playgroundLeft.size)) + " |" + ("  Q" * playgroundRight.size) +" | R\n"
+      var box = createNumberRow()+"\n" +"" + (line * playgroundLeft.size)
+      val playerNameString =((" " * (playgroundLeft.size-1))+"Player 1" +(" " * (playgroundLeft.size-1)) +" |" )
+      for {
+        row <- 0 until playgroundLeft.size
+        col <- 0 until playgroundLeft.size
+      } box = (box.replaceFirst("q", playgroundLeft.cell(row, col).toString)
+        replaceFirst("Q", playgroundRight.cell(row, col).toString)
+        replaceFirst("L", ("A"(0) + col).toChar.toString)
+        replaceFirst("R", ("A"(0) + col).toChar.toString))
+      box
     }
 
-    def setRowForEnemy(x:Int, y:Int, pg:Battlefield, lineString: String): String ={
-
-      var currentCell = lineString
-
-      if(pg.cell(x-1,y-1).value < 2){
-        currentCell = currentCell.concat("\u001b[48;5;20m . \u001b[0m")
-      }
-      if(pg.cell(x-1,y-1).value == 2) {
-        currentCell = currentCell.concat(" o ")
-      }
-      currentCell
+    def colorBattlefield(battlefield: String): String ={
+      val cB= battlefield.replace(" . ","\u001b[48;5;20m . \u001b[0m")
+      cB
     }
-    //creates a String for the Battlefield
-    def buildRows(): String ={
-      var playgroundString = ""
-      var lineP1 = ""
-      var lineP2 = ""
-      //First loop creates the column Strings
-      for (x <- 1 to pgP1.size) {
-        //Set first Letter
-        playgroundString = playgroundString.concat(("A"(0) + x - 1).toChar.toString)
-        //loop to create the row Strings
-        for (y <- 1 to pgP1.size) {
 
-          //build the Battlefield row Strings from the cell values for player1 and player 2
-          if (currentPlayer == "p1"){
-            lineP1 = setRowForPlayer(x,y,pgP1,lineP1)
-            lineP2 = setRowForEnemy(x,y,pgP2,lineP2)
-          }
-          if (currentPlayer == "p2"){
-            lineP1 = setRowForEnemy(x,y,pgP1,lineP1)
-            lineP2 = setRowForPlayer(x,y,pgP2,lineP2)
-          }
-        }
-        playgroundString = playgroundString.concat(lineP1 +" | " +lineP2 +("A"(0) + x - 1).toChar.toString+"\n")
-        lineP1=""
-        lineP2=""
-      }
-      playgroundString
-    }
-    "%s\n%s".format(buildNumberRowString(), buildRows())
+    colorBattlefield(battlefieldToString())
   }
 }

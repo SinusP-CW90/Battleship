@@ -2,7 +2,7 @@ package de.htwg.se.battleship.util
 
 //Vorlage aus Skript
 trait Observer {
-  def update: Unit
+  def update: Boolean
 }
 
 class Observable {

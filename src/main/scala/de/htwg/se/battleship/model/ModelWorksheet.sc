@@ -1,4 +1,7 @@
+import de.htwg.se.battleship.Battleship.tui
 import de.htwg.se.battleship.model._
+import de.htwg.se.battleship._
+
 import scala.io.StdIn.readLine
 
 val grid = new Battlefield(4)
