@@ -27,5 +27,18 @@ class PlayerSpec extends AnyWordSpec with Matchers {
         }
       }
     }
+    "initialized a Vector of 2 Player" should {
+      val noPlayerName = Player().setDefaultPlayerNames()
+      "have following  Vector" in {
+        noPlayerName.toString() should be("Vector(Player 1, Player 2)")
+      }
+    }
+    "initialized a Vector of 2 Player" should {
+      val noPlayerName = Player().playerNamesToString(Player().setDefaultPlayerNames())
+      "have following Vector String" in {
+        noPlayerName should be("Hello Player 1 and Player 2")
+      }
+    }
+
   }
 }

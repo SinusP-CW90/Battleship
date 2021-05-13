@@ -4,12 +4,8 @@ import de.htwg.se.battleship.model._
 import de.htwg.se.battleship.util.Observable
 
 class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observable {
-  def setPlayer(): Unit ={
-    val player1 = Player("p1")
-    val player2 = Player("p2")
-    println("Hello " +player1 +" and " +player2)
-  }
-
+  def setPlayerNames: String = Player().playerNamesToString(Player().setDefaultPlayerNames())
+  def playgroundToString: String = pgP1L.playgroundString(pgP1L, pgP2R)
 
   def createEmptyPlayground(size: Int):Unit = {
     pgP1L = new Battlefield(size)
@@ -22,7 +18,7 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     notifyObservers
   }
 
-  def playgroundToString: String = pgP1L.playgroundString(pgP1L, pgP2R)
+
 
 //TODO hier überarbeiten
   def set(pg: Battlefield, row: Int, col: Int, value: Int):Unit = {

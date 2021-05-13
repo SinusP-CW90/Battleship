@@ -14,6 +14,10 @@ class TuiSpec extends AnyWordSpec with Matchers {
     "do nothing on input 'q'" in {
       tui.processInputLine("q")
     }
+    "create and print Player Names on input 'set'" in {
+      tui.processInputLine("set")
+      //
+    }
     "create and empty Battlefield on input 'm'" in {
       tui.processInputLine("m")
       controller.pgP1L should be(new Battlefield(6))

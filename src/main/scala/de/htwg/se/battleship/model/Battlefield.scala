@@ -9,19 +9,6 @@ case class Battlefield(cells:Matrix[Cell]){
   //Int value with the size of the Battlefield
   val size:Int = cells.size
 
-  val blocknum: Int = sqrt(size).toInt
-
-   def toStringX: String = {
-    val lineseparator = ("+-" + ("--" * blocknum)) * blocknum + "+\n"
-    val line = ("| " + ("x " * blocknum)) * blocknum + "|\n"
-    var box = "\n" + (lineseparator + (line * blocknum)) * blocknum + lineseparator
-    for {
-      row <- 0 until size
-      col <- 0 until size
-    } box = box.replaceFirst("x", cell(row, col).toString)
-    box
-  }
-
   //return the called cell
   def cell(row:Int, col:Int):Cell = cells.cell(row, col)
   //change the cell value in the Battlefield
@@ -37,6 +24,8 @@ case class Battlefield(cells:Matrix[Cell]){
   def row(row:Int):Vector[Cell] = cells.rows(row)
   //show the called column of the Battlefield
   def col(col:Int):Vector[Cell] = cells.rows.map(row=>row(col))
+
+
 
   //TODO - prints raus nehemen
   def shoot(pg: Battlefield, row:Int, col:Int):Battlefield = {

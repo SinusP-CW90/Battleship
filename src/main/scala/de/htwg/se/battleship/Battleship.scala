@@ -16,7 +16,8 @@ object Battleship {
     var input: String = ""
     if (args.length>0) input=args(0)
     if (!input.isEmpty) tui.processInputLine(input)
-    else do {
+    else
+      do {
       input = readLine()
       tui.processInputLine(input)
     } while (input != "q")
