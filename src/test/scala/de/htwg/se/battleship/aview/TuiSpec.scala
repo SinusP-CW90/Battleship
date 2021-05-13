@@ -38,6 +38,19 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("X")
       controller.playgroundToString should be(old)
     }
+    "test input" in {
+      tui.processInputLine("rl")
+      tui.processInputLine("rr")
+      tui.processInputLine("a1")
+      tui.processInputLine("a2")
+      tui.processInputLine("b1")
+      tui.processInputLine("b2")
+      tui.processInputLine("A1")
+      tui.processInputLine("A2")
+      tui.processInputLine("B1")
+      tui.processInputLine("B2")
+
+    }
     /*
     "quit wenn you type 'q'" in {
       tui.processInputLine("q") should be("quit")

@@ -12,13 +12,25 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     pgP2R = new Battlefield(size)
     notifyObservers
   }
-  /*
+
   def start(): Unit ={
-    pgP1L.playgroundString(pgP1L, pgP2R)
+    //pgP1L.playgroundString(pgP1L, pgP2R)
     //pgP1L.start(pgP1L,pgP2R)
     notifyObservers
   }
+  def set(player:String,row: Int, col: Int, value: Int):Unit = {
+    if (player == "l") pgP1L = pgP1L.set(row, col, value)
+    if (player == "r") pgP2R = pgP2R.set(row, col, value)
+    notifyObservers
+  }
 
+  def createRandomBattlefield(player:String,size: Int): Unit = {
+    if (player == "l") pgP1L = (new BattlefieldCreateRandomStrategy).createNewGrid(size)
+    if (player == "r") pgP2R = (new BattlefieldCreateRandomStrategy).createNewGrid(size)
+    notifyObservers
+  }
+
+/*
 //TODO hier überarbeiten
   def set(pg: Battlefield, row: Int, col: Int, value: Int):Unit = {
     var pgNew = pg.set(row, col, value)

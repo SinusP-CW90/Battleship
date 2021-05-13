@@ -11,7 +11,8 @@ var testBattlefield = testBattlefield1.set(1,1,7)
 var testBattlefieldR = testBattlefield1.set(0,0,7)
 
 
-  val input = "Hello\nWorld\n"
-  val is = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8))
-ConsoleAction.readInput(is).size===2
+object Singleton {
+  def singletonFunction = println("I am a singleton")
 }
+
+Singleton.singletonFunction

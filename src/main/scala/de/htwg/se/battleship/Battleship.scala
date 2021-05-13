@@ -14,9 +14,9 @@ object Battleship {
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
-    //if (args.length>0) input=args(0)
-    if (!args.isEmpty) tui.processInputLine(input=args(0))
-
+    if (args.length>0) input=args(0)
+    println(args.length)
+    if (!input.isEmpty) tui.processInputLine(input)
     else
       do {
       input = readLine()

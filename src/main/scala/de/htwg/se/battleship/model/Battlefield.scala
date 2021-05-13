@@ -50,6 +50,8 @@ case class Battlefield(cells:Matrix[Cell]){
     }
     isWinning
   }
+//strategy pattern
+
 /*
   //TODO!! komplett überarbeiten, da readLine() nur in TUI oder Battleship main, wegen besserer testbarkeit vorkommen darf
 //TODO fehler abfangen, wenn ships doppelt oder außerhalb der spielfeld größe gesetzt werden

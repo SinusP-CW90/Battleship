@@ -5,7 +5,6 @@ package de.htwg.se.battleship.model
 //TODO exclude all other Int and Strings
 case class Cell(value: Int) {
   def isSet: Boolean = value != 0
-
   override def toString: String = value match {
     case 0 => "."
     case 1 => "X"

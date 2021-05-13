@@ -16,7 +16,7 @@ class BattleshipSpec extends AnyWordSpec with Matchers {
       "run  without exceptions" in {
         val in = new ByteArrayInputStream("q".getBytes)
         Console.withIn(in) {
-          noException should be thrownBy Battleship.main(Array[String](""))
+          noException should be thrownBy Battleship.main(Array())
         }
       }
     }
