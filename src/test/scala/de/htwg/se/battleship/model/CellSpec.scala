@@ -31,5 +31,17 @@ class CellSpec extends AnyWordSpec with Matchers {
         cellWithValue.isSet should be(true)
       }
     }
+    "call toString" should {
+      val cellWithValue0 = Cell(0)
+      val cellWithValue1 = Cell(1)
+      val cellWithValue2 = Cell(2)
+      val cellWithValue3 = Cell(3)
+      "return another value in a String" in {
+        cellWithValue0.toString should be(".")
+        cellWithValue1.toString should be("X")
+        cellWithValue2.toString should be("o")
+        cellWithValue3.toString should be("?")
+      }
+    }
   }
 }
