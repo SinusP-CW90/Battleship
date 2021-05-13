@@ -12,17 +12,18 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     pgP2R = new Battlefield(size)
     notifyObservers
   }
+  /*
   def start(): Unit ={
     pgP1L.playgroundString(pgP1L, pgP2R)
     //pgP1L.start(pgP1L,pgP2R)
     notifyObservers
   }
 
-
-
 //TODO hier überarbeiten
   def set(pg: Battlefield, row: Int, col: Int, value: Int):Unit = {
     var pgNew = pg.set(row, col, value)
     notifyObservers
   }
+
+   */
 }

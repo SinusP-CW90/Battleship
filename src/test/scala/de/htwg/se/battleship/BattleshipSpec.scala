@@ -8,8 +8,9 @@ import java.io.ByteArrayInputStream
 class BattleshipSpec extends AnyWordSpec with Matchers {
   "The battleship main class" should {
     "accept text input as argument without readline loop, to test it from command line " in {
-     Battleship.main(Array[String]("s"))
+     Battleship.main(Array[String]("s","test"))
     }
+
     "started" should {
       "run  without exceptions" in {
         val in = new ByteArrayInputStream("q".getBytes)
