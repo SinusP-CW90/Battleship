@@ -64,6 +64,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("singleton")
       tui.processInputLine("msw")
       tui.processInputLine("lsw")
+      tui.processInputLine("sw")
 
     }
     /*

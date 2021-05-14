@@ -21,7 +21,7 @@ class Tui(controller: Controller) extends Observer {
       case "singleton" => controller.singleton();
       case "msw" => controller.createShip("mini");
       case "lsw" => controller.createShip("long");
-      //case "sw" => controller.createShip("normal");
+      case "sw" => controller.createShip("default");
       case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
         case row :: column :: value :: Nil => controller.setL(row, column, value)
         case _ =>
