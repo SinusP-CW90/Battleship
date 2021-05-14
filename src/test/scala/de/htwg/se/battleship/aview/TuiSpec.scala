@@ -41,6 +41,10 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("X")
       controller.playgroundToString should be(old)
     }
+    "to test is winning" in {
+      tui.processInputLine("A1")
+      tui.processInputLine("sA1")
+    }
     "test input" in {
       tui.processInputLine("rl")
       tui.processInputLine("rr")

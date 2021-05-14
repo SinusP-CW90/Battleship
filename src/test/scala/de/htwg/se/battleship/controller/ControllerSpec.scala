@@ -1,8 +1,7 @@
 package de.htwg.se.battleship.controller
 
-import de.htwg.se.battleship.model.Battlefield
+import de.htwg.se.battleship.model.{Battlefield, Ship}
 import de.htwg.se.battleship.util.Observer
-
 import org.scalatest.wordspec._
 import org.scalatest.matchers.should.Matchers
 
@@ -27,6 +26,11 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         observer.updated should be(true)
         controller.pgP1L.size should be(3)
         controller.pgP2R.size should be(3)
+      }
+      "test Ship trait" in {
+      object FakeImpl extends Ship {
+        override def swim = println("ship is swimming Trait Test")
+      }
       }
       //TODO start und set test erstellen, bzw. zum laufen bringen
       /*
