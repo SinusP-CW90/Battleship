@@ -1,7 +1,5 @@
-package de.htwg.se.battleship.model
+package de.htwg.se.battleship.controller
 
 object Singleton {
   def singletonFunction = println("I am a singleton")
 }
-
-//Singleton.singletonFunction

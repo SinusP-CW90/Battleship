@@ -52,7 +52,14 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("A2")
       tui.processInputLine("B1")
       tui.processInputLine("B2")
+      tui.processInputLine("sA1")
+      tui.processInputLine("sA2")
+      tui.processInputLine("sB1")
+      tui.processInputLine("sB2")
       tui.processInputLine("001")
+      tui.processInputLine("singleton")
+      tui.processInputLine("msw")
+      tui.processInputLine("lsw")
 
     }
     /*

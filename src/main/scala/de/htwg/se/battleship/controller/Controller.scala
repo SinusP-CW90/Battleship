@@ -6,6 +6,9 @@ import de.htwg.se.battleship.util.Observable
 
 class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observable {
   var gameStatus: GameStatus = IDLE
+  def singleton(): Unit ={
+    Singleton.singletonFunction
+  }
   def setPlayerNames: String = Player().playerNamesToString(Player().setDefaultPlayerNames())
   def playgroundToString: String = pgP1L.playgroundString(pgP1L, pgP2R)
 
@@ -16,19 +19,26 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
   }
 
   def start(): Unit ={
+    gameStatus=GameStatus.START
     //pgP1L.playgroundString(pgP1L, pgP2R)
     //pgP1L.start(pgP1L,pgP2R)
     notifyObservers
+  }
+ def createShip(shiptype: String){
+    val ship = Ship(shiptype)
+    ship.swim
   }
 
   def set(player:String,row: Int, col: Int, value: Int):Unit = {
     if (player == "l") pgP1L = pgP1L.set(row, col, value)
     if (player == "r") pgP2R = pgP2R.set(row, col, value)
+    if (pgP1L.isWinning(pgP2R)) gameStatus=GameStatus.WIN
     notifyObservers
   }
 
   def setL(row: Int, col: Int, value: Int):Unit = {
     pgP1L = pgP1L.set(row, col, value)
+    pgP2R.isWinning(pgP2R);
     notifyObservers
   }
 
@@ -38,12 +48,4 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     notifyObservers
   }
 
-/*
-//TODO hier überarbeiten
-  def set(pg: Battlefield, row: Int, col: Int, value: Int):Unit = {
-    var pgNew = pg.set(row, col, value)
-    notifyObservers
-  }
-
-   */
 }

@@ -18,6 +18,10 @@ class Tui(controller: Controller) extends Observer {
       case "start" => controller.start()
       case "rl" => controller.createRandomBattlefield("l", controller.pgP1L.size)
       case "rr" => controller.createRandomBattlefield("r", controller.pgP2R.size)
+      case "singleton" => controller.singleton();
+      case "msw" => controller.createShip("mini");
+      case "lsw" => controller.createShip("long");
+      //case "sw" => controller.createShip("normal");
       case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
         case row :: column :: value :: Nil => controller.setL(row, column, value)
         case _ =>
@@ -30,6 +34,10 @@ class Tui(controller: Controller) extends Observer {
             case "A2" => controller.set("r", 0, 1, 1)
             case "B1" => controller.set("r", 1, 0, 1)
             case "B2" => controller.set("r", 1, 1, 1)
+            case "sA1" => controller.set("r", 0, 0, 2)
+            case "sA2" => controller.set("r", 0, 1, 2)
+            case "sB1" => controller.set("r", 1, 0, 2)
+            case "sB2" => controller.set("r", 1, 1, 2)
             case _ => println("please set a valid String");
           }
       }
