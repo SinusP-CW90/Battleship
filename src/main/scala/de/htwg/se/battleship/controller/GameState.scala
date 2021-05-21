@@ -1,19 +1,15 @@
 package de.htwg.se.battleship.controller
 
-object GameState {
-  var state = onState
-  /*
-  def handle(e: Event) = {
-    e match {
-      case on: OnEvent => state = onState
-      case off: OffEvent => state = offState
-    }
-    state
+import de.htwg.se.battleship.util.State
+
+case class GameState(controller: Controller) {
+  var state: State[GameState] = StartState(controller)
+
+  def handle(string: String): Unit = {
+    state.handle(string, this)
   }
-*/
-  def onState = println("I am on")
-  def offState = println("I am off")
 
-
+  def nextState(state: State[GameState]): Unit = {
+    this.state = state
+  }
 }
-

@@ -1,11 +1,10 @@
 package de.htwg.se.battleship.controller
 
-import de.htwg.se.battleship.controller.GameStatus._
 import de.htwg.se.battleship.model._
 import de.htwg.se.battleship.util.{Observable, UndoManager}
 
 class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observable {
-  var gameStatus: GameStatus = IDLE
+  var gameState: GameState = GameState(this)
   private val undoManager = new UndoManager
 
   def setPlayerNames: String = Player().playerNamesToString(Player().setDefaultPlayerNames())
@@ -17,11 +16,10 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     notifyObservers
   }
 
-  def start(): Unit ={
-    gameStatus=GameStatus.START
-    //pgP1L.playgroundString(pgP1L, pgP2R)
-    //pgP1L.start(pgP1L,pgP2R)
+  def start(input: String): Boolean = {
+    gameState.handle(input)
     notifyObservers
+    true
   }
  def createShip(shiptype: String){
     val ship = Ship(shiptype)
@@ -29,14 +27,14 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
   }
 
   def set(player:String,row: Int, col: Int, value: Int):Unit = {
-    if (player == "l") pgP1L = pgP1L.set(row, col, value)
-    if (player == "r") pgP2R = pgP2R.set(row, col, value)
-    if (pgP1L.isWinning(pgP2R)) gameStatus=GameStatus.WIN
+    undoManager.doStep(new PlayerSetCommand(player, row, col, value, this))
+    gameState.handle("play")
     notifyObservers
   }
 
   def setL(row: Int, col: Int, value: Int): Unit = {
     undoManager.doStep(new SetCommand(row, col, value, this))
+    gameState.handle("play")
     pgP2R.isWinning(pgP2R);
     notifyObservers
   }
@@ -52,6 +50,7 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
   }
 
   def createRandomBattlefield(player:String,size: Int): Unit = {
+    gameState.handle("random")
     if (player == "l") pgP1L = (new BattlefieldCreateRandomStrategy).createNewGrid(size)
     if (player == "r") pgP2R = (new BattlefieldCreateRandomStrategy).createNewGrid(size)
     notifyObservers

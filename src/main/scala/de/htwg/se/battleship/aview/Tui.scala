@@ -15,7 +15,7 @@ class Tui(controller: Controller) extends Observer {
       case "s"|"small"|"3x3"|"set size small" => controller.createEmptyPlayground(3);
       case "m"|"medium"|"6x6"|"set size medium" => controller.createEmptyPlayground(6);
       case "l"|"large"|"9x9"|"set size large" => controller.createEmptyPlayground(9);
-      case "start" => controller.start()
+      case "start" => controller.start("start")
       case "rl" => controller.createRandomBattlefield("l", controller.pgP1L.size)
       case "rr" => controller.createRandomBattlefield("r", controller.pgP2R.size)
       case "msw" => controller.createShip("mini");
@@ -47,8 +47,8 @@ class Tui(controller: Controller) extends Observer {
 
   override def update: Boolean = {
     println(controller.playgroundToString)
-    println(GameStatus.message(controller.gameStatus))
-    controller.gameStatus=GameStatus.IDLE
+    //println("Current Game Status:\n" + controller.gameState.toString)
     true
   }
+
 }

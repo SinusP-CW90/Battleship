@@ -46,6 +46,8 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("sA1")
     }
     "test input" in {
+      tui.processInputLine("undo")
+      tui.processInputLine("redo")
       tui.processInputLine("rl")
       tui.processInputLine("rr")
       tui.processInputLine("a1")
