@@ -18,12 +18,13 @@ class Tui(controller: Controller) extends Observer {
       case "start" => controller.start()
       case "rl" => controller.createRandomBattlefield("l", controller.pgP1L.size)
       case "rr" => controller.createRandomBattlefield("r", controller.pgP2R.size)
-      case "singleton" => controller.singleton();
       case "msw" => controller.createShip("mini");
       case "lsw" => controller.createShip("long");
       case "sw" => controller.createShip("default");
+      case "undo" => controller.undo;
+      case "redo" => controller.redo;
       case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
-        case row :: column :: value :: Nil => controller.setL(row, column, value)
+        case row :: column :: value :: Nil => controller.setL(row, column, value);
         case _ =>
           input match {
             case "a1" => controller.set("l", 0, 0, 1)

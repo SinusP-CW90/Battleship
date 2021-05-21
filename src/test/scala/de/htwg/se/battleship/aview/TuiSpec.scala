@@ -66,6 +66,9 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("lsw")
       tui.processInputLine("sw")
 
+      tui.processInputLine("111")
+      tui.processInputLine("undo")
+      tui.processInputLine("redo")
     }
     /*
     "quit wenn you type 'q'" in {

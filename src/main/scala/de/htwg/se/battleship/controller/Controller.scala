@@ -2,13 +2,12 @@ package de.htwg.se.battleship.controller
 
 import de.htwg.se.battleship.controller.GameStatus._
 import de.htwg.se.battleship.model._
-import de.htwg.se.battleship.util.Observable
+import de.htwg.se.battleship.util.{Observable, UndoManager}
 
 class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observable {
   var gameStatus: GameStatus = IDLE
-  def singleton(): Unit ={
-    Singleton.singletonFunction
-  }
+  private val undoManager = new UndoManager
+
   def setPlayerNames: String = Player().playerNamesToString(Player().setDefaultPlayerNames())
   def playgroundToString: String = pgP1L.playgroundString(pgP1L, pgP2R)
 
@@ -36,9 +35,19 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     notifyObservers
   }
 
-  def setL(row: Int, col: Int, value: Int):Unit = {
-    pgP1L = pgP1L.set(row, col, value)
+  def setL(row: Int, col: Int, value: Int): Unit = {
+    undoManager.doStep(new SetCommand(row, col, value, this))
     pgP2R.isWinning(pgP2R);
+    notifyObservers
+  }
+
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers
+  }
+
+  def redo: Unit = {
+    undoManager.redoStep
     notifyObservers
   }
 
