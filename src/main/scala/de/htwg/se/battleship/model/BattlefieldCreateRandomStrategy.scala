@@ -1,5 +1,7 @@
 package de.htwg.se.battleship.model
 
+import de.htwg.se.battleship.util.BattlefieldCreateStrategyTemplate
+
 import scala.util.Random
 
 class BattlefieldCreateRandomStrategy extends BattlefieldCreateStrategyTemplate{

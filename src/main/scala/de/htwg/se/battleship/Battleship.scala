@@ -3,13 +3,16 @@ package de.htwg.se.battleship
 
 import de.htwg.se.battleship.model._
 import de.htwg.se.battleship.aview.Tui
-import de.htwg.se.battleship.controller.Controller
-
+import de.htwg.se.battleship.controller.{CellChanged, Controller}
+import de.htwg.se.battleship.aview.gui.SwingGui
 import scala.io.StdIn.readLine
 
 object Battleship {
-  val controller = new Controller(new Battlefield(2),new Battlefield(2))
+  val battlefieldSize = 4;
+  val controller = new Controller(new Battlefield(battlefieldSize),new Battlefield(battlefieldSize))
   val tui = new Tui(controller)
+  val gui = new SwingGui(controller)
+  controller.publish(new CellChanged)
   controller.notifyObservers
 
   def main(args: Array[String]): Unit = {

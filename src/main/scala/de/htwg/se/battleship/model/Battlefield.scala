@@ -50,6 +50,16 @@ case class Battlefield(cells:Matrix[Cell]){
     }
     isWinning
   }
+  def rows(row: Int): Vector[Cell] = cells.rows(row)
+  def cols(col: Int): Vector[Cell] = cells.rows.map(row => row(col))
+  /*
+  def available(row: Int, col: Int): Set[Int] = if (cell(row, col).isSet) {
+    Set.empty
+  }
+  else {
+    (1 to size).toSet -- rows(row).toIntSet -- cols(col).toIntSet -- blocks(blockAt(row, col)).toIntSet
+  }
+*/
 //strategy pattern
 
 /*
