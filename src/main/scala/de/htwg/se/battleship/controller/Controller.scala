@@ -29,6 +29,13 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     notifyObservers
   }
 
+  def resize(newSize:Int) :Unit = {
+    pgP1L = new Battlefield(newSize)
+    pgP2R = new Battlefield(newSize)
+    gameState.handle("rezise")
+    publish(new GridSizeChanged(newSize))
+  }
+
   def start(input: String): Boolean = {
     gameState.handle(input)
     notifyObservers

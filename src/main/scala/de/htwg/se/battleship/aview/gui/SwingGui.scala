@@ -5,10 +5,7 @@ import scala.swing.Swing.LineBorder
 import scala.swing.event._
 import de.htwg.se.battleship.controller._
 import de.htwg.se.battleship.util.Observer
-
-import java.awt.Color
 import javax.swing.BorderFactory
-import scala.io.Source._
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
@@ -17,7 +14,7 @@ class SwingGui(controller: Controller) extends Frame with Observer{
   listenTo(controller)
 
   title = "Battleship"
-  minimumSize = new Dimension(400, 400)
+  //minimumSize = new Dimension(400, 400)
   var cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
 
   def gridPanel = new GridPanel(controller.gridSize, controller.blockSize) {
@@ -29,7 +26,7 @@ class SwingGui(controller: Controller) extends Frame with Observer{
           val x = innerRow
           val y = innerColumn
           val cellPanel = new CellPanel(x, y, controller)
-          //cells(x)(y) = cellPanel
+          cells(x)(y) = cellPanel
           contents += cellPanel
           listenTo(cellPanel)
         }
@@ -67,7 +64,6 @@ class SwingGui(controller: Controller) extends Frame with Observer{
     add(statusline, BorderPanel.Position.South)
     add(testline1, BorderPanel.Position.South)
   }
-  //size = new Dimension(300,300)
 
   menuBar = new MenuBar {
     contents += new Menu("File") {
@@ -83,13 +79,13 @@ class SwingGui(controller: Controller) extends Frame with Observer{
     }
     contents += new Menu("Options") {
       mnemonic = Key.O
-      contents += new MenuItem(Action("Size 1*1") { controller.createEmptyPlayground(1) })
-      contents += new MenuItem(Action("Size 2*2") { controller.createEmptyPlayground(2) })
-      contents += new MenuItem(Action("Size 3*3") { controller.createEmptyPlayground(3) })
-      contents += new MenuItem(Action("Size 4*4") { controller.createEmptyPlayground(4) })
-      contents += new MenuItem(Action("Size 5*5") { controller.createEmptyPlayground(5) })
-      contents += new MenuItem(Action("Size 6*6") { controller.createEmptyPlayground(6) })
-      contents += new MenuItem(Action("Size 9*9") { controller.createEmptyPlayground(9) })
+      contents += new MenuItem(Action("Size 1*1") { controller.resize(1) })
+      contents += new MenuItem(Action("Size 2*2") { controller.resize(2) })
+      contents += new MenuItem(Action("Size 3*3") { controller.resize(3) })
+      contents += new MenuItem(Action("Size 4*4") { controller.resize(4) })
+      contents += new MenuItem(Action("Size 5*5") { controller.resize(5) })
+      contents += new MenuItem(Action("Size 6*6") { controller.resize(6) })
+      contents += new MenuItem(Action("Size 9*9") { controller.resize(9) })
 
     }
   }
@@ -106,7 +102,12 @@ class SwingGui(controller: Controller) extends Frame with Observer{
     cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
     contents = new BorderPanel {
       add(gridPanel, BorderPanel.Position.Center)
+      add(label123, BorderPanel.Position.North)
+      add(label123, BorderPanel.Position.South)
+      add(labelABC, BorderPanel.Position.West)
+      add(labelABC, BorderPanel.Position.East)
       add(statusline, BorderPanel.Position.South)
+      add(testline1, BorderPanel.Position.South)
     }
   }
 /*
@@ -118,8 +119,6 @@ class SwingGui(controller: Controller) extends Frame with Observer{
     statusline.text = controller.statusText
     repaint
   }
-
- */
-
+*/
   override def update(): Boolean = {true}
 }

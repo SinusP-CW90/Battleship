@@ -8,7 +8,7 @@ import de.htwg.se.battleship.aview.gui.SwingGui
 import scala.io.StdIn.readLine
 
 object Battleship {
-  val battlefieldSize = 4;
+  val battlefieldSize = 3;
   val controller = new Controller(new Battlefield(battlefieldSize),new Battlefield(battlefieldSize))
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
