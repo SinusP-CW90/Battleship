@@ -1,29 +1,34 @@
 package de.htwg.se.battleship.util
 
+import scala.util.Try
+
 class UndoManager {
   private var undoStack: List[Command]= Nil
   private var redoStack: List[Command]= Nil
-  def doStep(command: Command) = {
+
+  def doStep(command: Command):Try[_] = {
     undoStack = command::undoStack
-    command.doStep
+    command.doStep()
   }
-  def undoStep  = {
+  def undoStep(): Try[_]  = {
     undoStack match {
-      case  Nil =>
+      case  Nil =>Try()
       case head::stack => {
-        head.undoStep
+        val t = head.undoStep()
         undoStack=stack
         redoStack= head::redoStack
+        t
       }
     }
   }
-  def redoStep = {
+  def redoStep():Try[_] = {
     redoStack match {
-      case Nil =>
+      case Nil =>Try()
       case head::stack => {
-        head.redoStep
+        val t = head.redoStep()
         redoStack=stack
         undoStack=head::undoStack
+        t
       }
     }
   }

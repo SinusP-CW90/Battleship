@@ -11,4 +11,5 @@ case class Cell(value: Int) {
     case 2 => "o"
     case _ => "?"
   }
-}
+
+

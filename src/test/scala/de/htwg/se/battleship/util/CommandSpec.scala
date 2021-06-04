@@ -3,13 +3,15 @@ package de.htwg.se.battleship.util
 import org.scalatest.wordspec._
 import org.scalatest.matchers.should.Matchers
 
+import scala.util.Try
+
 class incrCommand extends Command {
   var state:Int =0
-  override def doStep: Unit = state+=1
+  override def doStep(): Try[_] = Try ( state+=1)
 
-  override def undoStep: Unit = state-=1
+  override def undoStep: Try[_] = Try (state-=1)
 
-  override def redoStep: Unit = state+=1
+  override def redoStep: Try[_] = Try (state+=1)
 }
 
 class CommandSpec extends AnyWordSpec with Matchers {
