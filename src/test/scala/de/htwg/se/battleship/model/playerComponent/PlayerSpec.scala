@@ -1,7 +1,7 @@
-package de.htwg.se.battleship.model
+package de.htwg.se.battleship.model.playerComponent
 
-import org.scalatest.wordspec._
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec._
 
 class PlayerSpec extends AnyWordSpec with Matchers {
   "A Battleship Player" when {

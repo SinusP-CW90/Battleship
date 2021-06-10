@@ -1,4 +1,4 @@
-import de.htwg.se.battleship.model._
+import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Cell, Matrix}
 
 import scala.io.StdIn.readLine
 

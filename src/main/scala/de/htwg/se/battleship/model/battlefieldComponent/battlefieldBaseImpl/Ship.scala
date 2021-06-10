@@ -1,7 +1,7 @@
-package de.htwg.se.battleship.model
+package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 
 trait Ship {
-  def swim = println("ship is swimming")
+  def swim:Unit = println("ship is swimming")
 }
 private class defaultShip extends Ship {
 
@@ -13,7 +13,7 @@ private class longShip extends Ship {
   override def swim: Unit = println("Long-Ship is swimming")
 }
 object Ship {
-  def apply(kind: String) = kind match {
+  def apply(kind: String):Ship = kind match {
     case "default" => new defaultShip()
     case "mini" => new miniShip()
     case "long" => new longShip()

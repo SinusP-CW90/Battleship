@@ -1,7 +1,7 @@
-package de.htwg.se.battleship.model
+package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 
-import org.scalatest.wordspec._
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec._
 
 class MatrixSpec extends AnyWordSpec with Matchers {
   "A Matrix is a tailor-made immutable data type that contains a two-dimentional Vector of Cells. " +

@@ -1,14 +1,15 @@
 package de.htwg.se.battleship
 
-
-import de.htwg.se.battleship.model._
 import de.htwg.se.battleship.aview.Tui
-import de.htwg.se.battleship.controller.{CellChanged, Controller}
 import de.htwg.se.battleship.aview.gui.SwingGui
+import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.CellChanged
+import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
+
 import scala.io.StdIn.readLine
 
 object Battleship {
-  val battlefieldSize = 3;
+  val battlefieldSize = 3
   val controller = new Controller(new Battlefield(battlefieldSize),new Battlefield(battlefieldSize))
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
@@ -19,7 +20,7 @@ object Battleship {
     var input: String = ""
     if (args.length>0) input=args(0)
     println(args.length)
-    if (!input.isEmpty) tui.processInputLine(input)
+    if (input.nonEmpty) tui.processInputLine(input)
     else
       do {
       input = readLine()

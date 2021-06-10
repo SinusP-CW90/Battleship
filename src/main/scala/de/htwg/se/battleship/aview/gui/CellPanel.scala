@@ -2,20 +2,19 @@ package de.htwg.se.battleship.aview.gui
 
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.battleship.controller.Controller
-import de.htwg.se.battleship.controller.CellChanged
-
 import scala.swing.Swing.LineBorder
+import de.htwg.se.battleship.controller.controllerComponent.{CellChanged, ControllerInterface}
+import de.htwg.se.battleship.model.battlefieldComponent.CellInterface
 
-class CellPanel(row: Int, column: Int, controller: Controller) extends FlowPanel {
+class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
 
   val cellColor = new Color(0, 0, 255)
 
-  def myCell = controller.cell(row, column)
+  def myCell: CellInterface = controller.cell(row, column)
 
   //def cellText(row: Int, col: Int) = if (controller.isSet(row, column)) "x" + controller.cell(row, column).value.toString else "o"
 
-  val candidatelist = (1 to 1).map {
+  val celllist: IndexedSeq[Label] = (1 to 1).map {
     (value =>
       new Label {
         //text = "x" //if (controller.available(row, column).contains(value)) value.toString else " "
@@ -48,7 +47,7 @@ class CellPanel(row: Int, column: Int, controller: Controller) extends FlowPanel
   val candidates = new GridPanel(1, 1) {
     setBackground(this)
     border = LineBorder(java.awt.Color.BLACK, 5)
-    contents ++= candidatelist
+    contents ++= celllist
   }
   contents += candidates
 

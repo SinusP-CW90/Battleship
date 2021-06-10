@@ -1,6 +1,6 @@
 package de.htwg.se.battleship.aview
 
-import de.htwg.se.battleship.controller._
+import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.battleship.util._
 
 class Tui(controller: Controller) extends Observer {
@@ -11,7 +11,7 @@ class Tui(controller: Controller) extends Observer {
 
     input match {
       case "q" =>
-      case "set" => println(controller.setPlayerNames);
+      case "set" => println(controller.setPlayerNames());
       case "s"|"small"|"3x3"|"set size small" => controller.createEmptyPlayground(3);
       case "m"|"medium"|"6x6"|"set size medium" => controller.createEmptyPlayground(6);
       case "l"|"large"|"9x9"|"set size large" => controller.createEmptyPlayground(9);

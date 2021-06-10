@@ -1,8 +1,7 @@
 package de.htwg.se.battleship.aview
 
-import de.htwg.se.battleship.controller.Controller
-import de.htwg.se.battleship.model.Battlefield
-
+import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
 import org.scalatest.wordspec._
 import org.scalatest.matchers.should.Matchers
 

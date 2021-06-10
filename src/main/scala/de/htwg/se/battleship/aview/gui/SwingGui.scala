@@ -1,23 +1,26 @@
 package de.htwg.se.battleship.aview.gui
 
+import de.htwg.se.battleship.controller.controllerComponent.ControllerInterface
+
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
-import de.htwg.se.battleship.controller._
+import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.GridSizeChanged
 import de.htwg.se.battleship.util.Observer
+
 import javax.swing.BorderFactory
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
-class SwingGui(controller: Controller) extends Frame with Observer{
+class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   listenTo(controller)
 
   title = "Battleship"
   //minimumSize = new Dimension(400, 400)
-  var cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
+  var cells: Array[Array[CellPanel]] = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
 
-  def gridPanel = new GridPanel(controller.gridSize, controller.blockSize) {
+  def gridPanel: GridPanel = new GridPanel(controller.gridSize, controller.blockSize) {
         border = LineBorder(java.awt.Color.BLACK, 5)
         for {
           innerRow <- 0 until controller.gridSize
@@ -94,11 +97,11 @@ class SwingGui(controller: Controller) extends Frame with Observer{
   //redraw
 
   reactions += {
-    case event: GridSizeChanged => resize(event.newSize)
+    case event: GridSizeChanged => resize()
     //case event: CellChanged     => redraw
   }
 
-  def resize(gridSize: Int) = {
+  def resize(): Unit = {
     cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
     contents = new BorderPanel {
       add(gridPanel, BorderPanel.Position.Center)
@@ -120,5 +123,5 @@ class SwingGui(controller: Controller) extends Frame with Observer{
     repaint
   }
 */
-  override def update(): Boolean = {true}
+  override def update: Boolean = {true}
 }

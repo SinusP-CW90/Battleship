@@ -1,56 +1,62 @@
-package de.htwg.se.battleship.model
+package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 
-import scala.io.StdIn.readLine
-import scala.math.sqrt
+import de.htwg.se.battleship.model.battlefieldComponent.BattlefieldInterface
 
-case class Battlefield(cells:Matrix[Cell]){
+case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
   //set the size with the Matrix class
-  def this(size:Int) = this(new Matrix[Cell](size, Cell(0)))
+  def this(size: Int) = this(new Matrix[Cell](size, Cell(0)))
+
   //Int value with the size of the Battlefield
-  val size:Int = cells.size
+  val size: Int = cells.size
+
 
   //return the called cell
-  def cell(row:Int, col:Int):Cell = cells.cell(row, col)
+  def cell(row: Int, col: Int): Cell = cells.cell(row, col)
+
   //change the cell value in the Battlefield
-  def set(row:Int, col:Int, value:Int):Battlefield = copy(cells.replaceCell(row, col, Cell(value)))
+  def set(row: Int, col: Int, value: Int): Battlefield = copy(cells.replaceCell(row, col, Cell(value)))
 
-  def setRowWithLetter(rowString:String, columnString:String, value:Int):Battlefield = {
+  def setRowWithLetter(rowString: String, columnString: String, value: Int): BattlefieldInterface = {
     val UpperRowString = rowString.toUpperCase
-    val row = (UpperRowString(0) -65).toChar.toInt
+    val row = (UpperRowString(0) - 65).toChar.toInt
     val col = columnString.toInt
-    copy (cells.replaceCell (row, col-1, Cell (value)))
+    copy(cells.replaceCell(row, col - 1, Cell(value)))
   }
-  //show the called row of the Battlefield
-  def row(row:Int):Vector[Cell] = cells.rows(row)
-  //show the called column of the Battlefield
-  def col(col:Int):Vector[Cell] = cells.rows.map(row=>row(col))
 
+  //show the called row of the Battlefield
+  def row(row: Int): Vector[Cell] = cells.rows(row)
+
+  //show the called column of the Battlefield
+  def col(col: Int): Vector[Cell] = cells.rows.map(row => row(col))
 
 
   //TODO - prints raus nehemen
-  def shoot(pg: Battlefield, row:Int, col:Int):Battlefield = {
-    if (cell(row,col).value == 1){
+  def shoot(pg: BattlefieldInterface, row: Int, col: Int): BattlefieldInterface = {
+    if (cell(row, col).value == 1) {
       println("hit")
-      this.set(row,col, 2)
+      this.set(row, col, 2)
     }
     else {
       println("miss")
       pg
     }
   }
-  def isWinning(pg: Battlefield): Boolean ={
+
+  def isWinning(pg: BattlefieldInterface): Boolean = {
     var isWinning = true
     for (x <- 1 to pg.size) {
       for (y <- 1 to pg.size) {
-        if(pg.cell(x-1,y-1).value == 1){
-          println("found a 1 in " +x +" " +y)
-          isWinning =  false
+        if (pg.cell(x - 1, y - 1).value == 1) {
+          println("found a 1 in " + x + " " + y)
+          isWinning = false
         }
       }
     }
     isWinning
   }
+
   def rows(row: Int): Vector[Cell] = cells.rows(row)
+
   def cols(col: Int): Vector[Cell] = cells.rows.map(row => row(col))
   /*
   def available(row: Int, col: Int): Set[Int] = if (cell(row, col).isSet) {
@@ -60,9 +66,9 @@ case class Battlefield(cells:Matrix[Cell]){
     (1 to size).toSet -- rows(row).toIntSet -- cols(col).toIntSet -- blocks(blockAt(row, col)).toIntSet
   }
 */
-//strategy pattern
+  //strategy pattern
 
-/*
+  /*
   //TODO!! komplett überarbeiten, da readLine() nur in TUI oder Battleship main, wegen besserer testbarkeit vorkommen darf
 //TODO fehler abfangen, wenn ships doppelt oder außerhalb der spielfeld größe gesetzt werden
   def setShips(pgP1: Battlefield, pgP2:Battlefield, currentPlayer:String): Battlefield ={
@@ -96,22 +102,22 @@ case class Battlefield(cells:Matrix[Cell]){
 */
 
   //generate a String that represents the Battlefield
-  def playgroundString(playgroundLeft:Battlefield, playgroundRight:Battlefield): String = {
+  def playgroundString(playgroundLeft: BattlefieldInterface, playgroundRight: BattlefieldInterface): String = {
 
-    def createNumberRow(): String ={
+    def createNumberRow(): String = {
       var currentNumberString = ""
       for (x <- 1 to playgroundLeft.size) {
-        currentNumberString = currentNumberString.concat(x.toString+"  ")
+        currentNumberString = currentNumberString.concat(x.toString + "  ")
       }
-      val numberString = "\n    " +currentNumberString + "|  " +currentNumberString
+      val numberString = "\n    " + currentNumberString + "|  " + currentNumberString
       numberString
     }
 
-    def battlefieldToString():String={
+    def battlefieldToString(): String = {
       //val y = createNumberRow();
-      val line = ("L |" + (" q " * playgroundLeft.size)) + " |" + ("  Q" * playgroundRight.size) +" | R\n"
-      var box = createNumberRow()+"\n" +"" + (line * playgroundLeft.size)
-      val playerNameString =((" " * (playgroundLeft.size-1))+"Player 1" +(" " * (playgroundLeft.size-1)) +" |" )
+      val line = ("L |" + (" q " * playgroundLeft.size)) + " |" + ("  Q" * playgroundRight.size) + " | R\n"
+      var box = createNumberRow() + "\n" + "" + (line * playgroundLeft.size)
+      val playerNameString = ((" " * (playgroundLeft.size - 1)) + "Player 1" + (" " * (playgroundLeft.size - 1)) + " |")
       for {
         row <- 0 until playgroundLeft.size
         col <- 0 until playgroundLeft.size
@@ -122,8 +128,8 @@ case class Battlefield(cells:Matrix[Cell]){
       box
     }
 
-    def colorBattlefield(battlefield: String): String ={
-      val cB= battlefield.replace(" . ","\u001b[48;5;20m . \u001b[0m")
+    def colorBattlefield(battlefield: String): String = {
+      val cB = battlefield.replace(" . ", "\u001b[48;5;20m . \u001b[0m")
       cB
     }
 

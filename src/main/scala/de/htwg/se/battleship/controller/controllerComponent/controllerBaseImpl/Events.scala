@@ -1,4 +1,4 @@
-package de.htwg.se.battleship.controller
+package de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl
 
 import scala.swing.event.Event
 

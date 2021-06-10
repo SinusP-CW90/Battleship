@@ -1,21 +1,26 @@
-package de.htwg.se.battleship.controller
+package de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.battleship.model._
+import de.htwg.se.battleship.controller.controllerComponent
+import de.htwg.se.battleship.controller.controllerComponent.{ControllerInterface, GameState}
+import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
+import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, BattlefieldCreateRandomStrategy, Ship}
+import de.htwg.se.battleship.model.playerComponent.Player
 import de.htwg.se.battleship.util.{Observable, UndoManager}
+
 import scala.swing.Publisher
 
-class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observable with Publisher {
-  var gameState: GameState = GameState(this)
+class Controller(var pgP1L :BattlefieldInterface, var pgP2R: BattlefieldInterface) extends ControllerInterface with Publisher with Observable {
+  var gameState: GameState = controllerComponent.GameState(this)
   private val undoManager = new UndoManager
   def gridSize:Int = pgP1L.size
   def blockSize:Int = Math.sqrt(pgP1L.size).toInt
   //mal schauen obs klappt
   def statusText:String = this.gameState.state.toString
-  def setPlayerNames: String = Player().playerNamesToString(Player().setDefaultPlayerNames())
+  def setPlayerNames(): String = Player().playerNamesToString(Player().setDefaultPlayerNames())
   def playgroundToString: String = pgP1L.playgroundString(pgP1L, pgP2R)
 
   //übernhame
-  def cell(row:Int, col:Int) = pgP2R.cell(row,col)
+  def cell(row:Int, col:Int): CellInterface = pgP2R.cell(row,col)
   //def available(row:Int, col:Int):Set[Int] = pgP1L.available(row, col)
 
   //def isGiven(row: Int, col: Int):Boolean = pgP1L.cell(row, col).given
@@ -33,7 +38,8 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     pgP1L = new Battlefield(newSize)
     pgP2R = new Battlefield(newSize)
     gameState.handle("rezise")
-    publish(new GridSizeChanged(newSize))
+    publish(GridSizeChanged(newSize))
+    notifyObservers
   }
 
   def start(input: String): Boolean = {
@@ -56,20 +62,20 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
   def setL(row: Int, col: Int, value: Int): Unit = {
     undoManager.doStep(new SetCommand(row, col, value, this))
     gameState.handle("play")
-    pgP2R.isWinning(pgP2R);
+    pgP2R.isWinning(pgP2R)
     publish(new CellChanged)
     notifyObservers
   }
 
   def undo: Unit = {
-    undoManager.undoStep
+    undoManager.undoStep()
     gameState.handle("UNDO")
     publish(new CellChanged)
     notifyObservers
   }
 
   def redo: Unit = {
-    undoManager.redoStep
+    undoManager.redoStep()
     gameState.handle("REDO")
     publish(new CellChanged)
     notifyObservers
@@ -82,5 +88,5 @@ class Controller(var pgP1L :Battlefield, var pgP2R: Battlefield) extends Observa
     publish(new CellChanged)
     notifyObservers
   }
-
+  //override def gameStatus: GameState = ???
 }

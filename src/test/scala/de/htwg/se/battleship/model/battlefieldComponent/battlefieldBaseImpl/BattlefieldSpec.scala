@@ -1,11 +1,7 @@
-package de.htwg.se.battleship.model
+package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 
-import org.scalatest.wordspec._
 import org.scalatest.matchers.should.Matchers
-
-import java.io.ByteArrayInputStream
-import scala.Console.in
-import scala.io.StdIn
+import org.scalatest.wordspec._
 
 class BattlefieldSpec extends AnyWordSpec with Matchers  {
   //TODO Test anpassen!

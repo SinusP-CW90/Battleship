@@ -1,9 +1,9 @@
-package de.htwg.se.battleship.controller
+package de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.battleship.model.{Battlefield, Ship}
+import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, Ship}
 import de.htwg.se.battleship.util.Observer
-import org.scalatest.wordspec._
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec._
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   //create
