@@ -12,9 +12,9 @@ class Tui(controller: Controller) extends Observer {
     input match {
       case "q" =>
       case "set" => println(controller.setPlayerNames());
-      case "s"|"small"|"3x3"|"set size small" => controller.createEmptyPlayground(3);
-      case "m"|"medium"|"6x6"|"set size medium" => controller.createEmptyPlayground(6);
-      case "l"|"large"|"9x9"|"set size large" => controller.createEmptyPlayground(9);
+      case "s"|"small"|"3x3"|"set size small" => controller.createEmptyBattlefield(3);
+      case "m"|"medium"|"6x6"|"set size medium" => controller.createEmptyBattlefield(6);
+      case "l"|"large"|"9x9"|"set size large" => controller.createEmptyBattlefield(9);
       case "start" => controller.start("start")
       case "rl" => controller.createRandomBattlefield("l", controller.pgP1L.size)
       case "rr" => controller.createRandomBattlefield("r", controller.pgP2R.size)

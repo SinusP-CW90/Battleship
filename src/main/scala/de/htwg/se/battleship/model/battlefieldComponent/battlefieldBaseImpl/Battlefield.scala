@@ -12,7 +12,16 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
 
   //return the called cell
   def cell(row: Int, col: Int): Cell = cells.cell(row, col)
-
+//TODO Option
+  /*
+  def cell(row:Int, col:Int): Option[Cell] = {
+    try {
+      Some(cells.cell(row, col))
+    } catch {
+      case e: NumberFormatException => None
+    }
+  }
+*/
   //change the cell value in the Battlefield
   def set(row: Int, col: Int, value: Int): Battlefield = copy(cells.replaceCell(row, col, Cell(value)))
 
@@ -32,7 +41,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
 
   //TODO - prints raus nehemen
   def shoot(pg: BattlefieldInterface, row: Int, col: Int): BattlefieldInterface = {
-    if (cell(row, col).value == 1) {
+    if (cell(row, col) == 1) {
       println("hit")
       this.set(row, col, 2)
     }

@@ -18,13 +18,13 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   title = "Battleship"
   //minimumSize = new Dimension(400, 400)
-  var cells: Array[Array[CellPanel]] = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
+  var cells: Array[Array[CellPanel]] = Array.ofDim[CellPanel](controller.battlefieldSize, controller.battlefieldSize)
 
-  def gridPanel: GridPanel = new GridPanel(controller.gridSize, controller.blockSize) {
+  def gridPanel: GridPanel = new GridPanel(controller.battlefieldSize, controller.blockSize) {
         border = LineBorder(java.awt.Color.BLACK, 5)
         for {
-          innerRow <- 0 until controller.gridSize
-          innerColumn <- 0 until controller.gridSize
+          innerRow <- 0 until controller.battlefieldSize
+          innerColumn <- 0 until controller.battlefieldSize
         } {
           val x = innerRow
           val y = innerColumn
@@ -35,8 +35,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
         }
   }
 
-  def labelABC: GridPanel = new GridPanel(controller.gridSize, 1) {
-    for (i <- Range(0, controller.gridSize, +1)) {
+  def labelABC: GridPanel = new GridPanel(controller.battlefieldSize, 1) {
+    for (i <- Range(0, controller.battlefieldSize, +1)) {
       contents += new Label {
         text = ("A"(0) + i).toChar.toString
         preferredSize = new Dimension(25, 50)
@@ -44,9 +44,9 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     }
   }
 
-  def label123: GridPanel = new GridPanel(1, controller.gridSize) {
+  def label123: GridPanel = new GridPanel(1, controller.battlefieldSize) {
     border = BorderFactory.createEmptyBorder(0, 25, 0, 25)
-    for (i <- Range(1, controller.gridSize+1, +1)) {
+    for (i <- Range(1, controller.battlefieldSize+1, +1)) {
       contents += new Label {
         horizontalAlignment = Alignment.Center
         text = i.toString
@@ -56,7 +56,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   }
 
   val statusline = new TextField(controller.statusText, 20)
-  val testline1 = new TextField("\n controller.gridSize: "+controller.gridSize+"\n controller.blockSize: "+controller.blockSize, 20)
+  val testline1 = new TextField("\n controller.battlefieldSize: "+controller.battlefieldSize+"\n controller.blockSize: "+controller.blockSize, 20)
 
   contents = new BorderPanel {
     add(gridPanel, BorderPanel.Position.Center)
@@ -71,8 +71,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   menuBar = new MenuBar {
     contents += new Menu("File") {
       mnemonic = Key.F
-      contents += new MenuItem(Action("New") { controller.createEmptyPlayground(controller.gridSize) })
-      contents += new MenuItem(Action("Random for P2") { controller.createRandomBattlefield("r",controller.gridSize) })
+      contents += new MenuItem(Action("New") { controller.createEmptyBattlefield(controller.battlefieldSize) })
+      contents += new MenuItem(Action("Random for P2") { controller.createRandomBattlefield("r",controller.battlefieldSize) })
       contents += new MenuItem(Action("Quit") { System.exit(0) })
     }
     contents += new Menu("Edit") {
@@ -102,7 +102,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   }
 
   def resize(): Unit = {
-    cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
+    cells = Array.ofDim[CellPanel](controller.battlefieldSize, controller.battlefieldSize)
     contents = new BorderPanel {
       add(gridPanel, BorderPanel.Position.Center)
       add(label123, BorderPanel.Position.North)
@@ -116,8 +116,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 /*
   def redraw = {
     for {
-      row <- 0 until controller.gridSize
-      column <- 0 until controller.gridSize
+      row <- 0 until controller.battlefieldSize
+      column <- 0 until controller.battlefieldSize
     } cells(row)(column).redraw
     statusline.text = controller.statusText
     repaint

@@ -7,10 +7,12 @@ import scala.util.Try
 
 trait ControllerInterface extends Publisher{
 
-  def gridSize:Int
+  def battlefieldSize:Int
   def blockSize:Int
-  def createEmptyPlayground(size:Int):Unit
+  def createEmptyBattlefield(size:Int):Unit
   def createRandomBattlefield(player:String, size:Int):Unit
+  def start(input: String): Boolean
+
   def undo:Unit
   def redo:Unit
   def resize(newSize:Int):Unit
@@ -26,6 +28,5 @@ trait ControllerInterface extends Publisher{
 import scala.swing.event.Event
 
 class CellChanged extends Event
-case class GridSizeChanged(newSize: Int) extends Event
-class CandidatesChanged extends Event
+case class BattlefieldSizeChanged(newSize: Int) extends Event
 

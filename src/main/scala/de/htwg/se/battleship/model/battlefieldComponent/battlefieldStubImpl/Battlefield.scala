@@ -1,8 +1,8 @@
-package de.htwg.se.battleship.model.battlefieldComponent.battlefieldMockImpl
+package de.htwg.se.battleship.model.battlefieldComponent.battlefieldStubImpl
 
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 
-class Battlefiled (var size:Int) extends BattlefieldInterface{
+class Battlefield(var size:Int) extends BattlefieldInterface{
   size=1
   def cell(row: Int, col: Int): CellInterface = EmptyCell
   def set(row: Int, col: Int, value: Int): BattlefieldInterface = this

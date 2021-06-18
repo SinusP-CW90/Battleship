@@ -12,7 +12,8 @@ import scala.swing.Publisher
 class Controller(var pgP1L :BattlefieldInterface, var pgP2R: BattlefieldInterface) extends ControllerInterface with Publisher with Observable {
   var gameState: GameState = controllerComponent.GameState(this)
   private val undoManager = new UndoManager
-  def gridSize:Int = pgP1L.size
+
+  def battlefieldSize:Int = pgP1L.size
   def blockSize:Int = Math.sqrt(pgP1L.size).toInt
   //mal schauen obs klappt
   def statusText:String = this.gameState.state.toString
@@ -27,7 +28,7 @@ class Controller(var pgP1L :BattlefieldInterface, var pgP2R: BattlefieldInterfac
   def isSet(row:Int, col:Int):Boolean = pgP1L.cell(row, col).isSet
   //def available(row:Int, col:Int):Set[Int] = pgP1L.available(row, col)
 
-  def createEmptyPlayground(size: Int):Unit = {
+  def createEmptyBattlefield(size: Int):Unit = {
     pgP1L = new Battlefield(size)
     pgP2R = new Battlefield(size)
     publish(new CellChanged)

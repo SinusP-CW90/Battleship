@@ -22,7 +22,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       }
       controller.add(observer)
       "notify its Observer after creation" in {
-        controller.createEmptyPlayground(3)
+        controller.createEmptyBattlefield(3)
         observer.updated should be(true)
         controller.pgP1L.size should be(3)
         controller.pgP2R.size should be(3)
@@ -41,7 +41,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.pgP1L.cell(0,0).value should be (0)
       }
       "notify its Observer after setting a cell" in {
-        controller.createEmptyPlayground(3)
+        controller.createEmptyBattlefield(3)
         controller.set(controller.pgP1L, 1,1,4)
         observer.updated should be(true)
         controller.pgP1L.cell(1,1).value should be (0)
