@@ -12,17 +12,16 @@ import scala.io.StdIn.readLine
 
 object Battleship {
   val battlefieldSize = 3
-  /*
+
   val injector = Guice.createInjector(new BattleshipModule)
   val controller = injector.getInstance(classOf[ControllerInterface])
+  //controller.createEmptyBattlefield(battlefieldSize)
 
-   */
-
-  val controller = new Controller(new Battlefield(battlefieldSize),new Battlefield(battlefieldSize))
+  //val controller = new Controller(new Battlefield(battlefieldSize),new Battlefield(battlefieldSize))
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
   controller.publish(new CellChanged)
-  controller.notifyObservers
+  //controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
     var input: String = ""

@@ -1,5 +1,6 @@
 package de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl
 
+import com.google.inject.name.Named
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.battleship.BattleshipModule
 import de.htwg.se.battleship.controller.controllerComponent
@@ -11,9 +12,9 @@ import de.htwg.se.battleship.util.{Observable, UndoManager}
 
 import scala.swing.Publisher
 
-class Controller @Inject() (var pgP1L :BattlefieldInterface, var pgP2R: BattlefieldInterface) extends ControllerInterface with Publisher with Observable {
+class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterface, @Named("DefaultSize") var pgP2R: BattlefieldInterface) extends ControllerInterface with Publisher with Observable {
 
-  //val injector: Injector = Guice.createInjector(new BattleshipModule)
+  val injector: Injector = Guice.createInjector(new BattleshipModule)
 
   var gameState: GameState = controllerComponent.GameState(this)
   private val undoManager = new UndoManager

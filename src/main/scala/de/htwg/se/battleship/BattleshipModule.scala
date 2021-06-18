@@ -14,13 +14,15 @@ class BattleshipModule extends AbstractModule with ScalaModule{
   override def configure():Unit = {
 
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
+    bind[BattlefieldInterface].annotatedWithName("DefaultSize").toInstance(new Battlefield(defaultSize))
+    //bind[BattlefieldInterface].annotatedWithName("p2").toInstance(new Battlefield(defaultSize))
 
-    //bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
+    bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
     //bind[BattlefieldInterface].to[Battlefield]
     //bind[BattlefieldInterface].annotatedWithName("Cells").toInstance(new Battlefield(2))
 /*
-    bind[BattlefieldInterface].annotatedWithName("tiny").toInstance(new Battlefield(2))
-    bind[BattlefieldInterface].annotatedWithName("small").toInstance(new Battlefield(4))
+    bind[BattlefieldInterface].annotatedWithName("p1").toInstance(new Battlefield(2))
+    bind[BattlefieldInterface].annotatedWithName("p2").toInstance(new Battlefield(2))
     bind[BattlefieldInterface].annotatedWithName("normal").toInstance(new Battlefield(9))
 */
   }

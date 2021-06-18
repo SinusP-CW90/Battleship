@@ -58,6 +58,7 @@ class Tui(controller: ControllerInterface) extends Observer with Reactor {
     //println(GameState.message(controller.gameStatus))
   }
 
+  //nötig?
   def update: Boolean = {
     println(controller.playgroundToString)
     //println("Current Game Status:\n" + controller.gameState.toString)
