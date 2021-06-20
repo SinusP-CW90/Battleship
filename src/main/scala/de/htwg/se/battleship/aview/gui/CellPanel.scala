@@ -15,7 +15,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
   //def cellText(row: Int, col: Int) = if (controller.isSet(row, column)) "x" + controller.cell(row, column).value.toString else "o"
 
   val celllist: IndexedSeq[Label] = (1 to 1).map {
-    (value =>
+    value =>
       new Label {
         //text = "x" //if (controller.available(row, column).contains(value)) value.toString else " "
 
@@ -28,23 +28,21 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
         listenTo(mouse.clicks)
         listenTo(controller)
         reactions += {
-          case e: CellChanged => {
+          case _: CellChanged =>
             //text = if (controller.available(row, column).contains(value)) value.toString else " "
             border = LineBorder(java.awt.Color.BLUE, 5)
             repaint
-          }
-          case MouseClicked(src, pt, mod, clicks, pops) => {
+          case MouseClicked(src, pt, mod, clicks, pops) =>
             controller.setL(row, column, value)
             border = LineBorder(java.awt.Color.GREEN, 5)
             //text = if (controller.available(row, column).contains(value)) value.toString else " "
             text = row.toString +" " +column.toString
             repaint
-          }
         }
-      })
+      }
   }
 
-  val candidates = new GridPanel(1, 1) {
+  val candidates: GridPanel = new GridPanel(1, 1) {
     setBackground(this)
     border = LineBorder(java.awt.Color.BLACK, 5)
     contents ++= celllist
@@ -52,6 +50,6 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
   contents += candidates
 
 
-  def setBackground(p: Panel) = p.background = cellColor
+  def setBackground(p: Panel): Unit = p.background = cellColor
 
 }

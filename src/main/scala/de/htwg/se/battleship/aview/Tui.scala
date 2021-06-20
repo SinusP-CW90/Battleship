@@ -1,7 +1,7 @@
 package de.htwg.se.battleship.aview
 
-import de.htwg.se.battleship.controller.controllerComponent.{BattlefieldSizeChanged, ControllerInterface, GameState}
-import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.{CellChanged, Controller}
+import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.CellChanged
+import de.htwg.se.battleship.controller.controllerComponent.{BattlefieldSizeChanged, ControllerInterface}
 import de.htwg.se.battleship.util._
 
 import scala.swing.Reactor
@@ -24,8 +24,8 @@ class Tui(controller: ControllerInterface) extends Observer with Reactor {
       //case "msw" => controller.createShip("mini");
       //case "lsw" => controller.createShip("long");
       //case "sw" => controller.createShip("default");
-      case "undo" => controller.undo;
-      case "redo" => controller.redo;
+      case "undo" => controller.undo();
+      case "redo" => controller.redo();
       case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
         case row :: column :: value :: Nil => controller.setL(row, column, value);
         case _ =>
@@ -49,11 +49,11 @@ class Tui(controller: ControllerInterface) extends Observer with Reactor {
   }
 
   reactions += {
-    case event: BattlefieldSizeChanged => printTui
-    case event: CellChanged     => printTui
+    case event: BattlefieldSizeChanged => printTui()
+    case event: CellChanged     => printTui()
   }
 
-  def printTui: Unit = {
+  def printTui(): Unit = {
     println(controller.playgroundToString)
     //println(GameState.message(controller.gameStatus))
   }

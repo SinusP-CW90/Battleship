@@ -1,11 +1,11 @@
 package de.htwg.se.battleship
 
-import com.google.inject.{AbstractModule, Guice, Inject}
+import com.google.inject.AbstractModule
 import com.google.inject.name.Names
-import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.battleship.controller.controllerComponent._
 import de.htwg.se.battleship.model.battlefieldComponent.BattlefieldInterface
 import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
+import net.codingwell.scalaguice.ScalaModule
 
 class BattleshipModule extends AbstractModule with ScalaModule{
 

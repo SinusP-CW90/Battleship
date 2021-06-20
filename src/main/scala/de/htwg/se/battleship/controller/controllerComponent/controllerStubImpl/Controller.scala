@@ -1,6 +1,6 @@
 package de.htwg.se.battleship.controller.controllerComponent.controllerStubImpl
 
-import de.htwg.se.battleship.controller.controllerComponent.{ControllerInterface, GameState}
+import de.htwg.se.battleship.controller.controllerComponent.ControllerInterface
 import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 
@@ -15,9 +15,9 @@ class Controller(var battlefield: BattlefieldInterface) extends ControllerInterf
   override def createEmptyBattlefield(size:Int):Unit = {}
   override def createRandomBattlefield(player:String, size:Int):Unit = {}
 
-  override def undo: Unit = {}
+  override def undo(): Unit = {}
 
-  override def redo: Unit = {}
+  override def redo(): Unit = {}
 
   override def resize(newSize: Int): Unit = {}
 
@@ -34,11 +34,11 @@ class Controller(var battlefield: BattlefieldInterface) extends ControllerInterf
   override def statusText: String = GameState.message(gameStatus)
  */
 
-  override def setL(row: Int, col: Int, value: Int): Unit = ???
+  override def setL(row: Int, col: Int, value: Int): Unit = {}
 
   //override def gameStatus: GameState = ???
 
-  override def statusText: String = ???
+  override def statusText: String = "state Text"
 
   override def start(input: String): Boolean = true
 }

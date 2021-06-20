@@ -1,9 +1,8 @@
 package de.htwg.se.battleship.controller.controllerComponent
 
-import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
+import de.htwg.se.battleship.model.battlefieldComponent.CellInterface
 
 import scala.swing.Publisher
-import scala.util.Try
 
 trait ControllerInterface extends Publisher{
 
@@ -13,8 +12,8 @@ trait ControllerInterface extends Publisher{
   def createRandomBattlefield(player:String, size:Int):Unit
   def start(input: String): Boolean
 
-  def undo:Unit
-  def redo:Unit
+  def undo():Unit
+  def redo():Unit
   def resize(newSize:Int):Unit
   def cell(row:Int, col:Int):CellInterface
   def set(player:String,row: Int, col: Int, value: Int):Unit

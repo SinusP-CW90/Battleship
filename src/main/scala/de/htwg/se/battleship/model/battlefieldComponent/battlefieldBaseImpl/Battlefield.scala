@@ -40,8 +40,9 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
 
 
   //TODO - prints raus nehemen
+
   def shoot(pg: BattlefieldInterface, row: Int, col: Int): BattlefieldInterface = {
-    if (cell(row, col) == 1) {
+    if (cell(row, col).value == 1) {
       println("hit")
       this.set(row, col, 2)
     }
@@ -126,7 +127,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
       //val y = createNumberRow();
       val line = ("L |" + (" q " * playgroundLeft.size)) + " |" + ("  Q" * playgroundRight.size) + " | R\n"
       var box = createNumberRow() + "\n" + "" + (line * playgroundLeft.size)
-      val playerNameString = ((" " * (playgroundLeft.size - 1)) + "Player 1" + (" " * (playgroundLeft.size - 1)) + " |")
+      val playerNameString = (" " * (playgroundLeft.size - 1)) + "Player 1" + (" " * (playgroundLeft.size - 1)) + " |"
       for {
         row <- 0 until playgroundLeft.size
         col <- 0 until playgroundLeft.size

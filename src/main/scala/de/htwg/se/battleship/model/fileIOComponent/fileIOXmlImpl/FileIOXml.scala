@@ -1,19 +1,16 @@
 package de.htwg.se.battleship.model.fileIOComponent.fileIOXmlImpl
 
-import com.google.inject.Guice
-import de.htwg.se.battleship.BattleshipModule
 import de.htwg.se.battleship.model.battlefieldComponent.BattlefieldInterface
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
-import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
-import scala.xml.{ NodeSeq, PrettyPrinter }
+import scala.xml.{Elem, PrettyPrinter}
 
 class FileIOXml extends FileIOInterface{
 
   override def load: BattlefieldInterface = {
     var battlefield: BattlefieldInterface = null
     val file = scala.xml.XML.loadFile("battlefield.xml")
-    val sizeAttr = (file \\ "battlefield" \ "@size")
+    val sizeAttr = file \\ "battlefield" \ "@size"
     val size = sizeAttr.text.toInt
     /*
     val injector = Guice.createInjector(new BattleshipModule)
@@ -25,7 +22,7 @@ class FileIOXml extends FileIOInterface{
     }
 
      */
-    val cellNodes = (file \\ "cell")
+    val cellNodes = file \\ "cell"
     for (cell <- cellNodes) {
       val row: Int = (cell \ "@row").text.toInt
       val col: Int = (cell \ "@col").text.toInt
@@ -48,9 +45,9 @@ class FileIOXml extends FileIOInterface{
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(battlefieldToXml(battlefield))
     pw.write(xml)
-    pw.close
+    pw.close()
   }
-  def battlefieldToXml(battlefield: BattlefieldInterface) = {
+  def battlefieldToXml(battlefield: BattlefieldInterface): Elem = {
     <grid size={ battlefield.size.toString }>
       {
       for {
@@ -61,7 +58,7 @@ class FileIOXml extends FileIOInterface{
     </grid>
   }
 
-  def cellToXml(battlefield: BattlefieldInterface, row: Int, col: Int) = {
+  def cellToXml(battlefield: BattlefieldInterface, row: Int, col: Int): Elem = {
     <cell row={ row.toString } col={ col.toString }>
       { battlefield.cell(row, col).value }
     </cell>

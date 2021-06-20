@@ -9,7 +9,7 @@ class BattlefieldCreateRandomStrategy extends BattlefieldCreateStrategyTemplate{
   def fill(_battlefield:BattlefieldInterface): BattlefieldInterface = {
     //val num = Math.sqrt(_battlefield.size).toInt
     var battlefield:BattlefieldInterface = new Battlefield(_battlefield.size)
-    for {index <- 1 to _battlefield.size} {
+    for {_ <- 1 to _battlefield.size} {
       battlefield = setRandomCell(battlefield)
     }
     battlefield

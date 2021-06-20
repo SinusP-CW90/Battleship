@@ -5,14 +5,14 @@ import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.battleship.BattleshipModule
 import de.htwg.se.battleship.controller.controllerComponent
 import de.htwg.se.battleship.controller.controllerComponent.{ControllerInterface, GameState}
-import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, BattlefieldCreateRandomStrategy, Ship}
+import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 import de.htwg.se.battleship.model.playerComponent.Player
-import de.htwg.se.battleship.util.{Observable, UndoManager}
+import de.htwg.se.battleship.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterface, @Named("DefaultSize") var pgP2R: BattlefieldInterface) extends ControllerInterface with Publisher with Observable {
+class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterface, @Named("DefaultSize") var pgP2R: BattlefieldInterface) extends ControllerInterface with Publisher {
 
   val injector: Injector = Guice.createInjector(new BattleshipModule)
 
@@ -38,32 +38,32 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     pgP1L = new Battlefield(size)
     pgP2R = new Battlefield(size)
     publish(new CellChanged)
-    notifyObservers
+    //notifyObservers
   }
 
   def resize(newSize:Int) :Unit = {
     pgP1L = new Battlefield(newSize)
     pgP2R = new Battlefield(newSize)
-    gameState.handle("rezise")
+    gameState.handle("resize")
     publish(GridSizeChanged(newSize))
-    notifyObservers
+    //notifyObservers
   }
 
   def start(input: String): Boolean = {
     gameState.handle(input)
-    notifyObservers
+    //notifyObservers
     true
   }
  def createShip(shiptype: String){
     val ship = Ship(shiptype)
-    ship.swim
+    ship.swim()
   }
 
   def set(player:String,row: Int, col: Int, value: Int):Unit = {
     undoManager.doStep(new PlayerSetCommand(player, row, col, value, this))
     gameState.handle("play")
     publish(new CellChanged)
-    notifyObservers
+    //notifyObservers
   }
 
   def setL(row: Int, col: Int, value: Int): Unit = {
@@ -71,21 +71,21 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     gameState.handle("play")
     pgP2R.isWinning(pgP2R)
     publish(new CellChanged)
-    notifyObservers
+    //notifyObservers
   }
 
-  def undo: Unit = {
+  def undo(): Unit = {
     undoManager.undoStep()
     gameState.handle("UNDO")
     publish(new CellChanged)
-    notifyObservers
+    //notifyObservers
   }
 
-  def redo: Unit = {
+  def redo(): Unit = {
     undoManager.redoStep()
     gameState.handle("REDO")
     publish(new CellChanged)
-    notifyObservers
+    //notifyObservers
   }
 
   def createRandomBattlefield(player:String,size: Int): Unit = {
@@ -93,7 +93,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     if (player == "l") pgP1L = (new BattlefieldCreateRandomStrategy).createNewGrid(size)
     if (player == "r") pgP2R = (new BattlefieldCreateRandomStrategy).createNewGrid(size)
     publish(new CellChanged)
-    notifyObservers
+    //notifyObservers
   }
   //override def gameStatus: GameState = ???
 }

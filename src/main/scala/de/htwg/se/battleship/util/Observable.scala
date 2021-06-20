@@ -12,5 +12,5 @@ trait Observable {
 
   def remove(s: Observer): Unit = subscribers = subscribers.filterNot(o => o == s)
 
-  def notifyObservers: Unit = subscribers.foreach(o => o.update)
+  def notifyObservers(): Unit = subscribers.foreach(o => o.update)
 }

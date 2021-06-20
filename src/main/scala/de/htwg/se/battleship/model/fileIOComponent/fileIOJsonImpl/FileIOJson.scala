@@ -1,11 +1,9 @@
 package de.htwg.se.battleship.model.fileIOComponent.fileIOJsonImpl
 
-import com.google.inject.Guice
-import de.htwg.se.battleship.BattleshipModule
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
-import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
-import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
+import play.api.libs.json.{JsNumber, JsObject, JsValue, Json, Writes}
+
 import scala.io.Source
 
 class FileIOJson extends FileIOInterface {
@@ -14,7 +12,10 @@ class FileIOJson extends FileIOInterface {
     var battlefield: BattlefieldInterface = null
     val source: String = Source.fromFile("battlefield.json").getLines.mkString
     val json: JsValue = Json.parse(source)
+    //source.close()
     val size = (json \ "battlefield" \ "size").get.toString.toInt
+
+
     /*
     val injector = Guice.createInjector(new BattleshipModule)
     size match {
@@ -39,22 +40,20 @@ class FileIOJson extends FileIOInterface {
     import java.io._
     val pw = new PrintWriter(new File("battlefield.json"))
     pw.write(Json.prettyPrint(battlefieldToJson(battlefield)))
-    pw.close
+    pw.close()
   }
 
-  implicit val cellWrites = new Writes[CellInterface] {
-    def writes(cell: CellInterface) = Json.obj(
-      "value" -> cell.value
-    )
-  }
+  implicit val cellWrites: Writes[CellInterface] = (cell: CellInterface) => Json.obj(
+    "value" -> cell.value
+  )
 
-  def battlefieldToJson(battlefield: BattlefieldInterface) = {
+  def battlefieldToJson(battlefield: BattlefieldInterface): JsObject = {
     Json.obj(
       "battlefield" -> Json.obj(
         "size" -> JsNumber(battlefield.size),
         "cells" -> Json.toJson(
           for {
-            row <- 0 until battlefield.size;
+            row <- 0 until battlefield.size
             col <- 0 until battlefield.size
           } yield {
             Json.obj(

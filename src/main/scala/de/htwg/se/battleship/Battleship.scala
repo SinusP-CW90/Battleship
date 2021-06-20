@@ -1,20 +1,18 @@
 package de.htwg.se.battleship
 
-import com.google.inject.Guice
+import com.google.inject.{Guice, Injector}
 import de.htwg.se.battleship.aview.Tui
 import de.htwg.se.battleship.aview.gui.SwingGui
 import de.htwg.se.battleship.controller.controllerComponent.ControllerInterface
-import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.CellChanged
-import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
 
 import scala.io.StdIn.readLine
 
 object Battleship {
   val battlefieldSize = 3
 
-  val injector = Guice.createInjector(new BattleshipModule)
-  val controller = injector.getInstance(classOf[ControllerInterface])
+  val injector: Injector = Guice.createInjector(new BattleshipModule)
+  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   //controller.createEmptyBattlefield(battlefieldSize)
 
   //val controller = new Controller(new Battlefield(battlefieldSize),new Battlefield(battlefieldSize))
