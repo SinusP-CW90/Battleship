@@ -8,7 +8,7 @@ import org.scalatest.matchers.should.Matchers
 
 class ObservableSpec extends AnyWordSpec with Matchers {
   "An Observable" should {
-    val observable = new Observable
+    val observable = new Object with Observable
     val observer = new Observer {
       var updated: Boolean = false
       def isUpdated: Boolean = updated

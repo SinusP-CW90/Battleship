@@ -1,4 +1,4 @@
-package de.htwg.se.battleship.model
+package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

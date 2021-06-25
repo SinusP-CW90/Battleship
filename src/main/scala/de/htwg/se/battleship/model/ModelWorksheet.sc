@@ -1,8 +1,4 @@
-import de.htwg.se.battleship.Battleship.tui
-import de.htwg.se.battleship.model._
-import de.htwg.se.battleship._
-
-import scala.io.StdIn.readLine
+import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, Cell, Matrix}
 
 val grid = new Battlefield(4)
 grid.row(0)
