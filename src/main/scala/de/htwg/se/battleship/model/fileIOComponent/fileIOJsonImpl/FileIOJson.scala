@@ -1,9 +1,12 @@
 package de.htwg.se.battleship.model.fileIOComponent.fileIOJsonImpl
 
-import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
+import com.google.inject.Guice
+import com.google.inject.name.Names
+import de.htwg.se.battleship.BattleshipModule
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
-import play.api.libs.json.{JsNumber, JsObject, JsValue, Json, Writes}
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
+import play.api.libs.json._
 
 import scala.io.Source
 
@@ -16,20 +19,19 @@ class FileIOJson extends FileIOInterface {
     //source.close()
     val size = (json \ "battlefield" \ "size").get.toString.toInt
 
-    battlefieldOption = Some(new Battlefield(size))
+    //battlefieldOption = Some(new Battlefield(size))
 
-    /*
     val injector = Guice.createInjector(new BattleshipModule)
     size match {
-      case 1 => grid = injector.instance[BattlefieldInterface](Names.named("tiny"))
-      case 4 => grid = injector.instance[BattlefieldInterface](Names.named("small"))
-      case 9 => grid = injector.instance[BattlefieldInterface](Names.named("normal"))
+      case 2 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-tiny")))
+      case 4 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-small")))
+      case 6 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-normal")))
+      case 9 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-big")))
       case _ =>
     }
 
-     */
     battlefieldOption match {
-      case Some(battlefield) => {
+      case Some(battlefield) =>
         var _battlefield = battlefield
         for (index <- 0 until size * size) {
           val row = (json \\ "row") (index).as[Int]
@@ -39,7 +41,6 @@ class FileIOJson extends FileIOInterface {
           _battlefield = _battlefield.set(row, col, value)
         }
         battlefieldOption=Some(_battlefield)
-      }
       case None =>
     }
     battlefieldOption

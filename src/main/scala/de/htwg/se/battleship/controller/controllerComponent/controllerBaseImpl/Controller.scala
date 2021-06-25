@@ -18,7 +18,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
 
   val injector: Injector = Guice.createInjector(new BattleshipModule)
 
-  val fileIo = injector.instance[FileIOInterface]
+  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
   var randomStrategy: BattlefieldCreateRandomStrategy = injector.instance[BattlefieldCreateRandomStrategy]
 
   var gameState: GameState = controllerComponent.GameState(this)
@@ -64,6 +64,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     pgP2R = new Battlefield(newSize)
     gameState.handle("resize")
     publish(GridSizeChanged(newSize))
+    publish(new CellChanged)
     //notifyObservers
   }
 
@@ -123,26 +124,24 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     val pgP1LOption = fileIo.load("battlefiledP1")
     val pgP2ROption = fileIo.load("battlefiledP2")
     pgP1LOption match {
-      case None => {
+      case None =>
         createEmptyBattlefield(battlefieldSize)
         gameState.handle("COULDNOTLOAD")
-      }
-      case Some(_battlefiled) => {
+      case Some(_battlefiled) =>
         pgP1L = _battlefiled
         gameState.handle("LOADED")
-      }
     }
     pgP2ROption match {
-      case None => {
+      case None =>
         createEmptyBattlefield(battlefieldSize)
         gameState.handle("COULDNOTLOAD")
-      }
-      case Some(_battlefiled) => {
+      case Some(_battlefiled) =>
         pgP2R = _battlefiled
         gameState.handle("LOADED")
-      }
     }
+    publish(GridSizeChanged(pgP1LOption.size))
     publish(new CellChanged)
+
   }
 
   def createRandomBattlefield(player:String,size: Int): Unit = {

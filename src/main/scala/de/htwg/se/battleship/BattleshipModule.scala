@@ -3,11 +3,10 @@ package de.htwg.se.battleship
 import com.google.inject.AbstractModule
 import com.google.inject.name.Names
 import de.htwg.se.battleship.controller.controllerComponent._
-import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.SetCommand
 import de.htwg.se.battleship.model.battlefieldComponent.BattlefieldInterface
 import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, BattlefieldCreateRandomStrategy}
 import de.htwg.se.battleship.model.fileIOComponent._
-import de.htwg.se.battleship.util.{BattlefieldCreateStrategyTemplate, Command}
+import de.htwg.se.battleship.util.BattlefieldCreateStrategyTemplate
 import net.codingwell.scalaguice.ScalaModule
 
 class BattleshipModule extends AbstractModule with ScalaModule{
