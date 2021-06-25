@@ -12,9 +12,11 @@ import scala.xml.{Elem, PrettyPrinter}
 
 class FileIOXml extends FileIOInterface{
 
-  override def load: BattlefieldInterface = {
+  def load(fileName:String): BattlefieldInterface = {
+
     var battlefield: BattlefieldInterface = null
-    val file = scala.xml.XML.loadFile("battlefield.xml")
+    val file = scala.xml.XML.loadFile(fileName+".xml")
+    //    val file = scala.xml.XML.loadFile("battlefield.xml")
     val sizeAttr = file \\ "battlefield" \ "@size"
     val size = sizeAttr.text.toInt
 
@@ -44,15 +46,16 @@ class FileIOXml extends FileIOInterface{
     battlefield
   }
 
-  def save(battlefield: BattlefieldInterface): Unit = saveString(battlefield)
+  def save(fileName:String, battlefield: BattlefieldInterface): Unit = saveString(fileName:String, battlefield)
 
-  def saveXML(battlefield: BattlefieldInterface): Unit = {
-    scala.xml.XML.save("battlefield.xml", battlefieldToXml(battlefield))
+  def saveXML(fileName:String, battlefield: BattlefieldInterface): Unit = {
+    scala.xml.XML.save(fileName+".xml", battlefieldToXml(battlefield))
+    //    scala.xml.XML.save("battlefield.xml", battlefieldToXml(battlefield))
   }
 
-  def saveString(battlefield: BattlefieldInterface): Unit = {
+  def saveString(fileName:String, battlefield: BattlefieldInterface): Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("battlefield.xml"))
+    val pw = new PrintWriter(new File(fileName+".xml"))
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(battlefieldToXml(battlefield))
     pw.write(xml)

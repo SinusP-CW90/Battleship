@@ -33,7 +33,7 @@ class BattleshipModule extends AbstractModule with ScalaModule{
     bind[BattlefieldInterface].annotatedWithName("p1-big").toInstance(new Battlefield(9))
     bind[BattlefieldInterface].annotatedWithName("p2-big").toInstance(new Battlefield(9))
 
-    //bind[FileIOInterface].to[fileIOJsonImpl.FileIOJson]
-    bind[FileIOInterface].to[fileIOXmlImpl.FileIOXml]
+    bind[FileIOInterface].to[fileIOJsonImpl.FileIOJson]
+    //bind[FileIOInterface].to[fileIOXmlImpl.FileIOXml]
   }
 }

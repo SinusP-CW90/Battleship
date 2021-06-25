@@ -9,9 +9,9 @@ import scala.io.Source
 
 class FileIOJson extends FileIOInterface {
 
-  override def load: BattlefieldInterface = {
+  override def load(fileName:String): BattlefieldInterface = {
     var battlefield: BattlefieldInterface = null
-    val source: String = Source.fromFile("battlefield.json").getLines.mkString
+    val source: String = Source.fromFile(fileName+".json").getLines.mkString
     val json: JsValue = Json.parse(source)
     //source.close()
     val size = (json \ "battlefield" \ "size").get.toString.toInt
@@ -38,9 +38,9 @@ class FileIOJson extends FileIOInterface {
     battlefield
   }
 
-  override def save(battlefield: BattlefieldInterface): Unit = {
+  override def save(fileName:String,battlefield: BattlefieldInterface): Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("battlefield.json"))
+    val pw = new PrintWriter(new File(fileName+".json"))
     pw.write(Json.prettyPrint(battlefieldToJson(battlefield)))
     pw.close()
   }

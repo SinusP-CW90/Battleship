@@ -4,7 +4,7 @@ import de.htwg.se.battleship.model.battlefieldComponent.BattlefieldInterface
 
 trait FileIOInterface {
 
-  def load: BattlefieldInterface
-  def save(battlefield: BattlefieldInterface): Unit
+  def load(fileName:String): BattlefieldInterface
+  def save(fileName:String, battlefield: BattlefieldInterface): Unit
 
 }

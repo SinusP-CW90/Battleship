@@ -106,14 +106,15 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     //notifyObservers
   }
   def save: Unit = {
-    fileIo.save(pgP1L)
+    fileIo.save("battlefiledP1",pgP1L)
+    fileIo.save("battlefiledP2",pgP2R)
     gameState.handle("SAVED")
     publish(new CellChanged)
   }
 
   def load: Unit = {
-    pgP1L = fileIo.load
-    pgP2R = fileIo.load
+    pgP1L = fileIo.load("battlefiledP1")
+    pgP2R = fileIo.load("battlefiledP2")
     gameState.handle("LOADED")
     publish(new CellChanged)
   }
