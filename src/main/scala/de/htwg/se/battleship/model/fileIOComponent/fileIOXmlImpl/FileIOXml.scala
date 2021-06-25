@@ -1,7 +1,12 @@
 package de.htwg.se.battleship.model.fileIOComponent.fileIOXmlImpl
 
+import com.google.inject.Guice
+import com.google.inject.name.Names
+import de.htwg.se.battleship.BattleshipModule
 import de.htwg.se.battleship.model.battlefieldComponent.BattlefieldInterface
+import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
 import scala.xml.{Elem, PrettyPrinter}
 
@@ -12,16 +17,22 @@ class FileIOXml extends FileIOInterface{
     val file = scala.xml.XML.loadFile("battlefield.xml")
     val sizeAttr = file \\ "battlefield" \ "@size"
     val size = sizeAttr.text.toInt
+
+    battlefield = new Battlefield(size)
     /*
     val injector = Guice.createInjector(new BattleshipModule)
     size match {
-      case 1 => grid = injector.instance[BattlefieldInterface](Names.named("tiny"))
-      case 4 => grid = injector.instance[BattlefieldInterface](Names.named("small"))
-      case 9 => grid = injector.instance[BattlefieldInterface](Names.named("normal"))
+      case 2 => battlefield = injector.instance[BattlefieldInterface](Names.named("p1-tiny"))
+        //pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-tiny"))
+      case 4 => battlefield = injector.instance[BattlefieldInterface](Names.named("p1-small"))
+        //pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-small"))
+      case 6 => battlefield = injector.instance[BattlefieldInterface](Names.named("p1-normal"))
+        //pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-normal"))
+      case 9 => battlefield = injector.instance[BattlefieldInterface](Names.named("p1-big"))
+        //pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-big"))
       case _ =>
-    }
+    }*/
 
-     */
     val cellNodes = file \\ "cell"
     for (cell <- cellNodes) {
       val row: Int = (cell \ "@row").text.toInt
@@ -48,14 +59,14 @@ class FileIOXml extends FileIOInterface{
     pw.close()
   }
   def battlefieldToXml(battlefield: BattlefieldInterface): Elem = {
-    <grid size={ battlefield.size.toString }>
+    <battlefield size={ battlefield.size.toString }>
       {
       for {
         row <- 0 until battlefield.size
         col <- 0 until battlefield.size
       } yield cellToXml(battlefield, row, col)
       }
-    </grid>
+    </battlefield>
   }
 
   def cellToXml(battlefield: BattlefieldInterface, row: Int, col: Int): Elem = {

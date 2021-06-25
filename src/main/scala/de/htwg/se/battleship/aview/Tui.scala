@@ -26,6 +26,8 @@ class Tui(controller: ControllerInterface) extends Observer with Reactor {
       //case "sw" => controller.createShip("default");
       case "undo" => controller.undo();
       case "redo" => controller.redo();
+      case "save" => controller.save
+      case "load" => controller.load
       case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
         case row :: column :: value :: Nil => controller.setL(row, column, value);
         case _ =>

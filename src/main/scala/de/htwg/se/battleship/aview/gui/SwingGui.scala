@@ -72,13 +72,15 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     contents += new Menu("File") {
       mnemonic = Key.F
       contents += new MenuItem(Action("New") { controller.createEmptyBattlefield(controller.battlefieldSize) })
+      contents += new MenuItem(Action("Save") { controller.save })
+      contents += new MenuItem(Action("Load") { controller.load })
       contents += new MenuItem(Action("Random for P2") { controller.createRandomBattlefield("r",controller.battlefieldSize) })
       contents += new MenuItem(Action("Quit") { System.exit(0) })
     }
     contents += new Menu("Edit") {
       mnemonic = Key.E
-      contents += new MenuItem(Action("Undo") { controller.undo })
-      contents += new MenuItem(Action("Redo") { controller.redo })
+      contents += new MenuItem(Action("Undo") { controller.undo() })
+      contents += new MenuItem(Action("Redo") { controller.redo() })
     }
     contents += new Menu("Options") {
       mnemonic = Key.O

@@ -146,3 +146,10 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
     colorBattlefield(battlefieldToString())
   }
 }
+
+/**Battlefield Object to write and read the cells into Json */
+object Battlefield {
+  import play.api.libs.json._
+  implicit val battlefieldWrites = Json.writes[Battlefield]
+  implicit val battlefieldReads = Json.reads[Battlefield]
+}

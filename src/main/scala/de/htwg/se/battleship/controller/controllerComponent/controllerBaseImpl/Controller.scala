@@ -1,12 +1,14 @@
 package de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl
 
-import com.google.inject.name.Named
+import com.google.inject.name.{Named, Names}
 import com.google.inject.{Guice, Inject, Injector}
+import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.battleship.BattleshipModule
 import de.htwg.se.battleship.controller.controllerComponent
 import de.htwg.se.battleship.controller.controllerComponent.{ControllerInterface, GameState}
 import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, BattlefieldCreateRandomStrategy, Ship}
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
+import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
 import de.htwg.se.battleship.model.playerComponent.Player
 import de.htwg.se.battleship.util.UndoManager
 
@@ -15,6 +17,9 @@ import scala.swing.Publisher
 class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterface, @Named("DefaultSize") var pgP2R: BattlefieldInterface) extends ControllerInterface with Publisher {
 
   val injector: Injector = Guice.createInjector(new BattleshipModule)
+
+  val fileIo = injector.instance[FileIOInterface]
+  var randomStrategy: BattlefieldCreateRandomStrategy = injector.instance[BattlefieldCreateRandomStrategy]
 
   var gameState: GameState = controllerComponent.GameState(this)
   private val undoManager = new UndoManager
@@ -35,8 +40,21 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   //def available(row:Int, col:Int):Set[Int] = pgP1L.available(row, col)
 
   def createEmptyBattlefield(size: Int):Unit = {
-    pgP1L = new Battlefield(size)
+    size match {
+      case 2 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-tiny"))
+                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-tiny"))
+      case 4 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-small"))
+                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-small"))
+      case 6 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-normal"))
+                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-normal"))
+      case 9 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-big"))
+                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-big"))
+      case _ =>
+    }
+    /*
+    pgP1L =new Battlefield(size)
     pgP2R = new Battlefield(size)
+     */
     publish(new CellChanged)
     //notifyObservers
   }
@@ -87,11 +105,40 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     publish(new CellChanged)
     //notifyObservers
   }
+  def save: Unit = {
+    fileIo.save(pgP1L)
+    gameState.handle("SAVED")
+    publish(new CellChanged)
+  }
+
+  def load: Unit = {
+    pgP1L = fileIo.load
+    pgP2R = fileIo.load
+    gameState.handle("LOADED")
+    publish(new CellChanged)
+  }
+
+  /*
+  def load: Unit = {
+    val battlefieldOption = fileIo.load
+    battlefieldOption match {
+      case None => {
+        createEmptyBattlefield
+        gameState.handle("COULDNOTLOAD")
+      }
+      case Some(_battlefield) => {
+        pgP1L = _battlefield
+        gameState.handle("LOADED")
+      }
+    }
+    publish(new CellChanged)
+  }
+   */
 
   def createRandomBattlefield(player:String,size: Int): Unit = {
     gameState.handle("random")
-    if (player == "l") pgP1L = (new BattlefieldCreateRandomStrategy).createNewGrid(size)
-    if (player == "r") pgP2R = (new BattlefieldCreateRandomStrategy).createNewGrid(size)
+    if (player == "l") pgP1L = randomStrategy.createNewGrid(size)
+    if (player == "r") pgP2R = randomStrategy.createNewGrid(size)
     publish(new CellChanged)
     //notifyObservers
   }

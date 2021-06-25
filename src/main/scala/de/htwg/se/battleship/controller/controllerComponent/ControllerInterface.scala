@@ -14,6 +14,8 @@ trait ControllerInterface extends Publisher{
 
   def undo():Unit
   def redo():Unit
+  def save: Unit
+  def load: Unit
   def resize(newSize:Int):Unit
   def cell(row:Int, col:Int):CellInterface
   def set(player:String,row: Int, col: Int, value: Int):Unit

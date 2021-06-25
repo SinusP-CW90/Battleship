@@ -41,4 +41,8 @@ class Controller(var battlefield: BattlefieldInterface) extends ControllerInterf
   override def statusText: String = "state Text"
 
   override def start(input: String): Boolean = true
+
+  override def save: Unit = {}
+
+  override def load: Unit = {}
 }

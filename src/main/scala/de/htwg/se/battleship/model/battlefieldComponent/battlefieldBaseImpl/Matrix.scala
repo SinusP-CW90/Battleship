@@ -20,3 +20,10 @@ case class Matrix[T](rows: Vector[Vector[T]]) {
   //fill object (Vector.tabulate generates a list from the Vector)
   def fill(filling: T): Matrix[T] = copy(Vector.tabulate(size, size) { (row, col) => filling })
 }
+
+/**Matrix Object to write and read the cells into Json */
+object Matrix {
+  import play.api.libs.json._
+  implicit val matrixWrites = Json.writes[Matrix[Cell]]
+  implicit val matrixReads = Json.reads[Matrix[Cell]]
+}

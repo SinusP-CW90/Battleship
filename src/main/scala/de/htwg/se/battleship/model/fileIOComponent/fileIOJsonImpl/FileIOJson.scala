@@ -1,5 +1,6 @@
 package de.htwg.se.battleship.model.fileIOComponent.fileIOJsonImpl
 
+import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Battlefield
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
 import play.api.libs.json.{JsNumber, JsObject, JsValue, Json, Writes}
@@ -15,6 +16,7 @@ class FileIOJson extends FileIOInterface {
     //source.close()
     val size = (json \ "battlefield" \ "size").get.toString.toInt
 
+    battlefield = new Battlefield(size)
 
     /*
     val injector = Guice.createInjector(new BattleshipModule)
