@@ -12,15 +12,15 @@ import scala.xml.{Elem, PrettyPrinter}
 
 class FileIOXml extends FileIOInterface{
 
-  def load(fileName:String): BattlefieldInterface = {
+  def load(fileName:String): Option[BattlefieldInterface] = {
 
-    var battlefield: BattlefieldInterface = null
+    var battlefieldOption: Option[BattlefieldInterface] = None
     val file = scala.xml.XML.loadFile(fileName+".xml")
     //    val file = scala.xml.XML.loadFile("battlefield.xml")
     val sizeAttr = file \\ "battlefield" \ "@size"
     val size = sizeAttr.text.toInt
 
-    battlefield = new Battlefield(size)
+    battlefieldOption = Some(new Battlefield(size))
     /*
     val injector = Guice.createInjector(new BattleshipModule)
     size match {
@@ -36,14 +36,20 @@ class FileIOXml extends FileIOInterface{
     }*/
 
     val cellNodes = file \\ "cell"
-    for (cell <- cellNodes) {
-      val row: Int = (cell \ "@row").text.toInt
-      val col: Int = (cell \ "@col").text.toInt
-      val value: Int = cell.text.trim.toInt
-      battlefield = battlefield.set(row, col, value)
-
+    battlefieldOption match {
+      case Some(battlefield)=> {
+        var _battlefield = battlefield
+        for (cell <- cellNodes) {
+          val row: Int = (cell \ "@row").text.toInt
+          val col: Int = (cell \ "@col").text.toInt
+          val value: Int = cell.text.trim.toInt
+          _battlefield = _battlefield.set(row, col, value)
+        }
+        battlefieldOption = Some(_battlefield)
+      }
+      case None =>
     }
-    battlefield
+    battlefieldOption
   }
 
   def save(fileName:String, battlefield: BattlefieldInterface): Unit = saveString(fileName:String, battlefield)

@@ -111,30 +111,39 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     gameState.handle("SAVED")
     publish(new CellChanged)
   }
-
+/*
   def load: Unit = {
     pgP1L = fileIo.load("battlefiledP1")
     pgP2R = fileIo.load("battlefiledP2")
     gameState.handle("LOADED")
     publish(new CellChanged)
   }
-
-  /*
+*/
   def load: Unit = {
-    val battlefieldOption = fileIo.load
-    battlefieldOption match {
+    val pgP1LOption = fileIo.load("battlefiledP1")
+    val pgP2ROption = fileIo.load("battlefiledP2")
+    pgP1LOption match {
       case None => {
-        createEmptyBattlefield
+        createEmptyBattlefield(battlefieldSize)
         gameState.handle("COULDNOTLOAD")
       }
-      case Some(_battlefield) => {
-        pgP1L = _battlefield
+      case Some(_battlefiled) => {
+        pgP1L = _battlefiled
+        gameState.handle("LOADED")
+      }
+    }
+    pgP2ROption match {
+      case None => {
+        createEmptyBattlefield(battlefieldSize)
+        gameState.handle("COULDNOTLOAD")
+      }
+      case Some(_battlefiled) => {
+        pgP2R = _battlefiled
         gameState.handle("LOADED")
       }
     }
     publish(new CellChanged)
   }
-   */
 
   def createRandomBattlefield(player:String,size: Int): Unit = {
     gameState.handle("random")

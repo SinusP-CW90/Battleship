@@ -9,14 +9,14 @@ import scala.io.Source
 
 class FileIOJson extends FileIOInterface {
 
-  override def load(fileName:String): BattlefieldInterface = {
-    var battlefield: BattlefieldInterface = null
+  override def load(fileName:String): Option[BattlefieldInterface] = {
+    var battlefieldOption: Option[BattlefieldInterface] = None
     val source: String = Source.fromFile(fileName+".json").getLines.mkString
     val json: JsValue = Json.parse(source)
     //source.close()
     val size = (json \ "battlefield" \ "size").get.toString.toInt
 
-    battlefield = new Battlefield(size)
+    battlefieldOption = Some(new Battlefield(size))
 
     /*
     val injector = Guice.createInjector(new BattleshipModule)
@@ -28,14 +28,21 @@ class FileIOJson extends FileIOInterface {
     }
 
      */
-    for (index <- 0 until size * size) {
-      val row = (json \\ "row")(index).as[Int]
-      val col = (json \\ "col")(index).as[Int]
-      val cell = (json \\ "cell")(index)
-      val value = (cell \ "value").as[Int]
-      battlefield = battlefield.set(row, col, value)
+    battlefieldOption match {
+      case Some(battlefield) => {
+        var _battlefield = battlefield
+        for (index <- 0 until size * size) {
+          val row = (json \\ "row") (index).as[Int]
+          val col = (json \\ "col") (index).as[Int]
+          val cell = (json \\ "cell") (index)
+          val value = (cell \ "value").as[Int]
+          _battlefield = _battlefield.set(row, col, value)
+        }
+        battlefieldOption=Some(_battlefield)
+      }
+      case None =>
     }
-    battlefield
+    battlefieldOption
   }
 
   override def save(fileName:String,battlefield: BattlefieldInterface): Unit = {
