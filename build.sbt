@@ -20,7 +20,4 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.0"
 // https://mvnrepository.com/artifact/com.typesafe.play/play-json
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC2"
 
-coverageExcludedPackages := "de.htwg.se.battleship.aview.gui.*"
-coverageExcludedPackages := "de.htwg.se.battleship.Battleship"
-coverageExcludedFiles := ".*Battleship.*"
-//coverageExcludedPackages := ".*gui.*;.*Battleship.*;.*fileIoComponent.*"
+coverageExcludedPackages := "de\\.htwg\\.se\\.battleship\\.view\\.gui;.*Battleship"
