@@ -5,7 +5,7 @@ import de.htwg.se.battleship.controller.controllerComponent.ControllerInterface
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
-import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.GridSizeChanged
+import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.BattlefieldSizeChanged
 import de.htwg.se.battleship.util.Observer
 
 import javax.swing.BorderFactory
@@ -99,7 +99,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   //redraw
 
   reactions += {
-    case event: GridSizeChanged => resize()
+    case event: BattlefieldSizeChanged => resize()
     //case event: CellChanged     => redraw
   }
 
