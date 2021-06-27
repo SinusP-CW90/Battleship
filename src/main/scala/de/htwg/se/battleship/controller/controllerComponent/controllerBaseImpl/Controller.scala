@@ -26,10 +26,11 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
 
   def battlefieldSize:Int = pgP1L.size
   def blockSize:Int = Math.sqrt(pgP1L.size).toInt
-  //mal schauen obs klappt
+
+  //TODO mal schauen obs klappt
   def statusText:String = this.gameState.state.toString
   def setPlayerNames(): String = Player().playerNamesToString(Player().setDefaultPlayerNames())
-  def playgroundToString: String = pgP1L.playgroundString(pgP1L, pgP2R)
+  def playgroundToString: String = pgP1L.battlefieldString(pgP1L, pgP2R)
 
   //übernhame
   def cell(row:Int, col:Int): CellInterface = pgP2R.cell(row,col)
@@ -88,7 +89,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   def setL(row: Int, col: Int, value: Int): Unit = {
     undoManager.doStep(new SetCommand(row, col, value, this))
     gameState.handle("play")
-    pgP2R.isWinning(pgP2R)
+    //pgP2R.isWinning(pgP2R)
     publish(new CellChanged)
     //notifyObservers
   }
