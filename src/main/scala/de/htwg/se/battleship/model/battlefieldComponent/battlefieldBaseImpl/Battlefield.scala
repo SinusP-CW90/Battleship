@@ -16,7 +16,6 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
   /**Int value with the size of the Battlefield*/
   val size: Int = cells.size
 
-
   /**The cell function can be used to address the desired cell in the battlefield*/
   def cell(row: Int, col: Int): Cell = cells.cell(row, col)
 
