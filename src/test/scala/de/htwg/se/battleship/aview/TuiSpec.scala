@@ -17,12 +17,22 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("set")
       //
     }
-    "create and empty Battlefield on input 's'" in {
+    "create a empty Battlefield on input 'mini'" in {
+      tui.processInputLine("mini")
+      controller.pgP1L should be(new Battlefield(2))
+      controller.pgP2R should be(new Battlefield(2))
+    }
+    "create a empty Battlefield on input 's'" in {
       tui.processInputLine("s")
       controller.pgP1L should be(new Battlefield(3))
       controller.pgP2R should be(new Battlefield(3))
     }
-    "create and empty Battlefield on input 'm'" in {
+    "create a empty Battlefield on input 'tiny'" in {
+      tui.processInputLine("tiny")
+      controller.pgP1L should be(new Battlefield(4))
+      controller.pgP2R should be(new Battlefield(4))
+    }
+    "create a empty Battlefield on input 'm'" in {
       tui.processInputLine("m")
       controller.pgP1L should be(new Battlefield(6))
       controller.pgP2R should be(new Battlefield(6))
@@ -46,8 +56,6 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("sA1")
     }
     "test input" in {
-      tui.processInputLine("undo")
-      tui.processInputLine("redo")
       tui.processInputLine("rl")
       tui.processInputLine("rr")
       tui.processInputLine("a1")
@@ -63,7 +71,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("sB1")
       tui.processInputLine("sB2")
       tui.processInputLine("001")
-      tui.processInputLine("singleton")
+
       tui.processInputLine("msw")
       tui.processInputLine("lsw")
       tui.processInputLine("sw")
@@ -71,24 +79,8 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("111")
       tui.processInputLine("undo")
       tui.processInputLine("redo")
+      tui.processInputLine("save")
+      tui.processInputLine("load")
     }
-    /*
-    "quit wenn you type 'q'" in {
-      tui.processInputLine("q") should be("quit")
-    }
-    "X" in {
-      tui.processInputLine("x") should be("text")
-    }
-
-     */
-/*
-    "start the Game" in {
-      tui.processInputLine("s")
-      controller.start();
-      //auf rückgabe warten, um zu antworten
-      tui.processInputLine("a1")
-      //controller.pgP1L.cell(0,0).value should be(2)
-    }
-     */
   }
 }

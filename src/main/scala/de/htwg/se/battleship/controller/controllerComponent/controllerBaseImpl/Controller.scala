@@ -4,8 +4,7 @@ import com.google.inject.name.{Named, Names}
 import com.google.inject.{Guice, Inject, Injector}
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.battleship.BattleshipModule
-import de.htwg.se.battleship.controller.controllerComponent
-import de.htwg.se.battleship.controller.controllerComponent.{ControllerInterface, GameState}
+import de.htwg.se.battleship.controller.controllerComponent.{BattlefieldSizeChanged, ControllerInterface, GameState}
 import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, BattlefieldCreateRandomStrategy, Ship}
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
@@ -27,22 +26,18 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   var players: Vector[Player] = Vector.empty
   //var message: Message = EmptyMessage
 
-
   def battlefieldSize:Int = pgP1L.size
   def blockSize:Int = Math.sqrt(pgP1L.size).toInt
 
-  //TODO mal schauen obs klappt
+  //TODO state
   def statusText:String = this.gameState.state.toString
   def setPlayerNames(): String = Player().playerNamesToString(Player().setDefaultPlayerNames())
   def playgroundToString: String = pgP1L.battlefieldString(pgP1L, pgP2R)
 
   //übernhame
   def cell(row:Int, col:Int): CellInterface = pgP2R.cell(row,col)
-  //def available(row:Int, col:Int):Set[Int] = pgP1L.available(row, col)
 
-  //def isGiven(row: Int, col: Int):Boolean = pgP1L.cell(row, col).given
   def isSet(row:Int, col:Int):Boolean = pgP1L.cell(row, col).isSet
-  //def available(row:Int, col:Int):Set[Int] = pgP1L.available(row, col)
 
   def createEmptyBattlefield(size: Int):Unit = {
     size match {
@@ -50,8 +45,8 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
                 pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-mini"))
       case 3 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-tiny"))
                 pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-tiny"))
-      case 4 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-small2"))
-                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-small2"))
+      case 4 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-small"))
+                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-small"))
       case 6 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-normal"))
                 pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-normal"))
       case 9 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-big"))
@@ -63,16 +58,14 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     pgP2R = new Battlefield(size)
      */
     publish(new CellChanged)
-    //notifyObservers
   }
 
   def resize(newSize:Int) :Unit = {
     pgP1L = new Battlefield(newSize)
     pgP2R = new Battlefield(newSize)
     gameState.handle("resize")
-    publish(GridSizeChanged(newSize))
+    publish(BattlefieldSizeChanged(newSize))
     publish(new CellChanged)
-    //notifyObservers
   }
 
   def start(input: String): Boolean = {
@@ -113,21 +106,14 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     publish(new CellChanged)
     //notifyObservers
   }
-  def save: Unit = {
+  def save(): Unit = {
     fileIo.save("battlefiledP1",pgP1L)
     fileIo.save("battlefiledP2",pgP2R)
     gameState.handle("SAVED")
     publish(new CellChanged)
   }
-/*
-  def load: Unit = {
-    pgP1L = fileIo.load("battlefiledP1")
-    pgP2R = fileIo.load("battlefiledP2")
-    gameState.handle("LOADED")
-    publish(new CellChanged)
-  }
-*/
-  def load: Unit = {
+
+  def load(): Unit = {
     val pgP1LOption = fileIo.load("battlefiledP1")
     val pgP2ROption = fileIo.load("battlefiledP2")
     pgP1LOption match {
@@ -146,7 +132,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
         pgP2R = _battlefiled
         gameState.handle("LOADED")
     }
-    publish(GridSizeChanged(pgP1LOption.size))
+    publish(BattlefieldSizeChanged(pgP1LOption.size))
     publish(new CellChanged)
 
   }

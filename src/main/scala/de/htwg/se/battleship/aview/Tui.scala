@@ -6,7 +6,7 @@ import de.htwg.se.battleship.util._
 
 import scala.swing.Reactor
 
-class Tui(controller: ControllerInterface) extends Observer with Reactor {
+class Tui(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 
@@ -15,15 +15,17 @@ class Tui(controller: ControllerInterface) extends Observer with Reactor {
     input match {
       case "q" =>
       //case "set" => println(controller.setPlayerNames());
+      case "mini"|"2x2"|"set size mini" => controller.createEmptyBattlefield(2);
       case "s"|"small"|"3x3"|"set size small" => controller.createEmptyBattlefield(3);
+      case "tiny"|"4x4"|"set size tiny" => controller.createEmptyBattlefield(4);
       case "m"|"medium"|"6x6"|"set size medium" => controller.createEmptyBattlefield(6);
       case "l"|"large"|"9x9"|"set size large" => controller.createEmptyBattlefield(9);
       case "start" => controller.start("start")
       case "rl" => controller.createRandomBattlefield("l", controller.battlefieldSize)
       case "rr" => controller.createRandomBattlefield("r", controller.battlefieldSize)
-      //case "msw" => controller.createShip("mini");
-      //case "lsw" => controller.createShip("long");
-      //case "sw" => controller.createShip("default");
+      case "msw" => controller.createShip("mini");
+      case "lsw" => controller.createShip("long");
+      case "sw" => controller.createShip("default");
       case "undo" => controller.undo();
       case "redo" => controller.redo();
       case "save" => controller.save
@@ -58,13 +60,6 @@ class Tui(controller: ControllerInterface) extends Observer with Reactor {
   def printTui(): Unit = {
     println(controller.playgroundToString)
     //println(GameState.message(controller.gameStatus))
-  }
-
-  //nötig?
-  def update: Boolean = {
-    println(controller.playgroundToString)
-    //println("Current Game Status:\n" + controller.gameState.toString)
-    true
   }
 
 }

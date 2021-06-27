@@ -17,10 +17,12 @@ case class Cell(value: Int) extends CellInterface{
   }
 
 }
-
+/*
 /**Cell Object to write and read the cells into Json */
 object Cell {
   import play.api.libs.json._
   implicit val cellWrites: OWrites[Cell] = Json.writes[Cell]
   implicit val cellReads: Reads[Cell] = Json.reads[Cell]
-}
+  }
+ */
+

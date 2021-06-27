@@ -26,9 +26,12 @@ case class Matrix[T](rows: Vector[Vector[T]]) {
   def fill(filling: T): Matrix[T] = copy(Vector.tabulate(size, size) { (row, col) => filling })
 }
 
+/*
 /**Matrix Object to write and read the cells into Json */
 object Matrix {
   import play.api.libs.json._
   implicit val matrixWrites: OWrites[Matrix[Cell]] = Json.writes[Matrix[Cell]]
   implicit val matrixReads: Reads[Matrix[Cell]] = Json.reads[Matrix[Cell]]
 }
+
+ */

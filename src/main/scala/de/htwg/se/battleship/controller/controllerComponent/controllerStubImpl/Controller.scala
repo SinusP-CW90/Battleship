@@ -45,4 +45,6 @@ class Controller(var battlefield: BattlefieldInterface) extends ControllerInterf
   override def save: Unit = {}
 
   override def load: Unit = {}
+
+  override def createShip(shiptype: String): Unit = {}
 }
