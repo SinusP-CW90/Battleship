@@ -1,6 +1,5 @@
 package de.htwg.se.battleship.model.battlefieldComponent.battlefieldStubImpl
 
-import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.Cell
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 
 class Battlefield(var size:Int) extends BattlefieldInterface{
