@@ -17,16 +17,17 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("set")
       //
     }
-    "create and empty Battlefield on input 'm'" in {
-      tui.processInputLine("m")
-      controller.pgP1L should be(new Battlefield(6))
-      controller.pgP2R should be(new Battlefield(6))
-    }
     "create and empty Battlefield on input 's'" in {
       tui.processInputLine("s")
       controller.pgP1L should be(new Battlefield(3))
       controller.pgP2R should be(new Battlefield(3))
     }
+    "create and empty Battlefield on input 'm'" in {
+      tui.processInputLine("m")
+      controller.pgP1L should be(new Battlefield(6))
+      controller.pgP2R should be(new Battlefield(6))
+    }
+
     "create and empty Battlefield on input 'l'" in {
       tui.processInputLine("l")
       controller.pgP1L should be(new Battlefield(9))

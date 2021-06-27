@@ -16,13 +16,17 @@ import scala.swing.Publisher
 
 class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterface, @Named("DefaultSize") var pgP2R: BattlefieldInterface) extends ControllerInterface with Publisher {
 
+  private val undoManager = new UndoManager
   val injector: Injector = Guice.createInjector(new BattleshipModule)
-
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+
   var randomStrategy: BattlefieldCreateRandomStrategy = injector.instance[BattlefieldCreateRandomStrategy]
 
-  var gameState: GameState = controllerComponent.GameState(this)
-  private val undoManager = new UndoManager
+  var currentPlayer: Option[Player] = None
+  var gameState: GameState = GameState(this)
+  var players: Vector[Player] = Vector.empty
+  //var message: Message = EmptyMessage
+
 
   def battlefieldSize:Int = pgP1L.size
   def blockSize:Int = Math.sqrt(pgP1L.size).toInt
@@ -42,10 +46,12 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
 
   def createEmptyBattlefield(size: Int):Unit = {
     size match {
-      case 2 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-tiny"))
+      case 2 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-mini"))
+                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-mini"))
+      case 3 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-tiny"))
                 pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-tiny"))
-      case 4 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-small"))
-                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-small"))
+      case 4 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-small2"))
+                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-small2"))
       case 6 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-normal"))
                 pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-normal"))
       case 9 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-big"))

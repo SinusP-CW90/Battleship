@@ -12,9 +12,9 @@ class Battlefield(var size:Int) extends BattlefieldInterface{
   def indexToRowCol(index: Int): (Int, Int) = (0,0)
 
   override def setRowWithLetter(rowString: String, columnString: String, value: Int): BattlefieldInterface = this
-  override def shoot(pg: BattlefieldInterface, row: Int, col: Int): BattlefieldInterface = this
-  override def isWinning(pg: BattlefieldInterface): Boolean = false //???
-  override def playgroundString(playgroundLeft: BattlefieldInterface, playgroundRight: BattlefieldInterface): String = ???
+  //override def shoot(pg: BattlefieldInterface, row: Int, col: Int): BattlefieldInterface = this
+  //override def isWinning(pg: BattlefieldInterface): Boolean = false //???
+  override def battlefieldString(playgroundLeft: BattlefieldInterface, playgroundRight: BattlefieldInterface): String = ???
 }
 
 object EmptyCell extends CellInterface {
