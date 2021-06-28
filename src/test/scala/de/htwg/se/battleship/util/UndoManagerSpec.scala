@@ -8,7 +8,7 @@ class UndoManagerSpec extends AnyWordSpec with Matchers {
   "An UndoManager" should {
     val undoManager = new UndoManager
 
-    "TEST have a do, undo and redo" in {
+    "when have nothing to undo und redo" in {
       val command = new incrCommand
       undoManager.undoStep
       command.state should be(0)
