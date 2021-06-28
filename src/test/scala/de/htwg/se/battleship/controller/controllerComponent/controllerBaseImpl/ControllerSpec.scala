@@ -24,6 +24,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       val controller = new Controller(noPlayground,noPlayground)
       controller.save()
       controller.load()
+      controller.battlefieldSize should be(0)
     }
     "test his Ship trait" in {
       object FakeImpl extends Ship {
