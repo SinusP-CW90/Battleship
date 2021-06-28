@@ -7,7 +7,7 @@ import scala.util.Try
 
 class incrCommand extends Command {
   var state:Int =0
-  override def doStep(): Try[_] = Try ( state+=1)
+  override def doStep(): Try[_] = Try (state+=1)
 
   override def undoStep: Try[_] = Try (state-=1)
 

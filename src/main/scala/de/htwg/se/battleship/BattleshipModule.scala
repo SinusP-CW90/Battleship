@@ -23,8 +23,10 @@ class BattleshipModule extends AbstractModule with ScalaModule{
 
     bind[BattlefieldCreateStrategyTemplate].annotatedWithName("RandomStrategy").toInstance(new BattlefieldCreateRandomStrategy)
 
-    bind[BattlefieldInterface].annotatedWithName("p1-tiny").toInstance(new Battlefield(2))
-    bind[BattlefieldInterface].annotatedWithName("p2-tiny").toInstance(new Battlefield(2))
+    bind[BattlefieldInterface].annotatedWithName("p1-mini").toInstance(new Battlefield(2))
+    bind[BattlefieldInterface].annotatedWithName("p2-mini").toInstance(new Battlefield(2))
+    bind[BattlefieldInterface].annotatedWithName("p1-tiny").toInstance(new Battlefield(3))
+    bind[BattlefieldInterface].annotatedWithName("p2-tiny").toInstance(new Battlefield(3))
     bind[BattlefieldInterface].annotatedWithName("p1-small").toInstance(new Battlefield(4))
     bind[BattlefieldInterface].annotatedWithName("p2-small").toInstance(new Battlefield(4))
     bind[BattlefieldInterface].annotatedWithName("p1-normal").toInstance(new Battlefield(6))

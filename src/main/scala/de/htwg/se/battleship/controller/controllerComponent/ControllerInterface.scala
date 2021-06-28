@@ -11,23 +11,24 @@ trait ControllerInterface extends Publisher{
   def createEmptyBattlefield(size:Int):Unit
   def createRandomBattlefield(player:String, size:Int):Unit
   def start(input: String): Boolean
-
+  def setPlayerNames():String
   def undo():Unit
   def redo():Unit
-  def save: Unit
-  def load: Unit
+  def save(): Unit
+  def load(): Unit
   def resize(newSize:Int):Unit
   def cell(row:Int, col:Int):CellInterface
   def set(player:String,row: Int, col: Int, value: Int):Unit
   def setL(row:Int, col:Int, value:Int):Unit
+  def createShip(shiptype: String):Unit
   def isSet(row:Int, col:Int):Boolean
   def playgroundToString:String
   //def gameStatus:GameState
   def statusText:String
 }
 
-import scala.swing.event.Event
 
+import scala.swing.event.Event
 class CellChanged extends Event
 case class BattlefieldSizeChanged(newSize: Int) extends Event
 

@@ -12,7 +12,7 @@ class UndoManager {
   }
   def undoStep(): Try[_]  = {
     undoStack match {
-      case  Nil =>Try()
+      case  Nil => Try()
       case head::stack =>
         val t = head.undoStep()
         undoStack=stack
@@ -22,7 +22,7 @@ class UndoManager {
   }
   def redoStep():Try[_] = {
     redoStack match {
-      case Nil =>Try()
+      case Nil => Try()
       case head::stack =>
         val t = head.redoStep()
         redoStack=stack

@@ -2,29 +2,27 @@ package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 
 import de.htwg.se.battleship.model.battlefieldComponent.BattlefieldInterface
 
+/**The class Battlefield represents the Playground of one Player.
+ * @param cells The cells value is a 2 dimensional Vector of all cells.
+ *              Each one has a value that is used to show what happened to this cell.
+ *              e.g .: 0 for nothing. 1 for ship placed, 2 for ship hit etc.
+ */
 case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
-  //set the size with the Matrix class
+
+  /**initialized the 2D Vector of Cells with the int value
+   * @param size the size of the 2D Vector */
   def this(size: Int) = this(new Matrix[Cell](size, Cell(0)))
 
-  //Int value with the size of the Battlefield
+  /**Int value with the size of the Battlefield*/
   val size: Int = cells.size
 
-
-  //return the called cell
+  /**The cell function can be used to address the desired cell in the battlefield*/
   def cell(row: Int, col: Int): Cell = cells.cell(row, col)
-//TODO Option
-  /*
-  def cell(row:Int, col:Int): Option[Cell] = {
-    try {
-      Some(cells.cell(row, col))
-    } catch {
-      case e: NumberFormatException => None
-    }
-  }
-*/
-  //change the cell value in the Battlefield
+
+  /**With Set you can change the value in the desired cell of the Battlefield - all with Int Values*/
   def set(row: Int, col: Int, value: Int): Battlefield = copy(cells.replaceCell(row, col, Cell(value)))
 
+  /**setRowWithLetter changes the value of a desired cell. Here the row is addressed with a letter and converts it into a number*/
   def setRowWithLetter(rowString: String, columnString: String, value: Int): BattlefieldInterface = {
     val UpperRowString = rowString.toUpperCase
     val row = (UpperRowString(0) - 65).toChar.toInt
@@ -32,15 +30,13 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
     copy(cells.replaceCell(row, col - 1, Cell(value)))
   }
 
-  //show the called row of the Battlefield
+  /**row gives you the desired row in the battlefield*/
   def row(row: Int): Vector[Cell] = cells.rows(row)
 
-  //show the called column of the Battlefield
+  /**col gives you the desired collum in the battlefield*/
   def col(col: Int): Vector[Cell] = cells.rows.map(row => row(col))
 
-
   //TODO - prints raus nehemen
-
   def shoot(pg: BattlefieldInterface, row: Int, col: Int): BattlefieldInterface = {
     if (cell(row, col).value == 1) {
       println("hit")
@@ -51,7 +47,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
       pg
     }
   }
-
+//TODO
   def isWinning(pg: BattlefieldInterface): Boolean = {
     var isWinning = true
     for (x <- 1 to pg.size) {
@@ -64,19 +60,6 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
     }
     isWinning
   }
-
-  def rows(row: Int): Vector[Cell] = cells.rows(row)
-
-  def cols(col: Int): Vector[Cell] = cells.rows.map(row => row(col))
-  /*
-  def available(row: Int, col: Int): Set[Int] = if (cell(row, col).isSet) {
-    Set.empty
-  }
-  else {
-    (1 to size).toSet -- rows(row).toIntSet -- cols(col).toIntSet -- blocks(blockAt(row, col)).toIntSet
-  }
-*/
-  //strategy pattern
 
   /*
   //TODO!! komplett überarbeiten, da readLine() nur in TUI oder Battleship main, wegen besserer testbarkeit vorkommen darf
@@ -111,9 +94,10 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
   }
 */
 
-  //generate a String that represents the Battlefield
-  def playgroundString(playgroundLeft: BattlefieldInterface, playgroundRight: BattlefieldInterface): String = {
+  /**battlefieldString creates a string that represents the battlefield for TUI*/
+  def battlefieldString(playgroundLeft: BattlefieldInterface, playgroundRight: BattlefieldInterface): String = {
 
+    /**createNumberRow creates a series of ascending numbers for the coordinates of the battlefield */
     def createNumberRow(): String = {
       var currentNumberString = ""
       for (x <- 1 to playgroundLeft.size) {
@@ -122,7 +106,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
       val numberString = "\n    " + currentNumberString + "|  " + currentNumberString
       numberString
     }
-
+/**battlefieldToString converts the cell values of the 2D vector into a string and puts them in the right form */
     def battlefieldToString(): String = {
       //val y = createNumberRow();
       val line = ("L |" + (" q " * playgroundLeft.size)) + " |" + ("  Q" * playgroundRight.size) + " | R\n"
@@ -138,6 +122,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
       box
     }
 
+    /**colorBattlefield colors the playing area blue, which is supposed to symbolize the water */
     def colorBattlefield(battlefield: String): String = {
       val cB = battlefield.replace(" . ", "\u001b[48;5;20m . \u001b[0m")
       cB
@@ -147,9 +132,11 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
   }
 }
 
+/*
 /**Battlefield Object to write and read the cells into Json */
 object Battlefield {
   import play.api.libs.json._
-  implicit val battlefieldWrites = Json.writes[Battlefield]
-  implicit val battlefieldReads = Json.reads[Battlefield]
+  implicit val battlefieldWrites: OWrites[Battlefield] = Json.writes[Battlefield]
+  implicit val battlefieldReads: Reads[Battlefield] = Json.reads[Battlefield]
 }
+*/
