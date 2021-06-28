@@ -58,7 +58,6 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       val controller = new Controller(smallPlayground,smallPlayground)
       controller.save()
       controller.load()
-      controller.battlefieldSize should be(0)
     }
 
   }
