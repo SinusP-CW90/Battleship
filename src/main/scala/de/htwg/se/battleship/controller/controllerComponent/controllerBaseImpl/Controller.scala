@@ -53,10 +53,6 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
                 pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-big"))
       case _ =>
     }
-    /*
-    pgP1L =new Battlefield(size)
-    pgP2R = new Battlefield(size)
-     */
     publish(new CellChanged)
   }
 

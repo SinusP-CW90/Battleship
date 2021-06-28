@@ -11,7 +11,7 @@ trait ControllerInterface extends Publisher{
   def createEmptyBattlefield(size:Int):Unit
   def createRandomBattlefield(player:String, size:Int):Unit
   def start(input: String): Boolean
-
+  def setPlayerNames():String
   def undo():Unit
   def redo():Unit
   def save(): Unit
