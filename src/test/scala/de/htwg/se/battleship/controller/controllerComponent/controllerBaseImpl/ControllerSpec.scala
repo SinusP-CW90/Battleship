@@ -19,12 +19,26 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         override def update: Boolean = {updated = true; updated}
       }
     }
-    "have a cover case where the battlefield cannot load" in {
+    "test to set the size of the battefield to 1" in {
+      val noPlayground = new Battlefield(1)
+      val controller = new Controller(noPlayground,noPlayground)
+      controller.save()
+      controller.load()
+      controller.battlefieldSize should be(1)
+    }
+    "test to set the size of the battefield to 0" in {
       val noPlayground = new Battlefield(0)
       val controller = new Controller(noPlayground,noPlayground)
       controller.save()
       controller.load()
       controller.battlefieldSize should be(0)
+    }
+
+    "have a cover case where the battlefield cannot load" in {
+      val noPlayground = new Battlefield(0)
+      val controller = new Controller(noPlayground,noPlayground)
+      controller.save()
+      controller.load()
     }
     "test his Ship trait" in {
       object FakeImpl extends Ship {
