@@ -55,13 +55,15 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("A1")
       tui.processInputLine("sA1")
     }
-    "test input" in {
+    "test to set the cells (left Player and right Player) with undo redo" in {
       tui.processInputLine("rl")
       tui.processInputLine("rr")
       tui.processInputLine("a1")
       tui.processInputLine("a2")
       tui.processInputLine("b1")
       tui.processInputLine("b2")
+      tui.processInputLine("undo")
+      tui.processInputLine("redo")
       tui.processInputLine("A1")
       tui.processInputLine("A2")
       tui.processInputLine("B1")
@@ -74,15 +76,16 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("sB2")
       tui.processInputLine("001")
 
-      tui.processInputLine("msw")
-      tui.processInputLine("lsw")
-      tui.processInputLine("sw")
-
       tui.processInputLine("111")
       tui.processInputLine("undo")
       tui.processInputLine("redo")
       tui.processInputLine("save")
       tui.processInputLine("load")
+    }
+    "test to create some boats" in {
+      tui.processInputLine("msw")
+      tui.processInputLine("lsw")
+      tui.processInputLine("sw")
     }
   }
 }
