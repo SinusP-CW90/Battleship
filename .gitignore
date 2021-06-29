@@ -12,7 +12,6 @@ bin/
 .idea/
 target/
 
-
 # Gradle
 .gradle/
 build/
@@ -37,10 +36,15 @@ project/.sbtserver
 src\main\scala\de\htwg\se\battleship\model\TestSheet.sc
 src\main\scala\de\htwg\se\battleship\model\ModelWorksheet.sc
 .scala_dependencies
-.worksheet
+*.worksheet
+.sc
 
 # Sonar
 .sonar/
 
 # Application
 yourgame.log
+
+# Application backup
+battlefieldP1.json
+battlefieldP2.json

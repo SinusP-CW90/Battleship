@@ -4,7 +4,8 @@ import com.google.inject.name.{Named, Names}
 import com.google.inject.{Guice, Inject, Injector}
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.battleship.BattleshipModule
-import de.htwg.se.battleship.controller.controllerComponent.{BattlefieldSizeChanged, ControllerInterface, GameState}
+import de.htwg.se.battleship.controller.controllerComponent.battleshipGameStates.GameState
+import de.htwg.se.battleship.controller.controllerComponent.{BattlefieldSizeChanged, ControllerInterface, battleshipGameStates}
 import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, BattlefieldCreateRandomStrategy, Ship}
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
@@ -22,9 +23,15 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   var randomStrategy: BattlefieldCreateRandomStrategy = injector.instance[BattlefieldCreateRandomStrategy]
 
   var currentPlayer: Option[Player] = None
-  var gameState: GameState = GameState(this)
+
+  var gameState: GameState = battleshipGameStates.GameState(this)
+      gameState.handle("start")
+  var currentGameState: String = "start"
   var players: Vector[Player] = Vector.empty
-  //var message: Message = EmptyMessage
+  var shipsToSetP1:Int = pgP1L.size
+  var shipsToSetP2:Int = pgP2R.size
+  var playerSite: String = "l"
+  var shootValue:Int =1
 
   def battlefieldSize:Int = pgP1L.size
   def blockSize:Int = Math.sqrt(pgP1L.size).toInt
@@ -33,6 +40,12 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   def statusText:String = this.gameState.state.toString
   def setPlayerNames(): String = Player().playerNamesToString(Player().setDefaultPlayerNames())
   def playgroundToString: String = pgP1L.battlefieldString(pgP1L, pgP2R)
+  def switchPlayer():Unit={
+    if (playerSite=="l"){playerSite="r"}
+    else if (playerSite=="r"){playerSite="l"}
+    //--->test
+    println("Now Player: "+playerSite)
+  }
 
   //übernhame
   def cell(row:Int, col:Int): CellInterface = pgP2R.cell(row,col)
@@ -74,16 +87,54 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     ship.swim()
   }
 
-  def set(player:String,row: Int, col: Int, value: Int):Unit = {
-    undoManager.doStep(new PlayerSetCommand(player, row, col, value, this))
-    gameState.handle("play")
-    publish(new CellChanged)
-    //notifyObservers
+
+  def set(rowString: String, colString: String):Unit = {
+    //test
+    println("gameINFO: in setMethode")
+    println("currentGameState: " + currentGameState)
+    println("shipsToSetP1: " + shipsToSetP1)
+    println("current Player = " + playerSite)
+
+    val UpperRowString = rowString.toUpperCase
+    val row = (UpperRowString(0) - 65).toChar.toInt
+    val col = colString.toInt - 1
+
+    if (currentGameState == "shoot") {
+      undoManager.doStep(new PlayerShootCommand(playerSite, row, col, this))
+      gameState.handle("shoot")
+      playerSite match {
+        case "l" => if(pgP2R.isWinning(pgP2R)){gameState.handle("win")}
+        case "r" => if(pgP1L.isWinning(pgP1L)){gameState.handle("win")}
+      }
+      publish(new CellChanged)
+    }
+    if ((currentGameState == "setShips")|(currentGameState == "start")) {
+      if (checkIsInRange(row: Int, col: Int)) {
+        undoManager.doStep(new PlayerSetCommand(playerSite, row, col, 1, this))
+        gameState.handle("setShips")
+        publish(new CellChanged)
+      }
+      else
+        gameState.handle("set Error" + row + col)
+    }
   }
 
+  def checkIsInRange(row: Int, col: Int): Boolean = {
+    if ((row < battlefieldSize) &&(col < battlefieldSize)) {
+      println(row +" gz:"+battlefieldSize)
+      true
+    }
+    else false
+  }
+
+  def set(player:String,row: Int, col: Int, value: Int):Unit = {
+    undoManager.doStep(new PlayerSetCommand(playerSite, row, col, value, this))
+    gameState.handle("setShips")
+    publish(new CellChanged)
+  }
   def setL(row: Int, col: Int, value: Int): Unit = {
     undoManager.doStep(new SetCommand(row, col, value, this))
-    gameState.handle("play")
+    gameState.handle("setShips")
     //pgP2R.isWinning(pgP2R)
     publish(new CellChanged)
     //notifyObservers
@@ -115,22 +166,21 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     pgP1LOption match {
       case None =>
         createEmptyBattlefield(battlefieldSize)
-        gameState.handle("COULDNOTLOAD")
+        gameState.handle("COULDNOTLOADp1")
       case Some(_battlefiled) =>
         pgP1L = _battlefiled
-        gameState.handle("LOADED")
+        gameState.handle("LOADEDp1")
     }
     pgP2ROption match {
       case None =>
         createEmptyBattlefield(battlefieldSize)
-        gameState.handle("COULDNOTLOAD")
+        gameState.handle("COULDNOTLOADp2")
       case Some(_battlefiled) =>
         pgP2R = _battlefiled
-        gameState.handle("LOADED")
+        gameState.handle("LOADEDp2")
     }
     publish(BattlefieldSizeChanged(pgP1LOption.size))
-    publish(new CellChanged)
-
+    //publish(new CellChanged)
   }
 
   def createRandomBattlefield(player:String,size: Int): Unit = {
@@ -140,5 +190,4 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     publish(new CellChanged)
     //notifyObservers
   }
-  //override def gameStatus: GameState = ???
 }

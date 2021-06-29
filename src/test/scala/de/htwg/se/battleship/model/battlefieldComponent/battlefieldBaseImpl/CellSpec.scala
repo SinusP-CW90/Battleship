@@ -36,11 +36,13 @@ class CellSpec extends AnyWordSpec with Matchers {
       val cellWithValue1 = Cell(1)
       val cellWithValue2 = Cell(2)
       val cellWithValue3 = Cell(3)
+      val cellWithValue4 = Cell(4)
       "return another value in a String" in {
         cellWithValue0.toString should be(".")
-        cellWithValue1.toString should be("X")
-        cellWithValue2.toString should be("o")
-        cellWithValue3.toString should be("?")
+        cellWithValue1.toString should be("S")
+        cellWithValue2.toString should be("X")
+        cellWithValue3.toString should be("o")
+        cellWithValue4.toString should be("?")
       }
     }
   }
