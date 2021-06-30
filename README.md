@@ -1,3 +1,3 @@
 # Battleship [![Build Status](https://travis-ci.com/SinusP-CW90/Battleship.svg?branch=main)](https://travis-ci.com/SinusP-CW90/Battleship) [![Coverage Status](https://coveralls.io/repos/github/SinusP-CW90/Battleship/badge.svg?branch=main)](https://coveralls.io/github/SinusP-CW90/Battleship?branch=main)
 As a software project of the course Software Engineering at the University of Applied Sciences 
-HTWG Konstanz, I'm developing the everywhere popular game 'Battleship'.
+HTWG Konstanz, I'm developing the everywhere popular game 'Battleship' in the Scala programming language.

@@ -23,10 +23,12 @@ class FileIOJson extends FileIOInterface {
 
     val injector = Guice.createInjector(new BattleshipModule)
     size match {
-      case 2 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-tiny")))
-      case 4 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-small")))
-      case 6 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-normal")))
-      case 9 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-big")))
+      case 2 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-2x2")))
+      case 3 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-3x3")))
+      case 4 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-4x4")))
+      case 5 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-5x5")))
+      case 6 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-6x6")))
+      case 9 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-9x9")))
       case _ =>
     }
 

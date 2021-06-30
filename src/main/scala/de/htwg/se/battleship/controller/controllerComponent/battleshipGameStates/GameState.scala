@@ -1,5 +1,6 @@
-package de.htwg.se.battleship.controller.controllerComponent
+package de.htwg.se.battleship.controller.controllerComponent.battleshipGameStates
 
+import de.htwg.se.battleship.controller.controllerComponent.ControllerInterface
 import de.htwg.se.battleship.util.State
 
 case class GameState(controller: ControllerInterface) {

@@ -55,9 +55,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("A1")
       tui.processInputLine("sA1")
     }
-    "test to set the cells (left Player and right Player) with undo redo" in {
-      tui.processInputLine("rl")
-      tui.processInputLine("rr")
+    "input test to set the cells (left Player and right Player) with undo redo" in {
       tui.processInputLine("a1")
       tui.processInputLine("a2")
       tui.processInputLine("b1")
@@ -82,10 +80,29 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("save")
       tui.processInputLine("load")
     }
-    "test to create some boats" in {
+    "input test to create some boats" in {
       tui.processInputLine("msw")
       tui.processInputLine("lsw")
       tui.processInputLine("sw")
     }
+    "input test to create a random Battlefield on the Left Side" in {
+      tui.processInputLine("rl")
+    }
+    "input test to create a random Battlefield on the Right Side" in {
+      tui.processInputLine("rr")
+    }
+    "input test to create a random Battlefield for both sides" in {
+      tui.processInputLine("rrr")
+    }
+    "input test to switch the current Player" in {
+      tui.processInputLine("sp")
+    }
+
+    "input test for a GUI funktion" in {
+      tui.processInputLine("setL")
+    }
+
+
+
   }
 }

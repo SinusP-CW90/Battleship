@@ -15,6 +15,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
     input match {
       case "q" =>
       case "set" => println(controller.setPlayerNames());
+      //case "testSize"|"1x1" => controller.createEmptyBattlefield(1);
       case "mini"|"2x2"|"set size mini" => controller.createEmptyBattlefield(2);
       case "s"|"small"|"3x3"|"set size small" => controller.createEmptyBattlefield(3);
       case "tiny"|"4x4"|"set size tiny" => controller.createEmptyBattlefield(4);
@@ -23,31 +24,21 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case "start" => controller.start("start")
       case "rl" => controller.createRandomBattlefield("l", controller.battlefieldSize)
       case "rr" => controller.createRandomBattlefield("r", controller.battlefieldSize)
+      case "rrr" => controller.createRandomBattlefield("r", controller.battlefieldSize)
+                    controller.createRandomBattlefield("l", controller.battlefieldSize)
+                    controller.gameState.handle("shoot")
       case "msw" => controller.createShip("mini");
       case "lsw" => controller.createShip("long");
       case "sw" => controller.createShip("default");
+      case "setL" => controller.setL(0,0,0)//for the Gui
       case "undo" => controller.undo();
       case "redo" => controller.redo();
-      case "save" => controller.save
-      case "load" => controller.load
-      case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
-        case row :: column :: value :: Nil => controller.setL(row, column, value);
-        case _ =>
-          input match {
-            case "a1" => controller.set("l", 0, 0, 1)
-            case "a2" => controller.set("l", 0, 1, 1)
-            case "b1" => controller.set("l", 1, 0, 1)
-            case "b2" => controller.set("l", 1, 1, 1)
-            case "A1" => controller.set("r", 0, 0, 1)
-            case "A2" => controller.set("r", 0, 1, 1)
-            case "B1" => controller.set("r", 1, 0, 1)
-            case "B2" => controller.set("r", 1, 1, 1)
-            case "sA1" => controller.set("r", 0, 0, 2)
-            case "sA2" => controller.set("r", 0, 1, 2)
-            case "sB1" => controller.set("r", 1, 0, 2)
-            case "sB2" => controller.set("r", 1, 1, 2)
-            case _ => println("please set a valid String");
-          }
+      case "save" => controller.save();
+      case "load" => controller.load();
+      case "sp"=> controller.switchPlayer;
+      case _ =>  input.toList.filter(c => c != ' ').map(c => c.toString) match {
+          case row :: column :: Nil => controller.set(row,column);
+          case _ =>println("please set a valid String");
       }
     }
   }

@@ -55,7 +55,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     }
   }
 
-  val statusline = new TextField(controller.statusText, 20)
+  val statusline = new TextField(controller.currentGameState, 20)
   val testline1 = new TextField("\n controller.battlefieldSize: "+controller.battlefieldSize+"\n controller.blockSize: "+controller.blockSize, 20)
 
   contents = new BorderPanel {

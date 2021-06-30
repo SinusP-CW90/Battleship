@@ -19,7 +19,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
   /**The cell function can be used to address the desired cell in the battlefield*/
   def cell(row: Int, col: Int): Cell = cells.cell(row, col)
 
-  /**With Set you can change the value in the desired cell of the Battlefield - all with Int Values*/
+  /**With set you can change the value in the desired cell of the Battlefield - all with Int Values*/
   def set(row: Int, col: Int, value: Int): Battlefield = copy(cells.replaceCell(row, col, Cell(value)))
 
   /**setRowWithLetter changes the value of a desired cell. Here the row is addressed with a letter and converts it into a number*/
@@ -36,18 +36,22 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
   /**col gives you the desired collum in the battlefield*/
   def col(col: Int): Vector[Cell] = cells.rows.map(row => row(col))
 
-  //TODO - prints raus nehemen
   def shoot(pg: BattlefieldInterface, row: Int, col: Int): BattlefieldInterface = {
-    if (cell(row, col).value == 1) {
-      println("hit")
-      this.set(row, col, 2)
-    }
-    else {
-      println("miss")
-      pg
+    pg.cell(row, col).value match {
+      case 0 => println("miss")
+                pg.set(row, col, 3)
+      case 1 => println("hit")
+                pg.set(row, col, 2)
+      case 2 => println("miss")
+                pg.set(row, col, 2)
+      case 3 => println("missOverMiss")
+                pg.set(row, col, 3)
+      case _ => println("unknown: " +pg.cell(row, col).value)
+                pg
     }
   }
-//TODO
+
+  /**isWinning searches in the battlefield for still available ships (1 values in teh cells)*/
   def isWinning(pg: BattlefieldInterface): Boolean = {
     var isWinning = true
     for (x <- 1 to pg.size) {
@@ -60,39 +64,6 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
     }
     isWinning
   }
-
-  /*
-  //TODO!! komplett überarbeiten, da readLine() nur in TUI oder Battleship main, wegen besserer testbarkeit vorkommen darf
-//TODO fehler abfangen, wenn ships doppelt oder außerhalb der spielfeld größe gesetzt werden
-  def setShips(pgP1: Battlefield, pgP2:Battlefield, currentPlayer:String): Battlefield ={
-    var pgP1L = pgP1
-    var pgP2R = pgP2
-    var counter = size
-    print("please set " +size +" Ships\n")
-    var input: String = ""
-    do {
-      input = readLine()
-      pgP1L = pgP1L.setRowWithLetter(input(0).toString,input(1).toString,1)
-      counter = counter -1
-      println(pgP1L.playgroundString(pgP1L,pgP2,currentPlayer))
-      print(counter +" Ships are left\n")
-    } while (counter != 0)
-    if(currentPlayer =="p1"){
-      pgP1L
-    }
-    else{
-      pgP2R
-    }
-  }
-
-//TODO - nicht gut zu testen wegen setShips
-  def start(pgP1: Battlefield, pgP2:Battlefield): Battlefield ={
-
-    setShips(pgP1,pgP2,"p1")
-    setShips(pgP2,pgP1,"p2")
-    pgP1
-  }
-*/
 
   /**battlefieldString creates a string that represents the battlefield for TUI*/
   def battlefieldString(playgroundLeft: BattlefieldInterface, playgroundRight: BattlefieldInterface): String = {
@@ -131,12 +102,3 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
     colorBattlefield(battlefieldToString())
   }
 }
-
-/*
-/**Battlefield Object to write and read the cells into Json */
-object Battlefield {
-  import play.api.libs.json._
-  implicit val battlefieldWrites: OWrites[Battlefield] = Json.writes[Battlefield]
-  implicit val battlefieldReads: Reads[Battlefield] = Json.reads[Battlefield]
-}
-*/

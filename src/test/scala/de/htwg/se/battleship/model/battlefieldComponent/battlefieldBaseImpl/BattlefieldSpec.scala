@@ -3,7 +3,7 @@ package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec._
 
-class BattlefieldSpec extends AnyWordSpec with Matchers  {
+class BattlefieldSpec extends AnyWordSpec with Matchers {
   //TODO Test anpassen!
   "The Battlefield" when {
     //case class test for 100% Coverage
@@ -48,14 +48,14 @@ class BattlefieldSpec extends AnyWordSpec with Matchers  {
     "set row on index 1,2 to the value 7 with a Letter" should {
       val testBattlefield = new Battlefield(3)
       "have value 7" in {
-        val b = testBattlefield.setRowWithLetter("b","3",7)
+        val b = testBattlefield.setRowWithLetter("b", "3", 7)
         b.cell(1, 2) should be(Cell(7))
       }
     }
     "have a size of 3" should {
       val testBattlefield = new Battlefield(3)
       "have on the first row 'Vector(Cell(0), Cell(0), Cell(0)'" in {
-          testBattlefield.row(0) should be(Vector(Cell(0), Cell(0), Cell(0)))
+        testBattlefield.row(0) should be(Vector(Cell(0), Cell(0), Cell(0)))
       }
       "have on the first col 'Vector(Cell(0), Cell(0), Cell(0)'" in {
         testBattlefield.col(0) should be(Vector(Cell(0), Cell(0), Cell(0)))
@@ -65,60 +65,57 @@ class BattlefieldSpec extends AnyWordSpec with Matchers  {
     "initialized with a size of 1, which shoot is a miss on 0,0" should {
       val testBattlefield = new Battlefield(1)
       "have a 0 in 0,0 (no changes)" in {
-        testBattlefield.shoot(testBattlefield,0,0) should be(Battlefield(Matrix(Vector(Vector(Cell(0))))))
+        testBattlefield.cell(0,0).value should be(0)
+        testBattlefield.shoot(testBattlefield, 0, 0) should be(Battlefield(Matrix(Vector(Vector(Cell(3))))))
       }
     }
     "initialized with a size of 1, which shoot is a hit on 0,0" should {
       val testBattlefield = new Battlefield(1)
-      val testBFwithABoat = testBattlefield.set(0,0,1)
+      val testBFwithABoat = testBattlefield.set(0, 0, 1)
       "have a 2 (for hit) in 0,0" in {
-        testBFwithABoat.shoot(testBFwithABoat,0,0) should be(Battlefield(Matrix(Vector(Vector(Cell(2))))))
+        testBFwithABoat.shoot(testBFwithABoat, 0, 0) should be(Battlefield(Matrix(Vector(Vector(Cell(2))))))
+        }
       }
-    }
-    "initialized with a size of 1 and is NOT winning" should {
+      "initialized with a size of 1 and is NOT winning" should {
+        val testBattlefield = new Battlefield(1)
+        val testBFwithABoat = testBattlefield.set(0, 0, 1)
+        "return a false" in {
+          testBFwithABoat.isWinning(testBFwithABoat) should be(false)
+        }
+      }
+      "initialized with a size of 1 and is winning" should {
+        val testBattlefield = new Battlefield(1)
+        val testBFwithABoat = testBattlefield.set(0, 0, 2)
+        "return a true" in {
+          testBFwithABoat.isWinning(testBFwithABoat) should be(true)
+        }
+      }
+    "shoot a cell with value 2 (already hit)" should {
       val testBattlefield = new Battlefield(1)
-      val testBFwithABoat = testBattlefield.set(0,0,1)
-      "return a false" in {
-        testBFwithABoat.isWinning(testBFwithABoat) should be(false)
+      val testBFwithABoat = testBattlefield.set(0, 0, 2)
+      "change the value to 2" in {
+        testBFwithABoat.shoot(testBFwithABoat,0,0)
+        testBFwithABoat.cell(0,0).value should be(2)
       }
     }
-    "initialized with a size of 1 and is winning" should {
+    "shoot a cell with value 3" should {
       val testBattlefield = new Battlefield(1)
-      val testBFwithABoat = testBattlefield.set(0,0,2)
-      "return a true" in {
-        testBFwithABoat.isWinning(testBFwithABoat) should be(true)
+      val testBFwithABoat = testBattlefield.set(0, 0, 3)
+      "not change the value" in {
+        testBFwithABoat.shoot(testBFwithABoat,0,0)
+        testBFwithABoat.cell(0,0).value should be(3)
       }
     }
-/*
-    "calls start" should {
+    "shoot a cell with a unused value" should {
       val testBattlefield = new Battlefield(1)
-      val b1 = new Battlefield(1)
-      val b2 = new Battlefield(1)
-      "return a true" in {
-        testBattlefield.start(b1,b2)  should be("true")
+      val testBFwithABoat = testBattlefield.set(0, 0, 7)
+      "show a ? in the battlefield" in {
+        testBFwithABoat.shoot(testBFwithABoat,0,0)
+        testBFwithABoat.cell(0,0).toString should be("?")
       }
     }
-
-    "readLine" should {
-      val testBattlefield = new Battlefield(1)
-      val b1 = new Battlefield(1)
-      val b2 = new Battlefield(1)
-      val in = new ByteArrayInputStream("a1".getBytes)
-      "return a true" in {
-
-        //Console.withIn(in)
-        //StdIn.readLine() should be ("abc")
-
-        testBattlefield.start(b1,b2) //should be("true")
-        scala.io.StdIn.readLine(in)
-        //System.setIn(in)
-      }
     }
-
- */
-
-  }
-  /*
+    /*
     "BattlefieldString function" should {
       val nonEmptyBattlefieldString = Battlefield(0,0).playgroundString()
       "retrun a non empty String" in {
@@ -127,4 +124,5 @@ class BattlefieldSpec extends AnyWordSpec with Matchers  {
     }
   }
 */
+
 }
