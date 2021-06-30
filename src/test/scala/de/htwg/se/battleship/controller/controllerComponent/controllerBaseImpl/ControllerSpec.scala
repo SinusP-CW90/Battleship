@@ -130,15 +130,15 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       }
     }
     "initializes with different sizes" should {
-      /*
-      val controller2 = new Controller(new Battlefield(2),new Battlefield(2))
-      controller2.save()
-      controller2.load()
-      "save and load in Json and have the same sizeof 2" in {
-        controller2.pgP1L.size should be(2)
-      }
 
-       */
+      val controllerTest = new Controller(new Battlefield(2),new Battlefield(2))
+      controllerTest.createEmptyBattlefield(2)
+      controllerTest.save()
+      controllerTest.pgP1L = controllerTest.pgP1L.set(0, 0, 1)
+      controllerTest.load()
+      "save and load in Json and have the same sizeof 2" in {
+        controllerTest.pgP1L.size should be(2)
+      }
       val controller = new Controller(new Battlefield(3),new Battlefield(3))
       controller.save()
       controller.load()
@@ -242,6 +242,9 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.playerSite should be("l")
         controller.switchPlayer()
         controller.playerSite should be("r")
+        controller.switchPlayer()
+        controller.playerSite should be("l")
+        controller.playerSite ="r"
         controller.switchPlayer()
         controller.playerSite should be("l")
       }
