@@ -116,16 +116,16 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       controller.currentGameState should be("set Error2598")
     }
     "initialized with a size of 2" should {
-      val controller = new Controller(new Battlefield(2),new Battlefield(2))
-      controller.createEmptyBattlefield(2)
-      controller.pgP1L = controller.pgP1L.set(0, 0, 1)
-      controller.save()
-      controller.pgP1L = controller.pgP1L.set(0, 1, 2)
-      controller.load()
+      val controller2 = new Controller(new Battlefield(2),new Battlefield(2))
+      controller2.createEmptyBattlefield(2)
+      controller2.pgP1L = controller2.pgP1L.set(0, 0, 1)
+      controller2.save()
+      controller2.pgP1L = controller2.pgP1L.set(0, 1, 2)
+      controller2.load()
       "save and load in Json and have the same size and values" in {
-        //controller.pgP1L.size should be(2)
-        controller.pgP1L.cell(0,0).value should be(1)
-        controller.pgP1L.cell(0,1).toString should be(".")
+        controller2.pgP1L.size should be(2)
+        controller2.pgP1L.cell(0,0).value should be(1)
+        controller2.pgP1L.cell(0,1).toString should be(".")
       }
     }
     "initializes with different sizes" should {
