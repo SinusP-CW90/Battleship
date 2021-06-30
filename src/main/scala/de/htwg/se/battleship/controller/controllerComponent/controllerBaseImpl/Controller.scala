@@ -76,6 +76,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     gameState.handle(input)
     true
   }
+
  def createShip(shiptype: String){
     val ship = Ship(shiptype)
     ship.swim()

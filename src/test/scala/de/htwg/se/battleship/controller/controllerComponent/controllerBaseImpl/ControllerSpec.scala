@@ -224,6 +224,15 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.currentGameState  should be("start")
       }
     }
+    "have a case in the ShootState" should {
+      val controller = new Controller(new Battlefield(1),new Battlefield(1))
+      controller.currentGameState="shoot"
+      gameState.handle("shoot")
+      gameState.handle("test")
+      "should have a other input case" in {
+        controller.currentGameState  should be("shoot")
+      }
+    }
     "have a case in the WinState" should {
       val controller = new Controller(new Battlefield(1),new Battlefield(1))
       controller.currentGameState = "win"
