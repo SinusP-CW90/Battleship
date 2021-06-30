@@ -9,11 +9,14 @@ case class WinState(controller: ControllerInterface) extends State[GameState] {
       controller.playerSite match {
         case "l" => println(Console.RED + "BOOOOOOOOOOM!!!! Player 1 on the left Side wins the game."+ Console.RESET)
         case "r" => println(Console.RED + "BOOOOOOOOOOM!!!! Player 1 on the left Side wins the game."+ Console.RESET)
-        case _ => println(Console.RED + "Nobody wins the game :-( "+ Console.RESET)
+        //case _ => println(Console.RED + "Nobody wins the game :-( "+ Console.RESET)
       }
     }
+      /*
     else {
-      println("else im start State. Value: "+input)
+      println("else im win State. Value: "+input)
     }
+
+       */
   }
 }

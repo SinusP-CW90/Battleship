@@ -29,6 +29,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case "msw" => controller.createShip("mini");
       case "lsw" => controller.createShip("long");
       case "sw" => controller.createShip("default");
+      case "setL" => controller.setL(0,0,0)//for the Gui
       case "undo" => controller.undo();
       case "redo" => controller.redo();
       case "save" => controller.save();

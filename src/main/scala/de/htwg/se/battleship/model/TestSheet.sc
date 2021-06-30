@@ -181,4 +181,5 @@ pgP2R = pgP2R.shoot(pgP2R, 2, 1)
 pgP1L.playgroundString(pgP1L, pgP2R, "p1")
 pgP1L.isWinning(pgP2R)
 pgP1L.cell(1,1).value
-//pgP1L.start(pgP1L)
+
+var x = pgP1L.shoot(pgP1L, 1, 1)

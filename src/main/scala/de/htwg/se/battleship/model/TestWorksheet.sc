@@ -1,18 +1,17 @@
+import de.htwg.se.battleship.Battleship.controller
+val input ="111"
+val inputA ="a1"
 
-import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, Cell}
+input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt-1)
 
-import java.io.ByteArrayInputStream
+inputA.toList.filter(c => c != ' ').map(c => c.toString)
 
-var testBattlefield1 = new Battlefield(2)
-val testCell = Cell(0)
-val testCell1 = Cell(1)
-val testCell2 = Cell(2)
-var testBattlefield = testBattlefield1.set(1,1,7)
-var testBattlefieldR = testBattlefield1.set(0,0,7)
-
-
-object Singleton {
-  def singletonFunction:Unit = println("I am a singleton")
+input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
+  case row :: column :: value :: Nil => controller.setL(row, column, value)
 }
 
-Singleton.singletonFunction
+controller.setL(0, 0, 1)
+
+inputA.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString) match {
+  case row :: column :: Nil => controller.set(row, column)
+}

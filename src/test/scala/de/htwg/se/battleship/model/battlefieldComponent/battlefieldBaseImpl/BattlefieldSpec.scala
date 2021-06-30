@@ -90,6 +90,30 @@ class BattlefieldSpec extends AnyWordSpec with Matchers {
           testBFwithABoat.isWinning(testBFwithABoat) should be(true)
         }
       }
+    "shoot a cell with value 2 (already hit)" should {
+      val testBattlefield = new Battlefield(1)
+      val testBFwithABoat = testBattlefield.set(0, 0, 2)
+      "change the value to 2" in {
+        testBFwithABoat.shoot(testBFwithABoat,0,0)
+        testBFwithABoat.cell(0,0).value should be(2)
+      }
+    }
+    "shoot a cell with value 3" should {
+      val testBattlefield = new Battlefield(1)
+      val testBFwithABoat = testBattlefield.set(0, 0, 3)
+      "not change the value" in {
+        testBFwithABoat.shoot(testBFwithABoat,0,0)
+        testBFwithABoat.cell(0,0).value should be(3)
+      }
+    }
+    "shoot a cell with a unused value" should {
+      val testBattlefield = new Battlefield(1)
+      val testBFwithABoat = testBattlefield.set(0, 0, 7)
+      "show a ? in the battlefield" in {
+        testBFwithABoat.shoot(testBFwithABoat,0,0)
+        testBFwithABoat.cell(0,0).toString should be("?")
+      }
+    }
     }
     /*
     "BattlefieldString function" should {

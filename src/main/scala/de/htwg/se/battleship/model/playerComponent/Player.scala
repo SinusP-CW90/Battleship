@@ -7,5 +7,5 @@ case class Player(name: String = "Player Name") {
 
   def setDefaultPlayerNames(): Vector[Player] = Vector(Player("Player 1"), Player("Player 2"))
 
-  def playerNamesToString(names: Vector[Player]): String = "Hello " + names(0) + " and " + names(1)
+  def playerNamesToString(names: Vector[Player]): String = "Hello " + names(0) + " (left Side) and " + names(1) +" (right side)"
 }
