@@ -33,23 +33,11 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   def blockSize:Int = Math.sqrt(pgP1L.size).toInt
   def setPlayerNames(): String = Player().playerNamesToString(Player().setDefaultPlayerNames())
   def playgroundToString: String = pgP1L.battlefieldString(pgP1L, pgP2R)
-  /*
-  def switchPlayer():Unit={
-    if (playerSite=="l"){playerSite="r"}
-    else if (playerSite=="r"){playerSite="l"}
-  }
-*/
-  def switchPlayer():Unit = {
+  def switchPlayer:Unit = {
     playerSite match {
       case "l" => playerSite="r"
       case "r" => playerSite="l"
     }
-    println("Now Player: "+playerSite)
-  }
-
-  {
-    if (playerSite=="l"){playerSite="r"}
-    else if (playerSite=="r"){playerSite="l"}
     println("Now Player: "+playerSite)
   }
 
@@ -125,7 +113,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
         publish(new CellChanged)
       }
       else
-        currentGameState = "set Error" + row + col
+        //currentGameState = "set Error" + row + col
         gameState.handle("set Error" + row + col)
     }
   }
@@ -141,7 +129,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   def setL(row: Int, col: Int, value: Int): Unit = {
     undoManager.doStep(new SetCommand(row, col, value, this))
     gameState.handle("setShips")
-    //pgP2R.isWinning(pgP2R)
+    pgP2R.isWinning(pgP2R)
     publish(new CellChanged)
     //notifyObservers
   }
@@ -186,7 +174,6 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
         gameState.handle("LOADEDp2")
     }
     publish(BattlefieldSizeChanged(pgP1LOption.size))
-    //publish(new CellChanged)
   }
 
   def createRandomBattlefield(player:String,size: Int): Unit = {

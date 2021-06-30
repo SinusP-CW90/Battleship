@@ -1,14 +1,11 @@
 package de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.battleship.Battleship.controller.gameState
-import de.htwg.se.battleship.controller.controllerComponent.battleshipGameStates.{GameState, SetShipsState}
+import de.htwg.se.battleship.controller.controllerComponent.battleshipGameStates.SetShipsState
 import de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl.{Battlefield, Ship}
 import de.htwg.se.battleship.util.{Observer, UndoManager}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec._
-
-import java.nio.file.{Files, Paths}
-import scala.io.Source
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" when {
@@ -93,7 +90,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       controller.createRandomBattlefield("r", controller.battlefieldSize)
       controller.createRandomBattlefield("l", controller.battlefieldSize)
       controller.gameState.handle("shoot")
-      controller.switchPlayer()
+      controller.switchPlayer
       controller.set("a","1")
       controller.gameState.handle("win")
       controller.battlefieldSize should be(1)
@@ -113,7 +110,8 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       val controller = new Controller(miniPlayground,miniPlayground)
       controller.set("Z","99")
       controller.battlefieldSize should be(1)
-      controller.currentGameState should be("set Error2598")
+      controller.currentGameState should be("start")
+      //controller.currentGameState should be("set Error2598")
     }
 
     "initialized with a size of 2" should {
@@ -240,12 +238,12 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       val controller = new Controller(new Battlefield(2),new Battlefield(2))
       "with you should switch the player from left to right and left again" in {
         controller.playerSite should be("l")
-        controller.switchPlayer()
+        controller.switchPlayer
         controller.playerSite should be("r")
-        controller.switchPlayer()
+        controller.switchPlayer
         controller.playerSite should be("l")
         controller.playerSite ="r"
-        controller.switchPlayer()
+        controller.switchPlayer
         controller.playerSite should be("l")
       }
     }

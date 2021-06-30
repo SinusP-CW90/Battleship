@@ -16,7 +16,7 @@ case class SetShipsState(controller: ControllerInterface) extends State[GameStat
           println(controller.shipsToSetP1)
 
           if (controller.shipsToSetP1 == 0) {
-            println("Now it is Player 2's turn")
+            println(Console.RED + "Now it is Player 2's turn"+Console.RESET)
             controller.playerSite = "r"
           }
         }
