@@ -69,6 +69,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     pgP2R = new Battlefield(newSize)
     gameState.handle("resize")
     publish(new BattlefieldSizeChanged(newSize))
+    publish(new GridSizeChanged(newSize))
     //publish(new CellChanged)
   }
 

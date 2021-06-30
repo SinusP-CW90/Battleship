@@ -5,14 +5,14 @@ import de.htwg.se.battleship.controller.controllerComponent.ControllerInterface
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
-import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.{BattlefieldSizeChanged, CellChanged}
+import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.GridSizeChanged
 import de.htwg.se.battleship.util.Observer
 
 import javax.swing.BorderFactory
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
-class SwingGui(controller: ControllerInterface) extends Frame{
+class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   listenTo(controller)
 
@@ -21,18 +21,18 @@ class SwingGui(controller: ControllerInterface) extends Frame{
   var cells: Array[Array[CellPanel]] = Array.ofDim[CellPanel](controller.battlefieldSize, controller.battlefieldSize)
 
   def gridPanel: GridPanel = new GridPanel(controller.battlefieldSize, controller.blockSize) {
-        border = LineBorder(java.awt.Color.BLACK, 5)
-        for {
-          innerRow <- 0 until controller.battlefieldSize
-          innerColumn <- 0 until controller.battlefieldSize
-        } {
-          val x = innerRow
-          val y = innerColumn
-          val cellPanel = new CellPanel(x, y, controller)
-          cells(x)(y) = cellPanel
-          contents += cellPanel
-          listenTo(cellPanel)
-        }
+    border = LineBorder(java.awt.Color.BLACK, 5)
+    for {
+      innerRow <- 0 until controller.battlefieldSize
+      innerColumn <- 0 until controller.battlefieldSize
+    } {
+      val x = innerRow
+      val y = innerColumn
+      val cellPanel = new CellPanel(x, y, controller)
+      cells(x)(y) = cellPanel
+      contents += cellPanel
+      listenTo(cellPanel)
+    }
   }
 
   def labelABC: GridPanel = new GridPanel(controller.battlefieldSize, 1) {
@@ -60,7 +60,6 @@ class SwingGui(controller: ControllerInterface) extends Frame{
 
   contents = new BorderPanel {
     add(gridPanel, BorderPanel.Position.Center)
-    add(gridPanel, BorderPanel.Position.West)
     add(label123, BorderPanel.Position.North)
     add(label123, BorderPanel.Position.South)
     add(labelABC, BorderPanel.Position.West)
@@ -85,23 +84,23 @@ class SwingGui(controller: ControllerInterface) extends Frame{
     }
     contents += new Menu("Options") {
       mnemonic = Key.O
-      contents += new MenuItem(Action("Size 1*1") { controller.createEmptyBattlefield(1) })
+      contents += new MenuItem(Action("Size 1*1") { controller.resize(1) })
       contents += new MenuItem(Action("Size 2*2") { controller.resize(2) })
-      contents += new MenuItem(Action("Size 3*3") { controller.createEmptyBattlefield(3) })
-      contents += new MenuItem(Action("Size 4*4") { controller.createEmptyBattlefield(4) })
-      contents += new MenuItem(Action("Size 5*5") { controller.createEmptyBattlefield(5) })
-      contents += new MenuItem(Action("Size 6*6") { controller.createEmptyBattlefield(6) })
-      contents += new MenuItem(Action("Size 9*9") { controller.createEmptyBattlefield(9) })
+      contents += new MenuItem(Action("Size 3*3") { controller.resize(3) })
+      contents += new MenuItem(Action("Size 4*4") { controller.resize(4) })
+      contents += new MenuItem(Action("Size 5*5") { controller.resize(5) })
+      contents += new MenuItem(Action("Size 6*6") { controller.resize(6) })
+      contents += new MenuItem(Action("Size 9*9") { controller.resize(9) })
 
     }
   }
 
   visible = true
-  redraw
+  //redraw
 
   reactions += {
-    case event: BattlefieldSizeChanged => resize()
-    case event: CellChanged     => redraw
+    case event: GridSizeChanged => resize()
+    //case event: CellChanged     => redraw
   }
 
   def resize(): Unit = {
@@ -116,15 +115,15 @@ class SwingGui(controller: ControllerInterface) extends Frame{
       add(testline1, BorderPanel.Position.South)
     }
   }
-
-  def redraw = {
-    for {
-      row <- 0 until controller.battlefieldSize
-      column <- 0 until controller.battlefieldSize
-    } cells(row)(column)
-    //statusline.text = controller.statusText
-    repaint
-  }
-
-  //override def update: Boolean = {true}
+  /*
+    def redraw = {
+      for {
+        row <- 0 until controller.battlefieldSize
+        column <- 0 until controller.battlefieldSize
+      } cells(row)(column).redraw
+      statusline.text = controller.statusText
+      repaint
+    }
+  */
+  override def update: Boolean = {true}
 }

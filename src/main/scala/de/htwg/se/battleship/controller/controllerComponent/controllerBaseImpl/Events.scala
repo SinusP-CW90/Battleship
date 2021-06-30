@@ -4,3 +4,4 @@ import scala.swing.event.Event
 
 class CellChanged extends Event
 case class BattlefieldSizeChanged(newSize: Int) extends Event
+case class GridSizeChanged(newSize: Int) extends Event
