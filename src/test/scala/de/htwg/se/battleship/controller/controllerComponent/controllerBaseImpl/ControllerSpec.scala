@@ -117,6 +117,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     }
     "initialized with a size of 2" should {
       val controller = new Controller(new Battlefield(2),new Battlefield(2))
+      controller.createEmptyBattlefield(2)
       controller.pgP1L = controller.pgP1L.set(0, 0, 1)
       controller.save()
       controller.pgP1L = controller.pgP1L.set(0, 1, 2)
