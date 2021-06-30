@@ -140,6 +140,15 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     //notifyObservers
   }
 
+  def setInGUI(playerSite:String, row: Int, col: Int): Unit = {
+    if (checkIsInRange(row: Int, col: Int)) {
+      undoManager.doStep(new PlayerSetCommand(playerSite, row, col, 1, this))
+      gameState.handle("setShips")
+      pgP2R.isWinning(pgP2R)
+      publish(new CellChanged)
+    }
+  }
+
   def undo(): Unit = {
     undoManager.undoStep()
     gameState.handle("UNDO")

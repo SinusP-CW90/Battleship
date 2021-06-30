@@ -8,7 +8,8 @@ import scala.swing.event._
 import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.GridSizeChanged
 import de.htwg.se.battleship.util.Observer
 
-import javax.swing.BorderFactory
+import java.awt.Image
+import javax.swing.{BorderFactory, ImageIcon}
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
@@ -28,7 +29,23 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     } {
       val x = innerRow
       val y = innerColumn
-      val cellPanel = new CellPanel(x, y, controller)
+      //val cellPanel = new CellPanel(x, y, controller)
+      val cellPanel = new CellPanel("l",x, y, controller)
+      cells(x)(y) = cellPanel
+      contents += cellPanel
+      listenTo(cellPanel)
+    }
+  }
+
+  def gridPanelTest: GridPanel = new GridPanel(controller.battlefieldSize, controller.blockSize) {
+    border = LineBorder(java.awt.Color.BLACK, 5)
+    for {
+      innerRow <- 0 until controller.battlefieldSize
+      innerColumn <- 0 until controller.battlefieldSize
+    } {
+      val x = innerRow
+      val y = innerColumn
+      val cellPanel = new CellPanel("r",x, y, controller)
       cells(x)(y) = cellPanel
       contents += cellPanel
       listenTo(cellPanel)
@@ -55,18 +72,64 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     }
   }
 
+  def labelPanel: BoxPanel = new BoxPanel(orientation = Orientation.Horizontal) {
+    contents += label123
+    contents += label123
+  }
+
+  def statusPanel: BoxPanel = new BoxPanel(orientation = Orientation.Vertical) {
+    contents += statusline
+    contents += testline1
+  }
+
+  def titlePanel = new FlowPanel {
+    contents += new Label()
+    {
+      icon = new ImageIcon(new ImageIcon("src/main/resources/battleship.jpg").getImage.getScaledInstance(700, 200, Image.SCALE_DEFAULT))
+    }
+  }
+
+  def bPanel = new BoxPanel(Orientation.Vertical) {
+        contents += new Label {
+          // successfully displays my logo so no resource issues.
+          icon = new ImageIcon(getClass.getResource("/ship1.png"))
+        }
+      }
+
+
+
+  def NorthPanel: BoxPanel = new BoxPanel(orientation = Orientation.Vertical) {
+    contents += titlePanel
+    contents += labelPanel
+  }
+
+
+
   val statusline = new TextField(controller.currentGameState, 20)
   val testline1 = new TextField("\n controller.battlefieldSize: "+controller.battlefieldSize+"\n controller.blockSize: "+controller.blockSize, 20)
 
   contents = new BorderPanel {
-    add(gridPanel, BorderPanel.Position.Center)
-    add(label123, BorderPanel.Position.North)
-    add(label123, BorderPanel.Position.South)
+    add(new BoxPanel(orientation = Orientation.Horizontal) {
+      contents += gridPanel
+      contents += gridPanelTest
+    }, BorderPanel.Position.Center)
+    add(new BoxPanel(orientation = Orientation.Horizontal) {
+      contents += NorthPanel
+      //contents += bPanel
+      //contents += label123
+    }, BorderPanel.Position.North)
+    add(new BoxPanel(orientation = Orientation.Vertical) {
+      contents += labelPanel
+      contents += statusPanel
+    }, BorderPanel.Position.South)
+
     add(labelABC, BorderPanel.Position.West)
     add(labelABC, BorderPanel.Position.East)
-    add(statusline, BorderPanel.Position.South)
-    add(testline1, BorderPanel.Position.South)
+
   }
+
+
+
 
   menuBar = new MenuBar {
     contents += new Menu("File") {

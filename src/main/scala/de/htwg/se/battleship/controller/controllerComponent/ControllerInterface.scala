@@ -27,6 +27,7 @@ trait ControllerInterface extends Publisher{
   def cell(row:Int, col:Int):CellInterface
   //def set(player:String,row: Int, col: Int, value: Int):Unit
   def set(rowString: String, colString: String):Unit
+  def setInGUI(playerSite:String, row: Int, col: Int): Unit
   def checkIsInRange(row: Int, col: Int): Boolean
   def setL(row:Int, col:Int, value:Int):Unit
   def createShip(shiptype: String):Unit
