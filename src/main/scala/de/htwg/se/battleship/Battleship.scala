@@ -9,12 +9,11 @@ import de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl.C
 import scala.io.StdIn.readLine
 
 object Battleship {
-  //val battlefieldSize = 3
 
   val injector: Injector = Guice.createInjector(new BattleshipModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
-
   val tui = new Tui(controller)
+  //TODO activate GUI - it is deactivated cause fail/Error in travis CI Build
   //val gui = new SwingGui(controller)
   controller.publish(new CellChanged)
 

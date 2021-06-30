@@ -284,6 +284,13 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.currentGameState should be("test")
       }
     }
+    "test setInGUI() in the Controller" should {
+      val controller = new Controller(new Battlefield(4),new Battlefield(4))
+      "should have a cell value of 1 in the selected cell" in {
+        controller.setInGUI("l",0,0)
+        controller.pgP1L.cell(0,0).value should be(1)
+      }
+    }
     //test for case class coverage
     "have a GameState" should {
       val controller = new Controller(new Battlefield(1),new Battlefield(1))

@@ -1,12 +1,17 @@
 package de.htwg.se.battleship.aview.gui
 
+import javax.swing.ImageIcon
+import java.awt.Image
 import scala.swing._
 import scala.swing.event._
 import scala.swing.Swing.LineBorder
 import de.htwg.se.battleship.controller.controllerComponent.{CellChanged, ControllerInterface}
 import de.htwg.se.battleship.model.battlefieldComponent.CellInterface
 
-class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
+import javax.swing.ImageIcon
+import scala.io.Source
+
+class CellPanel(player:String, row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
 
   val cellColor = new Color(0, 0, 255)
 
@@ -33,10 +38,20 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
             border = LineBorder(java.awt.Color.BLUE, 5)
             repaint
           case MouseClicked(src, pt, mod, clicks, pops) =>
-            controller.setL(row, column, value)
+            //controller.setL(row, column, value)
+            controller.setInGUI(player, row, column)
             border = LineBorder(java.awt.Color.GREEN, 5)
             //text = if (controller.available(row, column).contains(value)) value.toString else " "
-            text = row.toString +" " +column.toString
+                //text = controller.cell(row,column).toString
+            ////text = row.toString +" " +column.toString
+            controller.cell(row,column).value match{
+              case 0 => text = controller.cell(row,column).toString
+              case 1 => icon = new ImageIcon(new ImageIcon("src/main/resources/ship2.png").getImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT))
+              case 2 => icon = new ImageIcon(new ImageIcon("src/main/resources/sinkingShip.png").getImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT))
+              case 3 => icon = new ImageIcon(new ImageIcon("src/main/resources/miss.png").getImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT))
+            }
+
+
             repaint
         }
       }

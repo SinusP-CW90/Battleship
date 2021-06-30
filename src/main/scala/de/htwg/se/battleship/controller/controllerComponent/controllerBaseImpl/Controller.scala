@@ -61,14 +61,15 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
                 pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-9x9"))
       case _ =>
     }
-    publish(BattlefieldSizeChanged(size))
+    publish(new BattlefieldSizeChanged(size))
   }
 
   def resize(newSize:Int) :Unit = {
     pgP1L = new Battlefield(newSize)
     pgP2R = new Battlefield(newSize)
     gameState.handle("resize")
-    publish(BattlefieldSizeChanged(newSize))
+    publish(new BattlefieldSizeChanged(newSize))
+    publish(new GridSizeChanged(newSize))
     //publish(new CellChanged)
   }
 
@@ -137,6 +138,15 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     pgP2R.isWinning(pgP2R)
     publish(new CellChanged)
     //notifyObservers
+  }
+
+  def setInGUI(playerSite:String, row: Int, col: Int): Unit = {
+    if (checkIsInRange(row: Int, col: Int)) {
+      undoManager.doStep(new PlayerSetCommand(playerSite, row, col, 1, this))
+      gameState.handle("setShips")
+      pgP2R.isWinning(pgP2R)
+      publish(new CellChanged)
+    }
   }
 
   def undo(): Unit = {
