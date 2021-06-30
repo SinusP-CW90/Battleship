@@ -256,13 +256,32 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.playerSite should be("l")
       }
     }
-    "test come in the win state area of set()" should {
+    "test the playerIsWinning function" should {
       val controller = new Controller(new Battlefield(1),new Battlefield(1))
-      "in the set() funktion" in {
+      "in the Controller" in {
         controller.createRandomBattlefield("r", controller.battlefieldSize)
         controller.createRandomBattlefield("l", controller.battlefieldSize)
         controller.gameState.handle("shoot")
         controller.set("a","1")
+        controller.playerIsWinning()
+        controller.switchPlayer
+        controller.playerIsWinning()
+        controller.currentGameState should be("shoot")
+        controller.currentGameState="test"
+        controller.gameState.handle("test")
+        controller.currentGameState should be("test")
+      }
+    }
+    "test other input case " should {
+      val controller = new Controller(new Battlefield(4),new Battlefield(4))
+      "in ShootState" in {
+        controller.createRandomBattlefield("r", controller.battlefieldSize)
+        controller.createRandomBattlefield("l", controller.battlefieldSize)
+        controller.gameState.handle("shoot")
+        controller.set("a","1")
+        controller.currentGameState="test"
+        controller.gameState.handle("test")
+        controller.currentGameState should be("test")
       }
     }
     //test for case class coverage

@@ -96,15 +96,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     if (currentGameState == "shoot") {
       undoManager.doStep(new PlayerShootCommand(playerSite, row, col, this))
       gameState.handle("shoot")
-      playerSite match {
-        case "l" => if (pgP2R.isWinning(pgP2R)) {
-          gameState.handle("win")
-          start("win")
-        }
-        case "r" => if (pgP1L.isWinning(pgP1L)) {
-          gameState.handle("win")
-        }
-      }
+      playerIsWinning()
       publish(new CellChanged)
     }
     if ((currentGameState == "setShips")|(currentGameState == "start")) {
@@ -125,6 +117,18 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
       true
     }
     else false
+  }
+
+  def playerIsWinning():Unit ={
+    playerSite match {
+      case "l" => if (pgP2R.isWinning(pgP2R)) {
+        gameState.handle("win")
+        start("win")
+      }
+      case "r" => if (pgP1L.isWinning(pgP1L)) {
+        gameState.handle("win")
+      }
+    }
   }
 
   def setL(row: Int, col: Int, value: Int): Unit = {
