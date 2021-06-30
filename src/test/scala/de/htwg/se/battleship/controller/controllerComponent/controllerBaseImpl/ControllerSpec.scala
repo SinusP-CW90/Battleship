@@ -18,14 +18,14 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         override def update: Boolean = {updated = true; updated}
       }
     }
-    "test to set the size of the battefield to 1" in {
+    "test to set the size of the battlefield to 1" in {
       val noPlayground = new Battlefield(1)
       val controller = new Controller(noPlayground,noPlayground)
       controller.save()
       controller.load()
       controller.battlefieldSize should be(1)
     }
-    "test to set the size of the battefield to 0" in {
+    "test to set the size of the battlefield to 0" in {
       val noPlayground = new Battlefield(0)
       val controller = new Controller(noPlayground,noPlayground)
       controller.save()
@@ -97,7 +97,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       controller.pgP1L.isWinning(controller.pgP1L)should be(true)
     }
     //todo - go in the other case
-    "cover the case whitch noch player win the game" in {
+    "cover the case which noch player win the game" in {
       val miniPlayground = new Battlefield(1)
       val controller = new Controller(miniPlayground,miniPlayground)
       controller.playerSite="test"
@@ -254,6 +254,15 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.playerSite ="r"
         controller.switchPlayer
         controller.playerSite should be("l")
+      }
+    }
+    "test come in the win state area of set()" should {
+      val controller = new Controller(new Battlefield(1),new Battlefield(1))
+      "in the set() funktion" in {
+        controller.createRandomBattlefield("r", controller.battlefieldSize)
+        controller.createRandomBattlefield("l", controller.battlefieldSize)
+        controller.gameState.handle("shoot")
+        controller.set("a","1")
       }
     }
     //test for case class coverage

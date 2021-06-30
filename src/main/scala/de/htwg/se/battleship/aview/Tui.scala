@@ -15,6 +15,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
     input match {
       case "q" =>
       case "set" => println(controller.setPlayerNames());
+      //case "testSize"|"1x1" => controller.createEmptyBattlefield(1);
       case "mini"|"2x2"|"set size mini" => controller.createEmptyBattlefield(2);
       case "s"|"small"|"3x3"|"set size small" => controller.createEmptyBattlefield(3);
       case "tiny"|"4x4"|"set size tiny" => controller.createEmptyBattlefield(4);
