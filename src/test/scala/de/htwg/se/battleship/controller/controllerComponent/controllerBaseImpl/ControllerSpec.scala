@@ -187,12 +187,24 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       val controller = new Controller(new Battlefield(2),new Battlefield(2))
       val undoManager = new UndoManager
       undoManager.doStep(new PlayerShootCommand("r",0,0, controller))
-      "should do, undo and redo correctly" in {
+      "should do, undo and redo correctly for the right player" in {
         controller.pgP1L.cell(0,0).value should be(3)
         undoManager.undoStep()
         controller.pgP1L.cell(0,0).value should be(0)
         undoManager.redoStep()
         controller.pgP1L.cell(0,0).value should be(3)
+      }
+    }
+    "have a PlayerShootCommand" should {
+      val controller = new Controller(new Battlefield(2),new Battlefield(2))
+      val undoManager = new UndoManager
+      undoManager.doStep(new PlayerShootCommand("l",0,0, controller))
+      "should do, undo and redo correctly for the left player" in {
+        controller.pgP2R.cell(0,0).value should be(3)
+        undoManager.undoStep()
+        controller.pgP2R.cell(0,0).value should be(0)
+        undoManager.redoStep()
+        controller.pgP2R.cell(0,0).value should be(3)
       }
     }
 
@@ -222,6 +234,16 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       gameState.handle("test")
       "should have a other input case" in {
         controller.currentGameState  should be("test")
+      }
+    }
+    "have a function switch player" should {
+      val controller = new Controller(new Battlefield(2),new Battlefield(2))
+      "with you should switch the player from left to right and left again" in {
+        controller.playerSite should be("l")
+        controller.switchPlayer()
+        controller.playerSite should be("r")
+        controller.switchPlayer()
+        controller.playerSite should be("l")
       }
     }
     //test for case class coverage
