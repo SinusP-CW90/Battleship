@@ -13,7 +13,7 @@ object Battleship {
   val injector: Injector = Guice.createInjector(new BattleshipModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
-  val gui = new SwingGui(controller)
+  //val gui = new SwingGui(controller)
   controller.publish(new CellChanged)
 
   def main(args: Array[String]): Unit = {
