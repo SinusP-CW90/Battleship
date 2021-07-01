@@ -13,7 +13,7 @@ object Battleship {
   val injector: Injector = Guice.createInjector(new BattleshipModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
-  //TODO activate GUI - it is deactivated cause fail/Error in travis CI Build
+  //TODO activate GUI - it is deactivated cause fail/Error in travis CI Build - please remove the // for use the GUI
   //val gui = new SwingGui(controller)
   controller.publish(new CellChanged)
 
