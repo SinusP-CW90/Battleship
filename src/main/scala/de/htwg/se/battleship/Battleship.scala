@@ -14,7 +14,7 @@ object Battleship {
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
   //TODO activate GUI - it is deactivated cause fail/Error in travis CI Build - please remove the // for use the GUI
-  //val gui = new SwingGui(controller)
+  val gui = new SwingGui(controller)
   controller.publish(new CellChanged)
 
   def main(args: Array[String]): Unit = {

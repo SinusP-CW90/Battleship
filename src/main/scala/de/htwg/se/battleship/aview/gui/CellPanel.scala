@@ -43,7 +43,6 @@ class CellPanel(player:String, row: Int, column: Int, controller: ControllerInte
             border = LineBorder(java.awt.Color.GREEN, 5)
             //text = if (controller.available(row, column).contains(value)) value.toString else " "
                 //text = controller.cell(row,column).toString
-            ////text = row.toString +" " +column.toString
             controller.cell(row,column).value match{
               case 0 => text = controller.cell(row,column).toString
               case 1 => icon = new ImageIcon(new ImageIcon("src/main/resources/ship2.png").getImage.getScaledInstance(40, 40, Image.SCALE_DEFAULT))

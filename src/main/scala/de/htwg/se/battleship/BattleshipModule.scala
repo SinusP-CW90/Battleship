@@ -23,6 +23,9 @@ class BattleshipModule extends AbstractModule with ScalaModule{
 
     bind[BattlefieldCreateStrategyTemplate].annotatedWithName("RandomStrategy").toInstance(new BattlefieldCreateRandomStrategy)
 
+    bind[FileIOInterface].to[fileIOJsonImpl.FileIOJson]
+    //bind[FileIOInterface].to[fileIOXmlImpl.FileIOXml]
+
     bind[BattlefieldInterface].annotatedWithName("p1-2x2").toInstance(new Battlefield(2))
     bind[BattlefieldInterface].annotatedWithName("p2-2x2").toInstance(new Battlefield(2))
     bind[BattlefieldInterface].annotatedWithName("p1-3x3").toInstance(new Battlefield(3))
@@ -36,7 +39,6 @@ class BattleshipModule extends AbstractModule with ScalaModule{
     bind[BattlefieldInterface].annotatedWithName("p1-9x9").toInstance(new Battlefield(9))
     bind[BattlefieldInterface].annotatedWithName("p2-9x9").toInstance(new Battlefield(9))
 
-    bind[FileIOInterface].to[fileIOJsonImpl.FileIOJson]
-    //bind[FileIOInterface].to[fileIOXmlImpl.FileIOXml]
+
   }
 }
