@@ -33,6 +33,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   def blockSize:Int = Math.sqrt(pgP1L.size).toInt
   def setPlayerNames(): String = Player().playerNamesToString(Player().setDefaultPlayerNames())
   def playgroundToString: String = pgP1L.battlefieldString(pgP1L, pgP2R)
+  //def playgroundToStringWOColor: String = pgP1L.battlefieldStringWOColor(pgP1L, pgP2R)
   def switchPlayer:Unit = {
     playerSite match {
       case "l" => playerSite="r"

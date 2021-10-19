@@ -92,7 +92,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
         replaceFirst("R", ("A"(0) + col).toChar.toString))
       box
     }
-
+/*
     /**colorBattlefield colors the playing area blue, which is supposed to symbolize the water */
     def colorBattlefield(battlefield: String): String = {
       val cB = battlefield.replace(" . ", "\u001b[48;5;20m . \u001b[0m")
@@ -100,5 +100,8 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
     }
 
     colorBattlefield(battlefieldToString())
+
+ */
+    battlefieldToString()
   }
 }
