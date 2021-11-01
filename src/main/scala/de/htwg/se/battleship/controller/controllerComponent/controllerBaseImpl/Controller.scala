@@ -43,8 +43,10 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   }
 
   def cell(row:Int, col:Int): CellInterface = pgP2R.cell(row,col)
+  def cellL(row:Int, col:Int): CellInterface = pgP1L.cell(row,col)
 
   def isSet(row:Int, col:Int):Boolean = pgP1L.cell(row, col).isSet
+  def isSetR(row:Int, col:Int):Boolean = pgP2R.cell(row, col).isSet
 
   def createEmptyBattlefield(size: Int):Unit = {
     size match {
@@ -62,16 +64,16 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
                 pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-9x9"))
       case _ =>
     }
-    publish(new BattlefieldSizeChanged(size))
+    publish(BattlefieldSizeChanged(size))
   }
 
   def resize(newSize:Int) :Unit = {
     pgP1L = new Battlefield(newSize)
     pgP2R = new Battlefield(newSize)
     gameState.handle("resize")
-    publish(new BattlefieldSizeChanged(newSize))
-    publish(new GridSizeChanged(newSize))
-    //publish(new CellChanged)
+    publish(BattlefieldSizeChanged(newSize))
+    publish(GridSizeChanged(newSize))
+    //publish(CellChanged)
   }
 
   def start(input: String): Boolean = {
@@ -79,7 +81,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     true
   }
 
- def createShip(shiptype: String){
+ def createShip(shiptype: String): Unit = {
     val ship = Ship(shiptype)
     ship.swim()
   }
