@@ -25,6 +25,7 @@ trait ControllerInterface extends Publisher{
   def load(): Unit
   def resize(newSize:Int):Unit
   def cell(row:Int, col:Int):CellInterface
+  def cellL(row:Int, col:Int):CellInterface
   //def set(player:String,row: Int, col: Int, value: Int):Unit
   def set(rowString: String, colString: String):Unit
   def setInGUI(playerSite:String, row: Int, col: Int): Unit
@@ -32,6 +33,7 @@ trait ControllerInterface extends Publisher{
   def setL(row:Int, col:Int, value:Int):Unit
   def createShip(shiptype: String):Unit
   def isSet(row:Int, col:Int):Boolean
+  def isSetR(row:Int, col:Int):Boolean
   def playgroundToString:String
   //def gameStatus:GameState
 }
