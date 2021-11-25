@@ -2,6 +2,7 @@ package de.htwg.se.battleship.controller.controllerComponent
 
 import de.htwg.se.battleship.controller.controllerComponent.battleshipGameStates.GameState
 import de.htwg.se.battleship.model.battlefieldComponent.CellInterface
+import play.api.libs.json.JsValue
 
 import scala.swing.Publisher
 
@@ -22,6 +23,7 @@ trait ControllerInterface extends Publisher{
   def undo():Unit
   def redo():Unit
   def save(): Unit
+  def gridToJson: JsValue
   def load(): Unit
   def resize(newSize:Int):Unit
   def cell(row:Int, col:Int):CellInterface
