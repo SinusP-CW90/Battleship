@@ -1,6 +1,7 @@
 package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 
-import de.htwg.se.battleship.model.battlefieldComponent.BattlefieldInterface
+import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
+import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
 
 /**The class Battlefield represents the Playground of one Player.
  * @param cells The cells value is a 2 dimensional Vector of all cells.
@@ -104,4 +105,28 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
  */
     battlefieldToString()
   }
+
+
+  //new
+  implicit val cellWrites: Writes[Cell] = (cell: CellInterface) => Json.obj(
+    "value" -> cell.value
+  )
+
+  def toJson:JsValue = {
+    Json.obj(
+      "grid" -> Json.obj(
+        "size" -> JsNumber(size),
+        "cells" -> Json.toJson(
+          for {row <- 0 until size;
+               col <- 0 until size} yield {
+            Json.obj(
+              "row" -> row,
+              "col" -> col,
+              "cell" -> Json.toJson(cell(row, col)))
+          }
+        )
+      )
+    )
+  }
+
 }

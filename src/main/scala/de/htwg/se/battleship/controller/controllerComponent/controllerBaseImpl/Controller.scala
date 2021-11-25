@@ -11,6 +11,7 @@ import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, C
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
 import de.htwg.se.battleship.model.playerComponent.Player
 import de.htwg.se.battleship.util.UndoManager
+import play.api.libs.json.JsValue
 
 import scala.swing.Publisher
 
@@ -171,6 +172,8 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     gameState.handle("SAVED")
     publish(new CellChanged)
   }
+
+  def gridToJson: JsValue = pgP1L.toJson
 
   def load(): Unit = {
     val pgP1LOption = fileIo.load("battlefiledP1")
