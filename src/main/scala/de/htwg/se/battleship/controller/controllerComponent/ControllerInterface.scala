@@ -38,6 +38,7 @@ trait ControllerInterface extends Publisher{
   def isSetR(row:Int, col:Int):Boolean
   def playgroundToString:String
   //def gameStatus:GameState
+  def test(): Unit
 }
 
 
