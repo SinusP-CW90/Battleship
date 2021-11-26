@@ -11,6 +11,7 @@ trait BattlefieldInterface {
   def isWinning(pg: BattlefieldInterface): Boolean
   def battlefieldString(playgroundLeft: BattlefieldInterface, playgroundRight: BattlefieldInterface): String
   //new
+  def test(): Unit
   def toJson: JsValue;
 }
 

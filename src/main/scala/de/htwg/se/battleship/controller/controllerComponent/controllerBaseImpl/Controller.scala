@@ -175,6 +175,8 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
 
   def gridToJson: JsValue = pgP1L.toJson
 
+  def test(): Unit = {}
+
   def load(): Unit = {
     val pgP1LOption = fileIo.load("battlefiledP1")
     val pgP2ROption = fileIo.load("battlefiledP2")
