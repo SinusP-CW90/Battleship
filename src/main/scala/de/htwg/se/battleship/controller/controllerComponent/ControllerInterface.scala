@@ -23,8 +23,8 @@ trait ControllerInterface extends Publisher{
   def undo():Unit
   def redo():Unit
   def save(): Unit
-  def gridToJson: JsValue
-  def sidesToJson: JsValue
+
+  def battlefieldSidesToJson: JsValue
 
   def load(): Unit
   def resize(newSize:Int):Unit

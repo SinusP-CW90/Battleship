@@ -173,9 +173,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     publish(new CellChanged)
   }
 
-  def gridToJson: JsValue = pgP1L.toJson
-
-  def sidesToJson:JsValue = {
+  def battlefieldSidesToJson:JsValue = {
     Json.obj(
       "battlefield" -> Json.obj(
         "leftSide" -> pgP1L.toJson,
