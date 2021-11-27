@@ -11,7 +11,7 @@ import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, C
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
 import de.htwg.se.battleship.model.playerComponent.Player
 import de.htwg.se.battleship.util.UndoManager
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsNumber, JsValue, Json}
 
 import scala.swing.Publisher
 
@@ -174,6 +174,15 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   }
 
   def gridToJson: JsValue = pgP1L.toJson
+
+  def sidesToJson:JsValue = {
+    Json.obj(
+      "battlefield" -> Json.obj(
+        "leftSide" -> pgP1L.toJson,
+        "rightSide" -> pgP1L.toJson
+      )
+    )
+}
 
   def test(): Unit = {}
 

@@ -24,6 +24,8 @@ trait ControllerInterface extends Publisher{
   def redo():Unit
   def save(): Unit
   def gridToJson: JsValue
+  def sidesToJson: JsValue
+
   def load(): Unit
   def resize(newSize:Int):Unit
   def cell(row:Int, col:Int):CellInterface
