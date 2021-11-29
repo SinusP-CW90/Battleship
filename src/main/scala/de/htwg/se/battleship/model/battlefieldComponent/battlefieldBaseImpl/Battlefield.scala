@@ -114,8 +114,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
 
   def toJson:JsValue = {
     Json.obj(
-      "grid" -> Json.obj(
-        "size" -> JsNumber(size),
+      "size" -> JsNumber(size),
         "cells" -> Json.toJson(
           for {row <- 0 until size;
                col <- 0 until size} yield {
@@ -125,7 +124,6 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
               "cell" -> Json.toJson(cell(row, col)))
           }
         )
-      )
     )
   }
 
