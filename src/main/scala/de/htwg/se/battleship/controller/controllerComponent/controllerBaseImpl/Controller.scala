@@ -137,6 +137,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   }
 
   def setL(row: Int, col: Int, value: Int): Unit = {
+    println("row " +row + " col " +col +" value: "+value )
     undoManager.doStep(new SetCommand(row, col, value, this))
     gameState.handle("setShips")
     pgP2R.isWinning(pgP2R)
