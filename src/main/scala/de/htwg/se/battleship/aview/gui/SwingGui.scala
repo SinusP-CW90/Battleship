@@ -169,13 +169,23 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   def resize(): Unit = {
     cells = Array.ofDim[CellPanel](controller.battlefieldSize, controller.battlefieldSize)
     contents = new BorderPanel {
-      add(gridPanel, BorderPanel.Position.Center)
-      add(label123, BorderPanel.Position.North)
-      add(label123, BorderPanel.Position.South)
+      add(new BoxPanel(orientation = Orientation.Horizontal) {
+        contents += gridPanel
+        contents += gridPanelTest
+      }, BorderPanel.Position.Center)
+      add(new BoxPanel(orientation = Orientation.Horizontal) {
+        contents += NorthPanel
+        //contents += bPanel
+        //contents += label123
+      }, BorderPanel.Position.North)
+      add(new BoxPanel(orientation = Orientation.Vertical) {
+        contents += labelPanel
+        contents += statusPanel
+      }, BorderPanel.Position.South)
+
       add(labelABC, BorderPanel.Position.West)
       add(labelABC, BorderPanel.Position.East)
-      add(statusline, BorderPanel.Position.South)
-      add(testline1, BorderPanel.Position.South)
+
     }
   }
   /*

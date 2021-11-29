@@ -17,8 +17,8 @@ libraryDependencies += "net.codingwell" %% "scala-guice" % "5.0.2"
 // https://mvnrepository.com/artifact/org.scala-lang.modules/scala-xml
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.1"
 
-dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.11.4"
-dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-core" % "2.11.4"
+dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.13.0"
+dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-core" % "2.13.0"
 
 // https://mvnrepository.com/artifact/com.typesafe.play/play-json
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC2"

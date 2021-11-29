@@ -11,6 +11,7 @@ import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, C
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
 import de.htwg.se.battleship.model.playerComponent.Player
 import de.htwg.se.battleship.util.UndoManager
+import play.api.libs.json.{JsNumber, JsValue, Json}
 
 import scala.swing.Publisher
 
@@ -136,6 +137,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   }
 
   def setL(row: Int, col: Int, value: Int): Unit = {
+    println("row " +row + " col " +col +" value: "+value )
     undoManager.doStep(new SetCommand(row, col, value, this))
     gameState.handle("setShips")
     pgP2R.isWinning(pgP2R)
@@ -171,6 +173,17 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     gameState.handle("SAVED")
     publish(new CellChanged)
   }
+
+  def battlefieldSidesToJson:JsValue = {
+    Json.obj(
+      "battlefield" -> Json.obj(
+        "leftSide" -> pgP1L.toJson,
+        "rightSide" -> pgP2R.toJson
+      )
+    )
+}
+
+  def test(): Unit = {}
 
   def load(): Unit = {
     val pgP1LOption = fileIo.load("battlefiledP1")

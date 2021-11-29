@@ -11,7 +11,7 @@ import net.codingwell.scalaguice.ScalaModule
 
 class BattleshipModule extends AbstractModule with ScalaModule{
 
-  val defaultSize:Int = 4
+  val defaultSize:Int = 2
 
   override def configure():Unit = {
 
