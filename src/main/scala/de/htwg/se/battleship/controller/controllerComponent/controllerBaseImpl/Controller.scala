@@ -177,7 +177,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     Json.obj(
       "battlefield" -> Json.obj(
         "leftSide" -> pgP1L.toJson,
-        "rightSide" -> pgP1L.toJson
+        "rightSide" -> pgP2R.toJson
       )
     )
 }
