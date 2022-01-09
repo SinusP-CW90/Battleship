@@ -1,0 +1,102 @@
+{
+  "battlefield" : {
+    "size" : 4,
+    "cells" : [ {
+      "row" : 0,
+      "col" : 0,
+      "cell" : {
+        "value" : 1
+      }
+    }, {
+      "row" : 0,
+      "col" : 1,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 0,
+      "col" : 2,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 0,
+      "col" : 3,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 1,
+      "col" : 0,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 1,
+      "col" : 1,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 1,
+      "col" : 2,
+      "cell" : {
+        "value" : 1
+      }
+    }, {
+      "row" : 1,
+      "col" : 3,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 2,
+      "col" : 0,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 2,
+      "col" : 1,
+      "cell" : {
+        "value" : 1
+      }
+    }, {
+      "row" : 2,
+      "col" : 2,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 2,
+      "col" : 3,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 3,
+      "col" : 0,
+      "cell" : {
+        "value" : 1
+      }
+    }, {
+      "row" : 3,
+      "col" : 1,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 3,
+      "col" : 2,
+      "cell" : {
+        "value" : 0
+      }
+    }, {
+      "row" : 3,
+      "col" : 3,
+      "cell" : {
+        "value" : 0
+      }
+    } ]
+  }
+}
