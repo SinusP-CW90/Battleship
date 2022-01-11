@@ -8,6 +8,9 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec._
 
 class ControllerSpec extends AnyWordSpec with Matchers {
+  /*
+  //deactivated for the build in the wep app
+
   "A Controller" when {
     "observed by an Observer" should {
       val smallPlayground = new Battlefield(3)
@@ -299,4 +302,6 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     }
 
   }
+
+   */
 }
