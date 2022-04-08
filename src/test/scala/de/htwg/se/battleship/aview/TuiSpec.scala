@@ -83,7 +83,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
     "input test to create some boats" in {
       tui.processInputLine("msw")
       tui.processInputLine("lsw")
-      tui.processInputLine("sw")
+      //tui.processInputLine("sw")
     }
     "input test to create a random Battlefield on the Left Side" in {
       tui.processInputLine("rl")

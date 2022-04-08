@@ -1,7 +1,6 @@
-
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-ThisBuild / scalaVersion := "3.1.1"
+ThisBuild / scalaVersion := "3.1.2"
 
 lazy val root = (project in file("."))
   .settings(
@@ -19,7 +18,7 @@ libraryDependencies += "com.google.inject.extensions" % "guice-assistedinject" %
 //libraryDependencies += "com.google.inject" % "guice" % "4.2.3" cross CrossVersion.for3Use2_13
 libraryDependencies += "net.codingwell" %% "scala-guice" % "5.0.2" cross CrossVersion.for3Use2_13
 
-dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.13.2.1"
+dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.13.2.2"
 dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-core" % "2.13.2"
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.1"

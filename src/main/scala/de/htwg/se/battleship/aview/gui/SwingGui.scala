@@ -24,8 +24,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   def gridPanel: GridPanel = new GridPanel(controller.battlefieldSize(), controller.blockSize()) {
     border = LineBorder(java.awt.Color.BLACK, 5)
     for {
-      innerRow <- 0 until controller.battlefieldSize
-      innerColumn <- 0 until controller.battlefieldSize
+      innerRow <- 0 until controller.battlefieldSize()
+      innerColumn <- 0 until controller.battlefieldSize()
     } {
       val x = innerRow
       val y = innerColumn
@@ -40,8 +40,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   def gridPanelTest: GridPanel = new GridPanel(controller.battlefieldSize(), controller.blockSize()) {
     border = LineBorder(java.awt.Color.BLACK, 5)
     for {
-      innerRow <- 0 until controller.battlefieldSize
-      innerColumn <- 0 until controller.battlefieldSize
+      innerRow <- 0 until controller.battlefieldSize()
+      innerColumn <- 0 until controller.battlefieldSize()
     } {
       val x = innerRow
       val y = innerColumn
@@ -63,7 +63,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   def label123: GridPanel = new GridPanel(1, controller.battlefieldSize()) {
     border = BorderFactory.createEmptyBorder(0, 25, 0, 25)
-    for (i <- Range(1, controller.battlefieldSize+1, +1)) {
+    for (i <- Range(1, controller.battlefieldSize()+1, +1)) {
       contents += new Label {
         horizontalAlignment = Alignment.Center
         text = i.toString

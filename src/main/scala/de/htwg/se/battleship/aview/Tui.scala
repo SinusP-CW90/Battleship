@@ -22,10 +22,10 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case "m"|"medium"|"6x6"|"set size medium" => controller.createEmptyBattlefield(6);
       case "l"|"large"|"9x9"|"set size large" => controller.createEmptyBattlefield(9);
       case "start" => controller.start("start")
-      case "rl" => controller.createRandomBattlefield("l", controller.battlefieldSize)
-      case "rr" => controller.createRandomBattlefield("r", controller.battlefieldSize)
-      case "rrr" => controller.createRandomBattlefield("r", controller.battlefieldSize)
-                    controller.createRandomBattlefield("l", controller.battlefieldSize)
+      case "rl" => controller.createRandomBattlefield("l", controller.battlefieldSize())
+      case "rr" => controller.createRandomBattlefield("r", controller.battlefieldSize())
+      case "rrr" => controller.createRandomBattlefield("r", controller.battlefieldSize())
+                    controller.createRandomBattlefield("l", controller.battlefieldSize())
                     controller.gameState.handle("shoot")
       case "msw" => controller.createShip("mini");
       case "lsw" => controller.createShip("long");
@@ -35,7 +35,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case "redo" => controller.redo();
       case "save" => controller.save();
       case "load" => controller.load();
-      case "sp"=> controller.switchPlayer;
+      case "sp"=> controller.switchPlayer();
       case _ =>  input.toList.filter(c => c != ' ').map(c => c.toString) match {
           case row :: column :: Nil => controller.set(row,column);
           case _ =>println("please set a valid String");

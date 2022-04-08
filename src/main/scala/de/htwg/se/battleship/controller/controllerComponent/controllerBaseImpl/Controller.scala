@@ -118,8 +118,8 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   }
 
   def checkIsInRange(row: Int, col: Int): Boolean = {
-    if ((row < battlefieldSize) &&(col < battlefieldSize)) {
-      println(row +" gz:"+battlefieldSize)
+    if ((row < battlefieldSize()) &&(col < battlefieldSize())) {
+      println(row +" gz:"+battlefieldSize())
       true
     }
     else false

@@ -16,13 +16,13 @@ class BattlefieldCreateRandomStrategy extends BattlefieldCreateStrategyTemplate{
   }
 
   private def setRandomCell(battlefield:BattlefieldInterface): BattlefieldInterface = {
-      var row = Random.nextInt(battlefield.size)
-      var column = Random.nextInt(battlefield.size)
+    var row = Random.nextInt(battlefield.size)
+    var column = Random.nextInt(battlefield.size)
     while (battlefield.cell(row,column).value != 0){
       row = Random.nextInt(battlefield.size)
       column = Random.nextInt(battlefield.size)
     }
-      val rBattlefield = battlefield.set(row,column,1)
+    val rBattlefield = battlefield.set(row,column,1)
 
     rBattlefield
   }
