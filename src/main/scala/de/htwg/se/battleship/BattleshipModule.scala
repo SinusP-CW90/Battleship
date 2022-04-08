@@ -9,35 +9,35 @@ import de.htwg.se.battleship.model.fileIOComponent._
 import de.htwg.se.battleship.util.BattlefieldCreateStrategyTemplate
 import net.codingwell.scalaguice.ScalaModule
 
-class BattleshipModule extends AbstractModule with ScalaModule{
+class BattleshipModule extends AbstractModule{
 
   val defaultSize:Int = 2
 
   override def configure():Unit = {
-
-    bind[ControllerInterface].to[controllerBaseImpl.Controller]
+//scala3 change
+    bind(classOf[ControllerInterface]).to(classOf[controllerBaseImpl.Controller])
     //bind[Command].to[SetCommand]
-    bind[BattlefieldInterface].annotatedWithName("DefaultSize").toInstance(new Battlefield(defaultSize))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("DefaultSize")).toInstance(new Battlefield(defaultSize))
 
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
 
-    bind[BattlefieldCreateStrategyTemplate].annotatedWithName("RandomStrategy").toInstance(new BattlefieldCreateRandomStrategy)
+    bind(classOf[BattlefieldCreateStrategyTemplate]).annotatedWith(Names.named("RandomStrategy")).toInstance(new BattlefieldCreateRandomStrategy)
 
-    bind[FileIOInterface].to[fileIOJsonImpl.FileIOJson]
+    bind(classOf[FileIOInterface]).to(classOf[fileIOJsonImpl.FileIOJson])
     //bind[FileIOInterface].to[fileIOXmlImpl.FileIOXml]
 
-    bind[BattlefieldInterface].annotatedWithName("p1-2x2").toInstance(new Battlefield(2))
-    bind[BattlefieldInterface].annotatedWithName("p2-2x2").toInstance(new Battlefield(2))
-    bind[BattlefieldInterface].annotatedWithName("p1-3x3").toInstance(new Battlefield(3))
-    bind[BattlefieldInterface].annotatedWithName("p2-3x3").toInstance(new Battlefield(3))
-    bind[BattlefieldInterface].annotatedWithName("p1-4x4").toInstance(new Battlefield(4))
-    bind[BattlefieldInterface].annotatedWithName("p2-4x4").toInstance(new Battlefield(4))
-    bind[BattlefieldInterface].annotatedWithName("p1-5x5").toInstance(new Battlefield(5))
-    bind[BattlefieldInterface].annotatedWithName("p2-5x5").toInstance(new Battlefield(5))
-    bind[BattlefieldInterface].annotatedWithName("p1-6x6").toInstance(new Battlefield(6))
-    bind[BattlefieldInterface].annotatedWithName("p2-6x6").toInstance(new Battlefield(6))
-    bind[BattlefieldInterface].annotatedWithName("p1-9x9").toInstance(new Battlefield(9))
-    bind[BattlefieldInterface].annotatedWithName("p2-9x9").toInstance(new Battlefield(9))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p1-2x2")).toInstance(new Battlefield(2))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p2-2x2")).toInstance(new Battlefield(2))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p1-3x3")).toInstance(new Battlefield(3))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p2-3x3")).toInstance(new Battlefield(3))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p1-4x4")).toInstance(new Battlefield(4))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p2-4x4")).toInstance(new Battlefield(4))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p1-5x5")).toInstance(new Battlefield(5))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p2-5x5")).toInstance(new Battlefield(5))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p1-6x6")).toInstance(new Battlefield(6))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p2-6x6")).toInstance(new Battlefield(6))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p1-9x9")).toInstance(new Battlefield(9))
+    bind(classOf[BattlefieldInterface]).annotatedWith(Names.named("p2-9x9")).toInstance(new Battlefield(9))
 
 
   }

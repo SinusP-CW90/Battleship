@@ -22,9 +22,10 @@ object Battleship {
     if (args.length>0) input=args(0)
     if (input.nonEmpty) tui.processInputLine(input)
     else
-      do {
-      input = readLine()
-      tui.processInputLine(input)
-    } while (input != "q")
+    //TODO SCALA3 change
+    //do <body> while <cond> not supported
+    //while ({ <body> ; <cond> }) ()
+      while ({ input = readLine()
+        tui.processInputLine(input) ; input != "q" }) ()
   }
 }

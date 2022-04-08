@@ -19,9 +19,9 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   title = "Battleship"
   //minimumSize = new Dimension(400, 400)
-  var cells: Array[Array[CellPanel]] = Array.ofDim[CellPanel](controller.battlefieldSize, controller.battlefieldSize)
+  var cells: Array[Array[CellPanel]] = Array.ofDim[CellPanel](controller.battlefieldSize(), controller.battlefieldSize())
 
-  def gridPanel: GridPanel = new GridPanel(controller.battlefieldSize, controller.blockSize) {
+  def gridPanel: GridPanel = new GridPanel(controller.battlefieldSize(), controller.blockSize()) {
     border = LineBorder(java.awt.Color.BLACK, 5)
     for {
       innerRow <- 0 until controller.battlefieldSize
@@ -37,7 +37,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     }
   }
 
-  def gridPanelTest: GridPanel = new GridPanel(controller.battlefieldSize, controller.blockSize) {
+  def gridPanelTest: GridPanel = new GridPanel(controller.battlefieldSize(), controller.blockSize()) {
     border = LineBorder(java.awt.Color.BLACK, 5)
     for {
       innerRow <- 0 until controller.battlefieldSize
@@ -52,8 +52,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     }
   }
 
-  def labelABC: GridPanel = new GridPanel(controller.battlefieldSize, 1) {
-    for (i <- Range(0, controller.battlefieldSize, +1)) {
+  def labelABC: GridPanel = new GridPanel(controller.battlefieldSize(), 1) {
+    for (i <- Range(0, controller.battlefieldSize(), +1)) {
       contents += new Label {
         text = ("A"(0) + i).toChar.toString
         preferredSize = new Dimension(25, 50)
@@ -61,7 +61,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     }
   }
 
-  def label123: GridPanel = new GridPanel(1, controller.battlefieldSize) {
+  def label123: GridPanel = new GridPanel(1, controller.battlefieldSize()) {
     border = BorderFactory.createEmptyBorder(0, 25, 0, 25)
     for (i <- Range(1, controller.battlefieldSize+1, +1)) {
       contents += new Label {
@@ -82,14 +82,14 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     contents += testline1
   }
 
-  def titlePanel = new FlowPanel {
+  def titlePanel: FlowPanel = new FlowPanel {
     contents += new Label()
     {
       icon = new ImageIcon(new ImageIcon("src/main/resources/battleship.jpg").getImage.getScaledInstance(700, 200, Image.SCALE_DEFAULT))
     }
   }
 
-  def bPanel = new BoxPanel(Orientation.Vertical) {
+  def bPanel: BoxPanel = new BoxPanel(Orientation.Vertical) {
         contents += new Label {
           // successfully displays my logo so no resource issues.
           icon = new ImageIcon(getClass.getResource("/ship1.png"))
@@ -103,10 +103,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
     contents += labelPanel
   }
 
-
-
   val statusline = new TextField(controller.currentGameState, 20)
-  val testline1 = new TextField("\n controller.battlefieldSize: "+controller.battlefieldSize+"\n controller.blockSize: "+controller.blockSize, 20)
+  val testline1 = new TextField("\n controller.battlefieldSize: "+controller.battlefieldSize()+"\n controller.blockSize: "+controller.blockSize(), 20)
 
   contents = new BorderPanel {
     add(new BoxPanel(orientation = Orientation.Horizontal) {
@@ -128,16 +126,13 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   }
 
-
-
-
   menuBar = new MenuBar {
     contents += new Menu("File") {
       mnemonic = Key.F
-      contents += new MenuItem(Action("New") { controller.createEmptyBattlefield(controller.battlefieldSize) })
-      contents += new MenuItem(Action("Save") { controller.save })
-      contents += new MenuItem(Action("Load") { controller.load })
-      contents += new MenuItem(Action("Random for P2") { controller.createRandomBattlefield("r",controller.battlefieldSize) })
+      contents += new MenuItem(Action("New") { controller.createEmptyBattlefield(controller.battlefieldSize() )})
+      contents += new MenuItem(Action("Save") { controller.save() })
+      contents += new MenuItem(Action("Load") { controller.load() })
+      contents += new MenuItem(Action("Random for P2") { controller.createRandomBattlefield("r",controller.battlefieldSize()) })
       contents += new MenuItem(Action("Quit") { System.exit(0) })
     }
     contents += new Menu("Edit") {
@@ -167,7 +162,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   }
 
   def resize(): Unit = {
-    cells = Array.ofDim[CellPanel](controller.battlefieldSize, controller.battlefieldSize)
+    cells = Array.ofDim[CellPanel](controller.battlefieldSize(), controller.battlefieldSize())
     contents = new BorderPanel {
       add(new BoxPanel(orientation = Orientation.Horizontal) {
         contents += gridPanel

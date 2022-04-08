@@ -1,8 +1,8 @@
 package de.htwg.se.battleship.controller.controllerComponent.controllerBaseImpl
 
 import com.google.inject.name.{Named, Names}
-import com.google.inject.{Guice, Inject, Injector}
-import net.codingwell.scalaguice.InjectorExtensions._
+import com.google.inject.{Guice, Inject, Injector,Key}
+import net.codingwell.scalaguice.InjectorExtensions.*
 import de.htwg.se.battleship.BattleshipModule
 import de.htwg.se.battleship.controller.controllerComponent.battleshipGameStates.GameState
 import de.htwg.se.battleship.controller.controllerComponent.{BattlefieldSizeChanged, ControllerInterface, battleshipGameStates}
@@ -19,8 +19,9 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
 
   private val undoManager = new UndoManager
   val injector: Injector = Guice.createInjector(new BattleshipModule)
-  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
-  var randomStrategy: BattlefieldCreateRandomStrategy = injector.instance[BattlefieldCreateRandomStrategy]
+  val fileIo: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
+  //var randomStrategy: BattlefieldCreateRandomStrategy = injector.instance[BattlefieldCreateRandomStrategy]
+  var randomStrategy: BattlefieldCreateRandomStrategy = injector.getInstance(classOf[BattlefieldCreateRandomStrategy])
 
   var gameState: GameState = battleshipGameStates.GameState(this)
   var currentGameState: String = "start"
@@ -30,12 +31,12 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
   var shipsToSetP2:Int = pgP2R.size
   var playerSite: String = "l"
 
-  def battlefieldSize:Int = pgP1L.size
-  def blockSize:Int = Math.sqrt(pgP1L.size).toInt
+  def battlefieldSize():Int = pgP1L.size
+  def blockSize():Int = Math.sqrt(pgP1L.size).toInt
   def setPlayerNames(): String = Player().playerNamesToString(Player().setDefaultPlayerNames())
   def playgroundToString: String = pgP1L.battlefieldString(pgP1L, pgP2R)
   //def playgroundToStringWOColor: String = pgP1L.battlefieldStringWOColor(pgP1L, pgP2R)
-  def switchPlayer:Unit = {
+  def switchPlayer():Unit = {
     playerSite match {
       case "l" => playerSite="r"
       case "r" => playerSite="l"
@@ -51,18 +52,18 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
 
   def createEmptyBattlefield(size: Int):Unit = {
     size match {
-      case 2 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-2x2"))
-                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-2x2"))
-      case 3 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-3x3"))
-                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-3x3"))
-      case 4 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-4x4"))
-                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-4x4"))
-      case 5 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-5x5"))
-                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-5x5"))
-      case 6 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-6x6"))
-                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-6x6"))
-      case 9 => pgP1L = injector.instance[BattlefieldInterface](Names.named("p1-9x9"))
-                pgP2R = injector.instance[BattlefieldInterface](Names.named("p2-9x9"))
+      case 2 => pgP1L = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p1-2x2")))
+                pgP2R = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p2-2x2")))
+      case 3 => pgP1L = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p1-3x3")))
+                pgP2R = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p2-3x3")))
+      case 4 => pgP1L = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p1-4x4")))
+                pgP2R = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p2-4x4")))
+      case 5 => pgP1L = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p1-5x5")))
+                pgP2R = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p2-5x5")))
+      case 6 => pgP1L = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p1-6x6")))
+                pgP2R = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p2-6x6")))
+      case 9 => pgP1L = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p1-9x9")))
+                pgP2R = injector.getInstance(Key.get(classOf[BattlefieldInterface], Names.named("p2-9x9")))
       case _ =>
     }
     publish(BattlefieldSizeChanged(size))
@@ -173,7 +174,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     gameState.handle("SAVED")
     publish(new CellChanged)
   }
-
+/*
   def battlefieldSidesToJson:JsValue = {
     Json.obj(
       "battlefield" -> Json.obj(
@@ -182,6 +183,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
       )
     )
 }
+*/
 
   def test(): Unit = {}
 
@@ -190,7 +192,7 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     val pgP2ROption = fileIo.load("battlefiledP2")
     pgP1LOption match {
       case None =>
-        createEmptyBattlefield(battlefieldSize)
+        createEmptyBattlefield(battlefieldSize())
         gameState.handle("COULDNOTLOADp1")
       case Some(_battlefiled) =>
         pgP1L = _battlefiled
@@ -198,13 +200,15 @@ class Controller @Inject() (@Named("DefaultSize") var pgP1L :BattlefieldInterfac
     }
     pgP2ROption match {
       case None =>
-        createEmptyBattlefield(battlefieldSize)
+        createEmptyBattlefield(battlefieldSize())
         gameState.handle("COULDNOTLOADp2")
       case Some(_battlefiled) =>
         pgP2R = _battlefiled
         gameState.handle("LOADEDp2")
     }
-    publish(BattlefieldSizeChanged(pgP1LOption.size))
+    publish {
+      BattlefieldSizeChanged(pgP1LOption.size)
+    }
   }
 
   def createRandomBattlefield(player:String,size: Int): Unit = {

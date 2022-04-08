@@ -13,9 +13,9 @@ trait ControllerInterface extends Publisher{
   var playerSite: String
   var currentGameState: String
 
-  def switchPlayer:Unit
-  def battlefieldSize:Int
-  def blockSize:Int
+  def switchPlayer():Unit
+  def battlefieldSize():Int
+  def blockSize():Int
   def createEmptyBattlefield(size:Int):Unit
   def createRandomBattlefield(player:String, size:Int):Unit
   def start(input: String): Boolean
@@ -23,9 +23,9 @@ trait ControllerInterface extends Publisher{
   def undo():Unit
   def redo():Unit
   def save(): Unit
-
+/*
   def battlefieldSidesToJson: JsValue
-
+*/
   def load(): Unit
   def resize(newSize:Int):Unit
   def cell(row:Int, col:Int):CellInterface
@@ -42,7 +42,6 @@ trait ControllerInterface extends Publisher{
   //def gameStatus:GameState
   def test(): Unit
 }
-
 
 import scala.swing.event.Event
 class CellChanged extends Event

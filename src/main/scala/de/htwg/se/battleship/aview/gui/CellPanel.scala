@@ -36,7 +36,7 @@ class CellPanel(player:String, row: Int, column: Int, controller: ControllerInte
           case _: CellChanged =>
             //text = if (controller.available(row, column).contains(value)) value.toString else " "
             border = LineBorder(java.awt.Color.BLUE, 5)
-            repaint
+            repaint()
           case MouseClicked(src, pt, mod, clicks, pops) =>
             //controller.setL(row, column, value)
             controller.setInGUI(player, row, column)
@@ -51,7 +51,7 @@ class CellPanel(player:String, row: Int, column: Int, controller: ControllerInte
             }
 
 
-            repaint
+            repaint()
         }
       }
   }

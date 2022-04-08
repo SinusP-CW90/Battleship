@@ -2,6 +2,22 @@ package de.htwg.se.battleship.model.battlefieldComponent.battlefieldBaseImpl
 
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
+import play.api.libs.json.OFormat.oFormatFromReadsAndOWrites
+import play.api.libs.json.Format.GenericFormat
+
+import com.google.inject.{Guice, Key}
+import com.google.inject.name.{Named, Names}
+import com.google.inject.{Guice, Inject, Injector,Key}
+import net.codingwell.scalaguice.InjectorExtensions.*
+import com.google.inject.name.Names
+import de.htwg.se.battleship.BattleshipModule
+import de.htwg.se.battleship.model.*
+import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
+import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
+import play.api.libs.json.*
+
+import scala.io.Source
 
 /**The class Battlefield represents the Playground of one Player.
  * @param cells The cells value is a 2 dimensional Vector of all cells.
@@ -108,6 +124,7 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
 
 
   //new
+/*
   implicit val cellWrites: Writes[Cell] = (cell: CellInterface) => Json.obj(
     "value" -> cell.value
   )
@@ -126,5 +143,5 @@ case class Battlefield(cells: Matrix[Cell]) extends BattlefieldInterface {
         )
     )
   }
-
+*/
 }

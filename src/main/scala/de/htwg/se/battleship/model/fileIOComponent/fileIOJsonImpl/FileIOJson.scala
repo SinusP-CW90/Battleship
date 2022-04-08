@@ -1,12 +1,16 @@
 package de.htwg.se.battleship.model.fileIOComponent.fileIOJsonImpl
 
-import com.google.inject.Guice
+import com.google.inject.{Guice, Key}
+import com.google.inject.name.{Named, Names}
+import com.google.inject.{Guice, Inject, Injector,Key}
+import net.codingwell.scalaguice.InjectorExtensions.*
 import com.google.inject.name.Names
 import de.htwg.se.battleship.BattleshipModule
+import de.htwg.se.battleship.model.*
 import de.htwg.se.battleship.model.battlefieldComponent.{BattlefieldInterface, CellInterface}
 import de.htwg.se.battleship.model.fileIOComponent.FileIOInterface
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import scala.io.Source
 
@@ -23,12 +27,13 @@ class FileIOJson extends FileIOInterface {
 
     val injector = Guice.createInjector(new BattleshipModule)
     size match {
-      case 2 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-2x2")))
-      case 3 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-3x3")))
-      case 4 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-4x4")))
-      case 5 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-5x5")))
-      case 6 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-6x6")))
-      case 9 => battlefieldOption = Some(injector.instance[BattlefieldInterface](Names.named("p1-9x9")))
+      case 2 => battlefieldOption = injector.getInstance(Key.get(classOf[Option[BattlefieldInterface]], Names.named("p1-2x2")))
+
+      case 3 => battlefieldOption = injector.getInstance(Key.get(classOf[Option[BattlefieldInterface]], Names.named("p1-3x3")))
+      case 4 => battlefieldOption = injector.getInstance(Key.get(classOf[Option[BattlefieldInterface]], Names.named("p1-4x4")))
+      case 5 => battlefieldOption = injector.getInstance(Key.get(classOf[Option[BattlefieldInterface]], Names.named("p1-5x5")))
+      case 6 => battlefieldOption = injector.getInstance(Key.get(classOf[Option[BattlefieldInterface]], Names.named("p1-6x6")))
+      case 9 => battlefieldOption = injector.getInstance(Key.get(classOf[Option[BattlefieldInterface]], Names.named("p1-9x9")))
       case _ =>
     }
 
